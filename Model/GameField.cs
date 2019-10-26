@@ -11,6 +11,11 @@ namespace Model
     /// </summary>
     public class GameField
     {
+        /// <summary>
+        /// Ячейки игрового поля
+        /// </summary>
+        private List<Cell> _cells = new List<Cell>();
+
 
     }
 }

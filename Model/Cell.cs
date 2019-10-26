@@ -12,6 +12,10 @@ namespace Model
     public class Cell
     {
         /// <summary>
+        /// Связи ячейки
+        /// </summary>
+        private List<Link> _links;
+        /// <summary>
         /// Текущий статус ячейки
         /// </summary>
         private CellStatus _cellStatus;
@@ -20,6 +24,16 @@ namespace Model
         /// </summary>
         private int _score;
 
+        /// <summary>
+        /// Связи ячейки
+        /// </summary>
+        public List<Link> Links
+        {
+            get
+            {
+                return _links;
+            }
+        }
         /// <summary>
         /// Текущий статус ячейки
         /// </summary>
@@ -35,6 +49,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Число очков ячейки
+        /// </summary>
         public int Score
         {
             get
@@ -56,6 +73,14 @@ namespace Model
         public void IncreaseScore()
         {
             _score++;
+        }
+
+        /// <summary>
+        /// Метод уменьшения счёта на единицу
+        /// </summary>
+        public void DecreaseScore()
+        {
+            _score--;
         }
 
         /// <summary>
