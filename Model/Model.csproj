@@ -41,11 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationModel.cs" />
+    <Compile Include="ApplicationState.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="CellStatus.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="ItemColor.cs" />
-    <Compile Include="Link.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="MenuItemStatus.cs" />

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Controller
+namespace View
 {
-    public class Class1
-    {
-    }
+  public abstract class Platform
+  {
+
+  }
 }

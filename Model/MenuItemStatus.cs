@@ -2,6 +2,6 @@
 {
   public enum MenuItemStatus
   {
-    Selected, Focused, Unfocused, Hidden
+    Selected, Unselected, Hidden
   }
 }

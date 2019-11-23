@@ -14,6 +14,18 @@ namespace Model
     public delegate void dChangeStatusHandler();
     public event dChangeStatusHandler ChangeStatus = null;
 
+    public MenuItemStatus MenuItemStatus
+    {
+      get
+      {
+        return _menuItemStatus;
+      }
+      set
+      {
+        _menuItemStatus = value;
+      }
+    }
+
     public MenuItem(int parId, string parName)
     {
       _name = parName;
