@@ -10,6 +10,14 @@
     /// </summary>
     private Platform _platform;
 
+    public Platform Platform
+    {
+      get
+      {
+        return _platform;
+      }
+
+    }
     /// <summary>
     /// Конструктор базового представления
     /// </summary>

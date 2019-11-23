@@ -11,6 +11,7 @@ namespace Model
   /// </summary>
   public class Cell
   {
+    private const int MAX_SCORE = 8;
     /// <summary>
     /// Текущий статус ячейки
     /// </summary>
@@ -19,6 +20,8 @@ namespace Model
     /// Число очков ячейки
     /// </summary>
     private int _score;
+
+    private Player _owner;
 
     private int _x;
     private int _y;
@@ -47,8 +50,26 @@ namespace Model
       {
         return _score;
       }
+      set
+      {
+        if (value > 0 || value <= MAX_SCORE)
+        {
+          _score = value;
+        }
+      }
     }
 
+    public Player Owner
+    {
+      get
+      {
+        return _owner;
+      }
+      set
+      {
+        _owner = value;
+      }
+    }
     public int X
     {
       get
