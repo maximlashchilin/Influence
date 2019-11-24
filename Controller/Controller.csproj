@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseContoller.cs" />
+    <Compile Include="FactoryOfContollers.cs" />
+    <Compile Include="FactoryOfMenuControllers.cs" />
     <Compile Include="MainController.cs" />
     <Compile Include="MenuController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -49,6 +52,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{e7ca902f-3b21-421e-a8ba-ad0af38d7731}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\View\View.csproj">
+      <Project>{91b1ef93-61b4-48a9-8876-dc40bec5c374}</Project>
+      <Name>View</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
