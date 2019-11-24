@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Model;
+using View;
 
 namespace Controller
 {
@@ -12,9 +13,21 @@ namespace Controller
   {
     private ApplicationModel _applicationModel;
 
+    private Platform _platform;
+
+    private ApplicationState _previousState;
+
+    private BaseContoller _currentController;
+
+    public MainController(Platform parPlatform)
+    {
+      _platform = parPlatform;
+    }
+
     public void Start()
     {
       _applicationModel = new ApplicationModel();
+      _previousState = _applicationModel.State;
       _applicationModel.Start();
       _applicationModel.ApplicationStateEvent += ProcessCurrentStatus;
     }
@@ -26,13 +39,19 @@ namespace Controller
       {
         Thread.Sleep(100);
 
-        switch (_applicationModel.State)
+        ChangeState(_applicationModel.State, new FactoryOfMenuControllers());
+        if (_previousState != _applicationModel.State)
         {
-          case ApplicationState.MenuWork:
-            new MenuController();
-            break;
-          default:
-            throw new NotImplementedException();
+          
+
+          switch (_applicationModel.State)
+          {
+            case ApplicationState.MenuWork:
+              new FactoryOfMenuControllers().CreateController(_platform);
+              break;
+            default:
+              throw new NotImplementedException();
+          }
         }
         //if (k == 10)
         //{
@@ -40,6 +59,13 @@ namespace Controller
         //}
         //k++;
       }
+    }
+
+    private void ChangeState(ApplicationState parState, FactoryOfContollers parFactoryOfContollers)
+    {
+      _previousState = _applicationModel.State;
+
+      _currentController = parFactoryOfContollers.CreateController(_platform);
     }
   }
 }

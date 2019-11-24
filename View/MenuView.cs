@@ -14,6 +14,7 @@ namespace View
     public MenuView(Menu parMenu, Platform parPlatform) : base(parPlatform)
     {
       _menu = parMenu;
+      _menu.ChangeStateEvent += Draw;
     }
 
     public override void Draw()
