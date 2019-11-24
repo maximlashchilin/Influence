@@ -4,19 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model;
+using View;
 
 namespace Controller
 {
-  public class MenuController
+  public class MenuController : BaseContoller
   {
     private Menu _menu;
 
-    public MenuController()
+    public MenuController(Platform parPlatform)
     {
-      _menu = new Menu("Main");
+      string menuName = "Main menu";
+      _menu = new Menu(menuName);
       _menu.AddItem(0, "New game");
       _menu.AddItem(1, "Records");
       _menu.AddItem(2, "Exit");
+
+      View = new MenuView(_menu, parPlatform);
     }
 
     private void OnClick(object parSender, EventArgs parEventArgs)

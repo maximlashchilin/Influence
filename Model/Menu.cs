@@ -15,6 +15,10 @@ namespace Model
     private SortedList<int, MenuItem> _menuItems = new SortedList<int, MenuItem>();
     //private int _currentItem;
 
+    public delegate void dChangeSelectedElement();
+
+    public event dChangeSelectedElement ChangeStateEvent;
+
     public string Name
     {
       get
@@ -74,7 +78,7 @@ namespace Model
         if (MenuItemStatus.Selected == elItem.Value.MenuItemStatus)
         {
           elItem.Value.MenuItemStatus = MenuItemStatus.Unselected;
-          
+
           if (elItem.Key == _menuItems.Count - 1)
           {
             _menuItems[0].MenuItemStatus = MenuItemStatus.Selected;
@@ -85,6 +89,8 @@ namespace Model
           }
         }
       }
+
+      ChangeStateEvent?.Invoke();
     }
 
     public void Previous()
