@@ -16,11 +16,14 @@ namespace Controller
     {
       string menuName = "Main menu";
       _menu = new Menu(menuName);
+      View = new MenuView(_menu, parPlatform);
       _menu.AddItem(0, "New game");
       _menu.AddItem(1, "Records");
       _menu.AddItem(2, "Exit");
 
-      View = new MenuView(_menu, parPlatform);
+      parPlatform.EnterDown += OnEnter;
+      parPlatform.ArrowUp += OnArrowUp;
+      parPlatform.ArrowDown += OnArrowDown;
     }
 
     private void OnClick(object parSender, EventArgs parEventArgs)
@@ -35,12 +38,12 @@ namespace Controller
 
     private void OnArrowUp(object parSender, EventArgs parEventArgs)
     {
-      _menu.Next();
+      _menu.Previous();
     }
 
     private void OnArrowDown(object parSender, EventArgs parEventArgs)
     {
-      _menu.Previous();
+      _menu.Next();
     }
 
     private void OnEnter(object parSender, EventArgs parEventArgs)
