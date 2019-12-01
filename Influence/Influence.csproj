@@ -50,9 +50,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleView\ConsoleView.csproj">
+      <Project>{301e54cc-cd8f-48ca-991c-c488fb15592f}</Project>
+      <Name>ConsoleView</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Controller\Controller.csproj">
       <Project>{1c1a78ad-126e-4eed-9ddc-90c73a475e36}</Project>
       <Name>Controller</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\View\View.csproj">
+      <Project>{91B1EF93-61B4-48A9-8876-DC40BEC5C374}</Project>
+      <Name>View</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
