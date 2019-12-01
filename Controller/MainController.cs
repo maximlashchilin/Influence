@@ -19,45 +19,34 @@ namespace Controller
 
     private BaseContoller _currentController;
 
+    private FactoryOfContollers _currentFactoryOfControllers;
+
     public MainController(Platform parPlatform)
     {
       _platform = parPlatform;
+      _platform.Initialize();
     }
 
     public void Start()
     {
       _applicationModel = new ApplicationModel();
       _previousState = _applicationModel.State;
+      _currentFactoryOfControllers = new FactoryOfMenuControllers();
       _applicationModel.Start();
       _applicationModel.ApplicationStateEvent += ProcessCurrentStatus;
     }
 
     private void ProcessCurrentStatus()
     {
-      //int k = 0;
+      ChangeState(_applicationModel.State, _currentFactoryOfControllers);
       while (_applicationModel.State != ApplicationState.Exit)
       {
-        Thread.Sleep(100);
+        Thread.Sleep(10);
 
-        ChangeState(_applicationModel.State, new FactoryOfMenuControllers());
         if (_previousState != _applicationModel.State)
         {
-          
-
-          switch (_applicationModel.State)
-          {
-            case ApplicationState.MenuWork:
-              new FactoryOfMenuControllers().CreateController(_platform);
-              break;
-            default:
-              throw new NotImplementedException();
-          }
+          ChangeState(_applicationModel.State, _currentFactoryOfControllers);
         }
-        //if (k == 10)
-        //{
-        //  _applicationModel.State = ApplicationState.Exit;
-        //}
-        //k++;
       }
     }
 
@@ -65,7 +54,18 @@ namespace Controller
     {
       _previousState = _applicationModel.State;
 
-      _currentController = parFactoryOfContollers.CreateController(_platform);
+      switch (_applicationModel.State)
+      {
+        case ApplicationState.MenuWork:
+          _currentFactoryOfControllers = new FactoryOfMenuControllers();
+          break;
+        case ApplicationState.Gaming:
+          break;
+        case ApplicationState.RecordsWatch:
+          break;
+      }
+
+      _currentController = _currentFactoryOfControllers.CreateController(_platform);
     }
   }
 }

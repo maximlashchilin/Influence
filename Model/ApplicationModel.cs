@@ -16,10 +16,14 @@ namespace Model
 
     public event dApplicationState ApplicationStateEvent;
 
-    public void Start()
+    public ApplicationModel()
     {
       ModelThread = new Thread(RunApplication);
       State = ApplicationState.MenuWork;
+    }
+
+    public void Start()
+    {
       ModelThread.Start();
     }
 
