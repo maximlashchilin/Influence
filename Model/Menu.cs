@@ -13,7 +13,6 @@ namespace Model
   {
     private string _name;
     private SortedList<int, MenuItem> _menuItems = new SortedList<int, MenuItem>();
-    //private int _currentItem;
 
     public delegate void dChangeSelectedElement();
 
@@ -39,53 +38,45 @@ namespace Model
       }
     }
 
-    //public int CurrentItem
-    //{
-    //  get
-    //  {
-    //    return _currentItem;
-    //  }
-    //  set
-    //  {
-    //    _currentItem = value;
-    //  }
-    //}
-
     public Menu(string parName)
     {
       _name = parName;
-      //_currentItem = -1;
     }
 
-    public void AddItem(int id, string parName)
+    public void AddItem(int parId, string parName)
     {
       if (null != parName)
       {
-        // проверять id на существование
-        _menuItems.Add(id, new MenuItem(id, parName));
+        _menuItems.Add(parId, new MenuItem(parId, parName));
+        if (parId == 0)
+        {
+          _menuItems[parId].MenuItemStatus = MenuItemStatus.Selected;
+        }
+        else
+        {
+          _menuItems[parId].MenuItemStatus = MenuItemStatus.Unselected;
+        }
+        ChangeStateEvent?.Invoke();
       }
-    }
-
-    public void DeleteItem(string parName)
-    {
-      throw new NotImplementedException();
     }
 
     public void Next()
     {
-      foreach (KeyValuePair<int, MenuItem> elItem in _menuItems)
+      for (int i = 0; i < _menuItems.Count; i++)
       {
-        if (MenuItemStatus.Selected == elItem.Value.MenuItemStatus)
+        if (_menuItems[i].MenuItemStatus == MenuItemStatus.Selected)
         {
-          elItem.Value.MenuItemStatus = MenuItemStatus.Unselected;
+          _menuItems[i].MenuItemStatus = MenuItemStatus.Unselected;
 
-          if (elItem.Key == _menuItems.Count - 1)
+          if (i == _menuItems.Count - 1)
           {
             _menuItems[0].MenuItemStatus = MenuItemStatus.Selected;
+            break;
           }
           else
           {
-            _menuItems[elItem.Key + 1].MenuItemStatus = MenuItemStatus.Selected;
+            _menuItems[i + 1].MenuItemStatus = MenuItemStatus.Selected;
+            break;
           }
         }
       }
@@ -95,22 +86,26 @@ namespace Model
 
     public void Previous()
     {
-      foreach (KeyValuePair<int, MenuItem> elItem in _menuItems)
+      for (int i = 0; i < _menuItems.Count; i++)
       {
-        if (MenuItemStatus.Selected == elItem.Value.MenuItemStatus)
+        if (_menuItems[i].MenuItemStatus == MenuItemStatus.Selected)
         {
-          elItem.Value.MenuItemStatus = MenuItemStatus.Unselected;
+          _menuItems[i].MenuItemStatus = MenuItemStatus.Unselected;
 
-          if (elItem.Key == 0)
+          if (i == 0)
           {
             _menuItems[_menuItems.Count - 1].MenuItemStatus = MenuItemStatus.Selected;
+            break;
           }
           else
           {
-            _menuItems[elItem.Key - 1].MenuItemStatus = MenuItemStatus.Selected;
+            _menuItems[i - 1].MenuItemStatus = MenuItemStatus.Selected;
+            break;
           }
         }
       }
+
+      ChangeStateEvent?.Invoke();
     }
 
     public void SelectItem()
