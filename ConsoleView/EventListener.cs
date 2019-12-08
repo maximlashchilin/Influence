@@ -15,6 +15,8 @@ namespace ConsoleView
 
     private Thread _listenerThread;
 
+    private bool _isRun;
+
     public EventListener()
     {
       _listenerThread = new Thread(ProcessWinEvent);
@@ -22,7 +24,13 @@ namespace ConsoleView
 
     public void Initialize()
     {
+      _isRun = true;
       _listenerThread.Start();
+    }
+
+    public void Stop()
+    {
+      _isRun = false;
     }
 
     private void ProcessWinEvent()
@@ -40,7 +48,7 @@ namespace ConsoleView
 
       var record = new NativeMethods.INPUT_RECORD();
       uint recordLen = 0;
-      while (true)
+      while (_isRun)
       {
         if (!(NativeMethods.ReadConsoleInput(handle, ref record, 1, ref recordLen))) { throw new Win32Exception(); }
         switch (record.EventType)
