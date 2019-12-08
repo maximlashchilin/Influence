@@ -2,6 +2,6 @@
 {
     public enum ItemColor
     {
-        Red, Green
+        Red, Green, Default
     }
 }

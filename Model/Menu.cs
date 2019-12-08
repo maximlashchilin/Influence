@@ -11,9 +11,19 @@ namespace Model
   /// </summary>
   public class Menu
   {
+    /// <summary>
+    /// Название меню
+    /// </summary>
     private string _name;
+
+    /// <summary>
+    /// Список пунктов меню
+    /// </summary>
     private SortedList<int, MenuItem> _menuItems = new SortedList<int, MenuItem>();
 
+    /// <summary>
+    /// 
+    /// </summary>
     public delegate void dChangeSelectedElement();
 
     public event dChangeSelectedElement ChangeStateEvent;
@@ -43,6 +53,11 @@ namespace Model
       _name = parName;
     }
 
+    public void Initialize()
+    {
+      ChangeStateEvent?.Invoke();
+    }
+
     public void AddItem(int parId, string parName)
     {
       if (null != parName)
@@ -56,7 +71,6 @@ namespace Model
         {
           _menuItems[parId].MenuItemStatus = MenuItemStatus.Unselected;
         }
-        ChangeStateEvent?.Invoke();
       }
     }
 
@@ -106,11 +120,6 @@ namespace Model
       }
 
       ChangeStateEvent?.Invoke();
-    }
-
-    public void SelectItem()
-    {
-
     }
   }
 }

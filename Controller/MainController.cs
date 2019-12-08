@@ -9,11 +9,14 @@ using View;
 
 namespace Controller
 {
+  /// <summary>
+  /// Главный контроллер
+  /// </summary>
   public class MainController
   {
-    private ApplicationModel _applicationModel;
-
     private Platform _platform;
+
+    private ApplicationState _currentState;
 
     private ApplicationState _previousState;
 
@@ -29,43 +32,44 @@ namespace Controller
 
     public void Start()
     {
-      _applicationModel = new ApplicationModel();
-      _previousState = _applicationModel.State;
+      _currentState = ApplicationState.MenuWork;
+      _previousState = _currentState;
       _currentFactoryOfControllers = new FactoryOfMenuControllers();
-      _applicationModel.Start();
-      _applicationModel.ApplicationStateEvent += ProcessCurrentStatus;
+      ProcessCurrentStatus();
     }
 
     private void ProcessCurrentStatus()
     {
-      ChangeState(_applicationModel.State, _currentFactoryOfControllers);
-      while (_applicationModel.State != ApplicationState.Exit)
+      ChangeState(_currentState, _currentFactoryOfControllers);
+      while (_currentState != ApplicationState.Exit)
       {
-        Thread.Sleep(10);
-
-        if (_previousState != _applicationModel.State)
-        {
-          ChangeState(_applicationModel.State, _currentFactoryOfControllers);
-        }
+        //if (_previousState != _currentState)
+        //{
+        //  ChangeState(_currentState, _currentFactoryOfControllers);
+        //}
       }
     }
 
     private void ChangeState(ApplicationState parState, FactoryOfContollers parFactoryOfContollers)
-    {
-      _previousState = _applicationModel.State;
-
-      switch (_applicationModel.State)
+    { 
+      _previousState = _currentState;
+      _currentState = parState;
+      _currentFactoryOfControllers = parFactoryOfContollers;
+      if (parState != ApplicationState.Exit)
       {
-        case ApplicationState.MenuWork:
-          _currentFactoryOfControllers = new FactoryOfMenuControllers();
-          break;
-        case ApplicationState.Gaming:
-          break;
-        case ApplicationState.RecordsWatch:
-          break;
+        _currentController = _currentFactoryOfControllers.CreateController(_platform);
+        _currentController.ChangeState += OnChangeState;
       }
+      else
+      {
+        _platform.Drop();
+      }
+    }
 
-      _currentController = _currentFactoryOfControllers.CreateController(_platform);
+    private void OnChangeState(object parSender, ChangeStateArgs parE)
+    {
+      _currentController.View.Platform.UnsubscribeAllEvents();
+      ChangeState(parE.ApplicationState, parE.FactoryOfContollers);
     }
   }
 }
