@@ -4,11 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using View;
+using Model;
 
 namespace Controller
 {
-  public class BaseContoller
+  public abstract class BaseContoller
   {
-    public BaseView View { get; set; }
+    private BaseView _view;
+
+    public event dChangeStateHandler ChangeState;
+
+    public BaseView View
+    {
+      get
+      {
+        return _view;
+      }
+      set
+      {
+        _view = value;
+      }
+    }
+
+    public abstract void Start();
+
+    public void CallChangeState(object parSender, ChangeStateArgs parE)
+    {
+      ChangeState?.Invoke(parSender, parE);
+    }
   }
 }

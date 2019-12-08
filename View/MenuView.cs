@@ -19,16 +19,18 @@ namespace View
 
     public override void Draw()
     {
-      float delta = 3.0f;
+      float delta = 10.0f;
+
+      Platform.Clear();
       for (int i = 0; i < _menu.MenuItems.Count; i++)
       {
         if (_menu.MenuItems[i].MenuItemStatus == MenuItemStatus.Selected)
         {
-          Platform.PrintMarkedTextInRectangle(10.0f, 5.0f + (i * delta), 35.0f, 7.0f + (i * delta), _menu.MenuItems[i].Name);
+          Platform.PrintMarkedTextInRectangle(40.0f, 5.0f + (i * delta), 60.0f, 7.0f + (i * delta), _menu.MenuItems[i].Name);
         }
         else
         {
-          Platform.PrintTextInRectangle(10.0f, 5.0f + (i * delta), 35.0f, 7.0f + (i * delta), _menu.MenuItems[i].Name);
+          Platform.PrintTextInRectangle(40.0f, 5.0f + (i * delta), 60.0f, 7.0f + (i * delta), _menu.MenuItems[i].Name);
         }
       }
     }

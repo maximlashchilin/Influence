@@ -2,6 +2,7 @@
 {
   public enum GameState
   {
+    Select,
     Atack,
     ScoreSetting,
     MovePassing

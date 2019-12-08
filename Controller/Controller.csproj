@@ -42,11 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseContoller.cs" />
+    <Compile Include="ButtonController.cs" />
+    <Compile Include="ChangeStateArgs.cs" />
+    <Compile Include="ChangeStateHandler.cs" />
+    <Compile Include="EnterOfPlayersController.cs" />
     <Compile Include="FactoryOfContollers.cs" />
+    <Compile Include="FactoryOfGameControllers.cs" />
     <Compile Include="FactoryOfMenuControllers.cs" />
     <Compile Include="GameController.cs" />
     <Compile Include="MainController.cs" />
     <Compile Include="MenuController.cs" />
+    <Compile Include="MenuItemController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

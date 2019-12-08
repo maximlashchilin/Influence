@@ -35,6 +35,14 @@ namespace Model
     #endregion
 
     #region Свойства класса
+    public int Id
+    {
+      get
+      {
+        return _id;
+      }
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -66,6 +74,7 @@ namespace Model
     /// <param name="parName"></param>
     public MenuItem(int parId, string parName)
     {
+      _id = parId;
       _name = parName;
     }
     #endregion
