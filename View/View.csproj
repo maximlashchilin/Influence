@@ -42,10 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseView.cs" />
+    <Compile Include="ButtonView.cs" />
     <Compile Include="GameFieldView.cs" />
     <Compile Include="MenuView.cs" />
     <Compile Include="MenuItemView.cs" />
     <Compile Include="Platform.cs" />
+    <Compile Include="PlatformType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
