@@ -7,24 +7,39 @@ using System.Threading.Tasks;
 namespace Model
 {
   /// <summary>
-  /// Класс игровой ячейки
+  /// Игровая ячейка
   /// </summary>
   public class Cell
   {
+    /// <summary>
+    /// Максимальное число очков в ячейке
+    /// </summary>
     private const int MAX_SCORE = 8;
+
     /// <summary>
     /// Текущий статус ячейки
     /// </summary>
     private CellStatus _cellStatus;
+
     /// <summary>
     /// Число очков ячейки
     /// </summary>
     private int _score;
 
+    /// <summary>
+    /// Владелец ячейки
+    /// </summary>
     private Player _owner;
 
-    private int _x;
-    private int _y;
+    /// <summary>
+    /// Горизонтальная координата ячейки
+    /// </summary>
+    private float _x;
+
+    /// <summary>
+    /// Вертикальная координата ячейки
+    /// </summary>
+    private float _y;
 
     /// <summary>
     /// Текущий статус ячейки
@@ -59,6 +74,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Владелец ячейки
+    /// </summary>
     public Player Owner
     {
       get
@@ -70,27 +88,46 @@ namespace Model
         _owner = value;
       }
     }
-    public int X
+
+    /// <summary>
+    /// Горизонтальная координата ячейки
+    /// </summary>
+    public float X
     {
       get
       {
         return _x;
       }
+      set
+      {
+        _x = value;
+      }
     }
 
-    public int Y
+    /// <summary>
+    /// Вертикальная координата ячейки
+    /// </summary>
+    public float Y
     {
       get
       {
         return _y;
       }
+      set
+      {
+        _y = value;
+      }
     }
 
     /// <summary>
-    /// Конструктор
+    /// Конструктор ячейки
     /// </summary>
-    public Cell()
+    /// <param name="parX">Горизонтальная координата</param>
+    /// <param name="parY">Вертикальная координата</param>
+    public Cell(float parX, float parY)
     {
+      _x = parX;
+      _y = parY;
       _score = 0;
       _cellStatus = CellStatus.NotChoosed;
     }
