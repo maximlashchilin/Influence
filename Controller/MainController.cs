@@ -24,10 +24,11 @@ namespace Controller
 
     private FactoryOfContollers _currentFactoryOfControllers;
 
+    private Thread _mainControllerThread;
+
     public MainController(Platform parPlatform)
     {
       _platform = parPlatform;
-      _platform.Initialize();
     }
 
     public void Start()
@@ -35,7 +36,9 @@ namespace Controller
       _currentState = ApplicationState.MenuWork;
       _previousState = _currentState;
       _currentFactoryOfControllers = new FactoryOfMenuControllers();
-      ProcessCurrentStatus();
+      _mainControllerThread = new Thread(ProcessCurrentStatus);
+      _mainControllerThread.Start();
+      _platform.Initialize();
     }
 
     private void ProcessCurrentStatus()

@@ -63,6 +63,11 @@ namespace View
       }
     }
 
+    public BaseView View
+    {
+      get; set;
+    }
+
     //private Platform()
     //{
     //}
