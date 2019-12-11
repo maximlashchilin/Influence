@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Controller;
+using WinFormsView;
 
 namespace InfluenceForms
 {
@@ -18,7 +19,7 @@ namespace InfluenceForms
     {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      new MainController().Start();
+      new MainController(new WinFormsPlatform()).Start();
     }
   }
 }
