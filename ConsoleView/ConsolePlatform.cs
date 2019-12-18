@@ -250,8 +250,8 @@ namespace ConsoleView
     /// <param name="parText">Текст</param>
     public override void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText)
     {
-      Console.BackgroundColor = ConsoleColor.Blue;
       StringBuilder s = new StringBuilder("┌");
+      Console.ForegroundColor = ConsoleColor.Blue;
       for (int i = TranslateBaseXToPlatformX(parX1) + 1; i < TranslateBaseXToPlatformX(parX2); i++)
       {
         s.Append("─");
@@ -291,7 +291,7 @@ namespace ConsoleView
 
       Console.SetCursorPosition(TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1));
       Console.WriteLine(s);
-      Console.BackgroundColor = ConsoleColor.Black;
+      Console.ForegroundColor = ConsoleColor.White;
     }
   }
 }
