@@ -8,10 +8,21 @@ using View;
 
 namespace Controller
 {
+  /// <summary>
+  /// Контроллер элемента меню
+  /// </summary>
   public class MenuItemController : BaseContoller
   {
+    /// <summary>
+    /// Экземпляр элемента меню
+    /// </summary>
     private MenuItem _menuItem;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parPlatform">Платформа</param>
+    /// <param name="parMenuItem">Элемент меню</param>
     public MenuItemController(Platform parPlatform, MenuItem parMenuItem)
     {
       _menuItem = parMenuItem;
@@ -24,6 +35,11 @@ namespace Controller
       throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Обрабатывает событие нажатия клавиши Enter
+    /// </summary>
+    /// <param name="parSender"></param>
+    /// <param name="parE"></param>
     private void OnEnter(object parSender, EventArgs parE)
     {
       if (_menuItem.MenuItemStatus == MenuItemStatus.Selected)

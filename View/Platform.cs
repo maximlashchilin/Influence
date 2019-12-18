@@ -35,6 +35,8 @@ namespace View
     /// </summary>
     public event EventHandler EnterDown;
 
+    public event EventHandler KeyDown;
+
     public event dMoveEventHander Move;
 
     public event EventHandler Click;
@@ -107,6 +109,11 @@ namespace View
     protected virtual void CallEnterDown()
     {
       EnterDown?.Invoke(this, EventArgs.Empty);
+    }
+
+    protected virtual void CallKeyDown()
+    {
+      KeyDown?.Invoke(this, EventArgs.Empty);
     }
 
     protected virtual void CallMove(object parSender, MoveEventArgs parE)
