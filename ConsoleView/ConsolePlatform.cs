@@ -1,46 +1,65 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using View;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using Model;
 
 namespace ConsoleView
 {
+  /// <summary>
+  /// Консольная платформа
+  /// </summary>
   public class ConsolePlatform : Platform
   {
+    /// <summary>
+    /// 
+    /// </summary>
     private const int WM_SYSCOMMAND = 0x0112;
+
+    /// <summary>
+    /// Код для сообщения максимизации окна
+    /// </summary>
     private const int SC_MAXIMIZE = 0xF030;
 
+    /// <summary>
+    /// Слушатель событий Windows
+    /// </summary>
     private EventListener _eventListener;
 
+    /// <summary>
+    /// Получает указатель на окно консоли
+    /// </summary>
+    /// <returns>Указатель на окно консоли</returns>
     [DllImport("kernel32")]
     static extern IntPtr GetConsoleWindow();
 
+    /// <summary>
+    /// Отправляет сообщение окну
+    /// </summary>
+    /// <param name="hWnd">Указатель окна</param>
+    /// <param name="wMsg"></param>
+    /// <param name="wParam"></param>
+    /// <param name="lParam"></param>
+    /// <returns></returns>
     [DllImport("user32.dll")]
     public static extern int SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-    public static IntPtr Handle
-    {
-      get
-      {
-        return GetConsoleWindow();
-      }
-    }
-
+    /// <summary>
+    /// Конструктор платформы
+    /// </summary>
     public ConsolePlatform()
     {
-      _eventListener = new EventListener();
+      _eventListener = EventListener.GetIntance();
       _eventListener.ConsoleMouseEvent += ConsoleMouseEventHandler;
       _eventListener.ConsoleKeyboardEvent += ConsoleKeyboardEventHandler;
     }
 
+    /// <summary>
+    /// Инициализирует консольную платформу
+    /// </summary>
     public override void Initialize()
     {
-      SendMessage(Handle, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+      SendMessage(GetConsoleWindow(), WM_SYSCOMMAND, SC_MAXIMIZE, 0);
       Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
       Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
       WidthPlatform = Console.WindowWidth;
@@ -50,11 +69,19 @@ namespace ConsoleView
       Console.Title = "Influence";
     }
 
+    /// <summary>
+    /// Уничтожает платформу
+    /// </summary>
     public override void Drop()
     {
       _eventListener.Stop();
     }
 
+    /// <summary>
+    /// Обрабатывает событие работы с мышью в консоли
+    /// </summary>
+    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parE">Параметры события</param>
     public void ConsoleMouseEventHandler(object parSender, ConsoleMouseEventArgs parE)
     {
       if (parE.ButtonState == 1)
@@ -67,29 +94,54 @@ namespace ConsoleView
       }
     }
 
+    /// <summary>
+    /// Обрабатывает событие работы с клавиатурой в консоли
+    /// </summary>
+    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parE">Параметры события</param>
     public void ConsoleKeyboardEventHandler(object parSender, ConsoleKeyboardEventArgs parE)
     {
+      const int ENTER_CODE = 13;
+      const int ARROW_UP_CODE = 38;
+      const int ARROW_DOWN_CODE = 40;
       if (parE.KeyDown)
       {
         switch (parE.VirtualKeyCode)
         {
-          case 13:
+          case ENTER_CODE:
             CallEnterDown();
             break;
-          case 38:
+          case ARROW_UP_CODE:
             CallArrowUpDown();
             break;
-          case 40:
+          case ARROW_DOWN_CODE:
             CallArrowDown();
             break;
+        }
+
+        if (parE.VirtualKeyCode >= 65 && parE.VirtualKeyCode <= 90)
+        {
+          CallKeyDown();
         }
       }
     }
 
+    /// <summary>
+    /// Очищает поверхность отображения платформы
+    /// </summary>
     public override void Clear()
     {
       Console.Clear();
     }
+
+    /// <summary>
+    /// Отображает восьмиугольник в указанных координатах
+    /// с количеством очков и соответствующим цветом
+    /// </summary>
+    /// <param name="parX">Координата X</param>
+    /// <param name="parY">Координата Y</param>
+    /// <param name="parScore">Количество очков</param>
+    /// <param name="parColor">Цвет</param>
     public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColor parColor)
     {
       if (parColor != ItemColor.Default)
@@ -113,16 +165,37 @@ namespace ConsoleView
       Console.ResetColor();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="parX1"></param>
+    /// <param name="parY1"></param>
+    /// <param name="parX2"></param>
+    /// <param name="parY2"></param>
     public override void DrawRectangle(float parX1, float parY1, float parX2, float parY2)
     {
       throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="parX"></param>
+    /// <param name="parY"></param>
+    /// <param name="parText"></param>
     public override void PrintText(float parX, float parY, string parText)
     {
       throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Печатает текст в прямоугольнике
+    /// </summary>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
+    /// <param name="parText">Текст</param>
     public override void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText)
     {
       StringBuilder s = new StringBuilder("┌");
@@ -167,6 +240,14 @@ namespace ConsoleView
       Console.WriteLine(s);
     }
 
+    /// <summary>
+    /// Выводит текст в выделенном прямоугольнике
+    /// </summary>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
+    /// <param name="parText">Текст</param>
     public override void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText)
     {
       Console.BackgroundColor = ConsoleColor.Blue;

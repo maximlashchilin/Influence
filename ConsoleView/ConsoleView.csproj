@@ -49,6 +49,7 @@
     <Compile Include="ConsoleMouseEventHandler.cs" />
     <Compile Include="ConsolePlatform.cs" />
     <Compile Include="EventListener.cs" />
+    <Compile Include="NativeMethodsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

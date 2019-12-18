@@ -1,28 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleView
 {
   /// <summary>
-  /// 
+  /// Параметры события нажатия клавиши в консоле
   /// </summary>
   public class ConsoleKeyboardEventArgs : EventArgs
   {
     /// <summary>
-    /// 
+    /// Признак нажатия клавиши
     /// </summary>
     private bool _keyDown;
 
     /// <summary>
-    /// 
+    /// Цифровой код клавиши
     /// </summary>
     private int _virtualKeyCode;
 
     /// <summary>
-    /// 
+    /// Признак нажатия клавиши
     /// </summary>
     public bool KeyDown
     {
@@ -33,7 +29,7 @@ namespace ConsoleView
     }
 
     /// <summary>
-    /// 
+    /// Цифровой код клавиши
     /// </summary>
     public int VirtualKeyCode
     {
@@ -44,10 +40,10 @@ namespace ConsoleView
     }
 
     /// <summary>
-    /// 
+    /// Конструктор
     /// </summary>
-    /// <param name="parKeyDown"></param>
-    /// <param name="parVirtualKeyCode"></param>
+    /// <param name="parKeyDown">Признак нажатия клавиши</param>
+    /// <param name="parVirtualKeyCode">Цифровой код клавиши</param>
     public ConsoleKeyboardEventArgs(bool parKeyDown, int parVirtualKeyCode)
     {
       _keyDown = parKeyDown;
