@@ -24,6 +24,11 @@ namespace Model
     private float _y;
 
     /// <summary>
+    /// Объект синхронизации
+    /// </summary>
+    private static object _syncObject = new object();
+
+    /// <summary>
     /// Координата x
     /// </summary>
     public float X
@@ -60,9 +65,12 @@ namespace Model
     {
       if (null == _instance)
       {
-        if (null == _instance)
+        lock (_syncObject)
         {
-          _instance = new Cursor(0.0f, 0.0f);
+          if (null == _instance)
+          {
+            _instance = new Cursor(0.0f, 0.0f);
+          }
         }
       }
 
