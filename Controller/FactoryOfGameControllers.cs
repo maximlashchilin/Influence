@@ -13,10 +13,10 @@ namespace Controller
   class FactoryOfGameControllers : FactoryOfContollers
   {
     /// <summary>
-    /// 
+    /// Создает контроллер состояния игры
     /// </summary>
-    /// <param name="parPlatform"></param>
-    /// <returns></returns>
+    /// <param name="parPlatform">Платформа</param>
+    /// <returns>Контроллер состояния игры</returns>
     public override BaseContoller CreateController(Platform parPlatform)
     {
       return new GameController(parPlatform);

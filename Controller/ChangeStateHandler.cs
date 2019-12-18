@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using View;
-
-namespace Controller
+﻿namespace Controller
 {
+  /// <summary>
+  /// Делегат события изменения состояния приложения
+  /// </summary>
+  /// <param name="parSender"></param>
+  /// <param name="parE"></param>
   public delegate void dChangeStateHandler(object parSender, ChangeStateArgs parE);
 }

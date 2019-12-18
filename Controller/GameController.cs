@@ -1,61 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model;
-using View;
+﻿using View;
 
 namespace Controller
 {
+  /// <summary>
+  /// Контроллер игры
+  /// </summary>
   public class GameController : BaseContoller
   {
-    private const int VERTICAL_SIZE = 6;
+    /// <summary>
+    /// Платформа
+    /// </summary>
+    private Platform _platform;
 
-    private const int HORIZONTAL_SIZE = 4;
+    /// <summary>
+    /// Текущий контроллер в игровом состоянии
+    /// </summary>
+    private BaseContoller _currentControllerInGameState;
 
-    private GameField _game;
-
-    private ButtonController _buttonController;
-
+    /// <summary>
+    /// Контроллер ввода игроков
+    /// </summary>
     private EnterOfPlayersController _enterOfPlayersController;
 
+    /// <summary>
+    /// Контроллер игрового поля
+    /// </summary>
+    private GameFieldController _gameFieldController;
+
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parPlatform">Платформа</param>
     public GameController(Platform parPlatform)
     {
-      List<Player> players = new List<Player>();
+      _enterOfPlayersController = new EnterOfPlayersController(parPlatform);
+      _currentControllerInGameState = _enterOfPlayersController;
+      _enterOfPlayersController.CompleteEnterOfPlayers += OnCompleteEnterOfPlayers;
+      _platform = parPlatform;
+    }
 
-      players.Add(new Player("Maxim", ItemColor.Green));
-      players.Add(new Player("Takis", ItemColor.Red));
-      _game = new GameField(VERTICAL_SIZE, HORIZONTAL_SIZE, players);
-      View = new GameFieldView(_game, parPlatform);
-      _buttonController = new ButtonController(parPlatform, _game.Button);
-      _game.Initialize();
-      _buttonController.Initialize();
-      _game.Button.Click += OnButtonClick;
-
-      parPlatform.Move += OnMove;
-      parPlatform.Click += OnClick;
+    /// <summary>
+    /// Обрабатывает событие завершения ввода игроков
+    /// </summary>
+    /// <param name="parObject">Отправитель события</param>
+    /// <param name="parE">Параметры события</param>
+    private void OnCompleteEnterOfPlayers(object parObject, CompleteEnterOfPlayersArgs parE)
+    {
+      _platform.UnsubscribeAllEvents();
+      _gameFieldController = new GameFieldController(parE.Players, _platform);
+      _currentControllerInGameState = _gameFieldController;
+      _enterOfPlayersController = null;
     }
 
     public override void Start()
     {
 
-    }
-
-    private void OnButtonClick(object parSender, EventArgs parE)
-    {
-      _game.CompleteAtack();
-      _game.Button.Name = "Pass move";
-    }
-
-    private void OnClick(object parSender, EventArgs parE)
-    {
-      _game.PerformGameAction();
-    }
-
-    private void OnMove(object parSender, MoveEventArgs parE)
-    {
-      Cursor.GetInstance().Move(parE.X, parE.Y);
     }
   }
 }
