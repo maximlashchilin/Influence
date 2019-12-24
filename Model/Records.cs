@@ -9,11 +9,25 @@ namespace Model
 {
   public class Records
   {
+    public event dPaintHandler PaintEvent;
+
     private const int NUM_OF_RECORDS = 5;
 
     private const string DEFAULT_FILENAME = "Records.txt";
 
     private List<string> _bestResults;
+
+    public List<string> BestResults
+    {
+      get
+      {
+        return _bestResults;
+      }
+      set
+      {
+        _bestResults = value;
+      }
+    }
 
     public Records()
     {
@@ -38,6 +52,8 @@ namespace Model
       }
 
       FilterBestResults(_bestResults);
+
+      PaintEvent?.Invoke();
     }
 
     private void FilterBestResults(List<string> parRecords)
