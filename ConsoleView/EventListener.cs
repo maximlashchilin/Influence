@@ -34,6 +34,11 @@ namespace ConsoleView
     private bool _isRun;
 
     /// <summary>
+    /// Объект синхронизации
+    /// </summary>
+    private static object _syncObject = new object();
+
+    /// <summary>
     /// Конструктор слушателя
     /// </summary>
     private EventListener()
@@ -49,7 +54,13 @@ namespace ConsoleView
     {
       if (null == _instance)
       {
-        _instance = new EventListener();
+        lock (_syncObject)
+        {
+          if (null == _instance)
+          {
+            _instance = new EventListener();
+          }
+        }
       }
 
       return _instance;

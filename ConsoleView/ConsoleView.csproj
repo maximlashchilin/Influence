@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleDrawer.cs" />
     <Compile Include="ConsoleKeyboardEventArgs.cs" />
     <Compile Include="ConsoleKeyboardEventHandler.cs" />
     <Compile Include="ConsoleMouseEventArgs.cs" />

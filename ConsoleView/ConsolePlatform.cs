@@ -26,6 +26,8 @@ namespace ConsoleView
     /// </summary>
     private EventListener _eventListener;
 
+    private ConsoleDrawer _consoleDrawer;
+
     /// <summary>
     /// Получает указатель на окно консоли
     /// </summary>
@@ -49,6 +51,12 @@ namespace ConsoleView
     /// </summary>
     public ConsolePlatform()
     {
+      SendMessage(GetConsoleWindow(), WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+      Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+      Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+      WidthPlatform = Console.WindowWidth;
+      HeightPlatform = Console.WindowHeight;
+      _consoleDrawer = new ConsoleDrawer((short)WidthPlatform, (short)HeightPlatform);
       _eventListener = EventListener.GetIntance();
       _eventListener.ConsoleMouseEvent += ConsoleMouseEventHandler;
       _eventListener.ConsoleKeyboardEvent += ConsoleKeyboardEventHandler;
@@ -59,11 +67,6 @@ namespace ConsoleView
     /// </summary>
     public override void Initialize()
     {
-      SendMessage(GetConsoleWindow(), WM_SYSCOMMAND, SC_MAXIMIZE, 0);
-      Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-      Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
-      WidthPlatform = Console.WindowWidth;
-      HeightPlatform = Console.WindowHeight;
       Console.CursorVisible = false;
       _eventListener.Initialize();
       Console.Title = "Influence";
@@ -90,7 +93,7 @@ namespace ConsoleView
       }
       else
       {
-        CallMove(this, new MoveEventArgs(TranslatePlatformXToBaseX((int)parE.X), TranslatePlatformYToBaseY((int)parE.Y)));
+        CallMove(new MoveEventArgs(TranslatePlatformXToBaseX((int)parE.X), TranslatePlatformYToBaseY((int)parE.Y)));
       }
     }
 
@@ -121,7 +124,7 @@ namespace ConsoleView
 
         if (parE.VirtualKeyCode >= 65 && parE.VirtualKeyCode <= 90)
         {
-          CallKeyDown();
+          CallKeyDown(new KeyDownEventArgs(Convert.ToChar(parE.VirtualKeyCode)));
         }
       }
     }
@@ -131,7 +134,7 @@ namespace ConsoleView
     /// </summary>
     public override void Clear()
     {
-      Console.Clear();
+      _consoleDrawer.Draw();
     }
 
     /// <summary>
@@ -144,6 +147,7 @@ namespace ConsoleView
     /// <param name="parColor">Цвет</param>
     public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColor parColor)
     {
+      Console.CursorVisible = false;
       if (parColor != ItemColor.Default)
       {
         if (parColor == ItemColor.Green)
@@ -178,14 +182,16 @@ namespace ConsoleView
     }
 
     /// <summary>
-    /// 
+    /// Печатает текст
     /// </summary>
     /// <param name="parX"></param>
     /// <param name="parY"></param>
     /// <param name="parText"></param>
     public override void PrintText(float parX, float parY, string parText)
     {
-      throw new NotImplementedException();
+      Console.CursorVisible = false;
+      Console.SetCursorPosition(TranslateBaseXToPlatformX(parX), TranslateBaseYToPlatformY(parY));
+      Console.Write(parText);
     }
 
     /// <summary>
@@ -196,7 +202,7 @@ namespace ConsoleView
     /// <param name="parX2">Координата X2</param>
     /// <param name="parY2">Координата Y2</param>
     /// <param name="parText">Текст</param>
-    public override void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText)
+    public override void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
       StringBuilder s = new StringBuilder("┌");
       for (int i = TranslateBaseXToPlatformX(parX1) + 1; i < TranslateBaseXToPlatformX(parX2); i++)
@@ -237,7 +243,18 @@ namespace ConsoleView
       s.Append("┘");
 
       Console.SetCursorPosition(TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1));
+      //_consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX1), (short)TranslateBaseYToPlatformY(parY1));
+      //_consoleDrawer.WriteInBuffer(s.ToString());
       Console.WriteLine(s);
+
+      if (parCursorVisible)
+      {
+        Console.SetCursorPosition(TranslateBaseXToPlatformX(parX1) + numbersOfLeftSpaces + parText.Length + 1, TranslateBaseYToPlatformY(parY1) + 1);
+        Console.CursorVisible = parCursorVisible;
+      }
+      
+      //_consoleDrawer.SetBufferCursor((short)(TranslateBaseXToPlatformX(parX1) + numbersOfLeftSpaces + parText.Length + 1), (short)(TranslateBaseYToPlatformY(parY1) + 1));
+      //_consoleDrawer.Draw();
     }
 
     /// <summary>
@@ -248,7 +265,7 @@ namespace ConsoleView
     /// <param name="parX2">Координата X2</param>
     /// <param name="parY2">Координата Y2</param>
     /// <param name="parText">Текст</param>
-    public override void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText)
+    public override void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
       StringBuilder s = new StringBuilder("┌");
       Console.ForegroundColor = ConsoleColor.Blue;
@@ -290,7 +307,16 @@ namespace ConsoleView
       s.Append("┘");
 
       Console.SetCursorPosition(TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1));
+      //_consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX1), (short)TranslateBaseYToPlatformY(parY1));
+      //_consoleDrawer.WriteInBuffer(s.ToString());
       Console.WriteLine(s);
+      //_consoleDrawer.SetBufferCursor((short)(TranslateBaseXToPlatformX(parX1) + numbersOfLeftSpaces + parText.Length + 1), (short)(TranslateBaseYToPlatformY(parY1) + 1));
+      //_consoleDrawer.Draw();
+      if (parCursorVisible)
+      {
+        Console.SetCursorPosition(TranslateBaseXToPlatformX(parX1) + numbersOfLeftSpaces + parText.Length + 1, TranslateBaseYToPlatformY(parY1) + 1);
+        Console.CursorVisible = parCursorVisible;
+      }
       Console.ForegroundColor = ConsoleColor.White;
     }
   }
