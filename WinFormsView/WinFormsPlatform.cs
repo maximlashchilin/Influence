@@ -153,6 +153,11 @@ namespace WinFormsView
     public override void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
       _appForm.Drawer.DrawString(parText, DEFAULT_FONT, Brushes.Blue, (float)TranslateBaseXToPlatformX(parX1), (float)TranslateBaseYToPlatformY(parY1));
+      if (parCursorVisible)
+      {
+        Pen pen = Pens.Black;
+        _appForm.Drawer.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY2)));
+      }
     }
 
     /// <summary>
@@ -178,6 +183,11 @@ namespace WinFormsView
     public override void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
       _appForm.Drawer.DrawString(parText, DEFAULT_FONT, Brushes.Black, TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1));
+      if (parCursorVisible)
+      {
+        Pen pen = Pens.Black;
+        _appForm.Drawer.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY2)));
+      }
     }
 
     /// <summary>
