@@ -1,16 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace View
 {
+  /// <summary>
+  /// Параметры события перемещения курсора мыши
+  /// </summary>
   public class MoveEventArgs : EventArgs
   {
+    /// <summary>
+    /// Координата X
+    /// </summary>
     private float _x;
+
+    /// <summary>
+    /// Координата Y
+    /// </summary>
     private float _y;
 
+    /// <summary>
+    /// Координата X
+    /// </summary>
     public float X
     {
       get
@@ -19,6 +28,9 @@ namespace View
       }
     }
 
+    /// <summary>
+    /// Координата Y
+    /// </summary>
     public float Y
     {
       get
@@ -27,6 +39,11 @@ namespace View
       }
     }
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parX">Координата X</param>
+    /// <param name="parY">Координата Y</param>
     public MoveEventArgs(float parX, float parY)
     {
       _x = parX;

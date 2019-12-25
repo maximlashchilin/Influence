@@ -2,10 +2,19 @@
 
 namespace View
 {
+  /// <summary>
+  /// Параметры события нажатия клавиши
+  /// </summary>
   public class KeyDownEventArgs : EventArgs
   {
+    /// <summary>
+    /// Введённый символ
+    /// </summary>
     private char _inputChar;
 
+    /// <summary>
+    /// Введённый символ
+    /// </summary>
     public char InputChar
     {
       get
@@ -14,6 +23,10 @@ namespace View
       }
     }
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parInputedChar"></param>
     public KeyDownEventArgs(char parInputedChar)
     {
       _inputChar = parInputedChar;

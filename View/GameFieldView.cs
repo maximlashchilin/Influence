@@ -7,16 +7,30 @@ using Model;
 
 namespace View
 {
+  /// <summary>
+  /// Представление игрового поля
+  /// </summary>
   public class GameFieldView : BaseView
   {
+    /// <summary>
+    /// Объект игрового поля
+    /// </summary>
     public GameField _gameField;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parGameField">Объект игрового поля</param>
+    /// <param name="parPlatform">Объект платформы</param>
     public GameFieldView(GameField parGameField, Platform parPlatform) : base(parPlatform)
     {
       _gameField = parGameField;
       _gameField.PaintEvent += Draw;
     }
 
+    /// <summary>
+    /// Отрисовывает игровое поле
+    /// </summary>
     public override void Draw()
     {
       int rows = _gameField.Cells.GetUpperBound(0) + 1;

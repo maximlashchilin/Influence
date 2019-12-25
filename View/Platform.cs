@@ -174,30 +174,87 @@ namespace View
       return (int)(parBaseY / 100.0f * _heightPlatform);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="parPlatformX"></param>
+    /// <returns></returns>
     public float TranslatePlatformXToBaseX(int parPlatformX)
     {
       return (float)parPlatformX / _widthPlatform * 100.0f;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="parPlatformY"></param>
+    /// <returns></returns>
     public float TranslatePlatformYToBaseY(int parPlatformY)
     {
       return (float)parPlatformY / _heightPlatform * 100;
     }
 
+    /// <summary>
+    /// Инициализирует платформу
+    /// </summary>
     public abstract void Initialize();
 
+    /// <summary>
+    /// Уничтожает платформу
+    /// </summary>
     public abstract void Drop();
 
+    /// <summary>
+    /// Очищает область отрисовки
+    /// </summary>
     public abstract void Clear();
 
+    /// <summary>
+    /// Печатает текст
+    /// </summary>
+    /// <param name="parX"></param>
+    /// <param name="parY"></param>
+    /// <param name="parText"></param>
     public abstract void PrintText(float parX, float parY, string parText);
 
+    /// <summary>
+    /// Отрисовывает прямоугольник
+    /// </summary>
+    /// <param name="parX1"></param>
+    /// <param name="parY1"></param>
+    /// <param name="parX2"></param>
+    /// <param name="parY2"></param>
     public abstract void DrawRectangle(float parX1, float parY1, float parX2, float parY2);
 
+    /// <summary>
+    /// Печатает текст в прямоугольнике
+    /// </summary>
+    /// <param name="parX1"></param>
+    /// <param name="parY1"></param>
+    /// <param name="parX2"></param>
+    /// <param name="parY2"></param>
+    /// <param name="parText"></param>
+    /// <param name="parCursorVisible"></param>
     public abstract void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible);
 
+    /// <summary>
+    /// Печатает текст в выделенном прямоугольнике
+    /// </summary>
+    /// <param name="parX1"></param>
+    /// <param name="parY1"></param>
+    /// <param name="parX2"></param>
+    /// <param name="parY2"></param>
+    /// <param name="parText"></param>
+    /// <param name="parCursorVisible"></param>
     public abstract void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible);
 
+    /// <summary>
+    /// Отрисовывает игровую ячейку
+    /// </summary>
+    /// <param name="parX"></param>
+    /// <param name="parY"></param>
+    /// <param name="parScore"></param>
+    /// <param name="parColor"></param>
     public abstract void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColor parColor);
   }
 }
