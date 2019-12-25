@@ -7,6 +7,9 @@ using Model;
 
 namespace View
 {
+  /// <summary>
+  /// Представление элемента меню
+  /// </summary>
   public class MenuItemView : BaseView
   {
     private MenuItem _menuItem;

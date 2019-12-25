@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model;
+﻿using Model;
 
 namespace View
 {
+  /// <summary>
+  /// Представление рекордов
+  /// </summary>
   public class RecordsView : BaseView
   {
+    /// <summary>
+    /// Объект рекордов
+    /// </summary>
     private Records _records;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parPlatform">Объект платформы</param>
+    /// <param name="parRecords">Объект рекордов</param>
     public RecordsView(Platform parPlatform, Records parRecords) : base(parPlatform)
     {
       _records = parRecords;
@@ -18,6 +24,9 @@ namespace View
       _records.PaintEvent += Draw;
     }
 
+    /// <summary>
+    /// Отрисовывает представление рекордов
+    /// </summary>
     public override void Draw()
     {
       float delta = 10.0f;

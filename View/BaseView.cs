@@ -10,6 +10,9 @@
     /// </summary>
     private Platform _platform;
 
+    /// <summary>
+    /// Текущая платформа
+    /// </summary>
     public Platform Platform
     {
       get
@@ -28,7 +31,7 @@
     }
 
     /// <summary>
-    /// Метод рисования
+    /// Отрисовывает представление
     /// </summary>
     public abstract void Draw();
   }
