@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using Model;
@@ -10,13 +6,29 @@ using View;
 
 namespace WinFormsView
 {
+  /// <summary>
+  /// Платформа Windows Forms
+  /// </summary>
   public class WinFormsPlatform : Platform
   {
+    /// <summary>
+    /// Шрифт по умолчанию
+    /// </summary>
     private static readonly Font DEFAULT_FONT = new Font(FontFamily.GenericSansSerif, 21, FontStyle.Bold);
+
+    /// <summary>
+    /// Шрифт для цифр
+    /// </summary>
     private static readonly Font NUMBER_FONT = new Font(FontFamily.GenericSansSerif, 8, FontStyle.Bold);
 
+    /// <summary>
+    /// Экземпляр формы
+    /// </summary>
     private AppForm _appForm;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
     public WinFormsPlatform()
     {
       _appForm = new AppForm();
@@ -27,6 +39,11 @@ namespace WinFormsView
       _appForm.Paint += OnPaint;
     }
 
+    /// <summary>
+    /// Обрабатывает нажатие клавиши на клавиатуре
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
     private void OnKeyDown(object parSender, KeyEventArgs parE)
     {
       switch (parE.KeyCode)
@@ -41,13 +58,28 @@ namespace WinFormsView
           CallEnterDown();
           break;
       }
+
+      if (parE.KeyCode >= Keys.A && parE.KeyCode <= Keys.Z)
+      {
+        CallKeyDown(new KeyDownEventArgs(Convert.ToChar(parE.KeyCode)));
+      }
     }
 
+    /// <summary>
+    /// Очищает область рисования
+    /// </summary>
     public override void Clear()
     {
       _appForm.Drawer.Clear(Color.White);
     }
 
+    /// <summary>
+    /// Рисует игровую ячейку
+    /// </summary>
+    /// <param name="parX">Координата X</param>
+    /// <param name="parY">Координата Y</param>
+    /// <param name="parScore">Счёт</param>
+    /// <param name="parColor">Цвет</param>
     public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColor parColor)
     {
       int x = TranslateBaseXToPlatformX(parX);
@@ -65,6 +97,11 @@ namespace WinFormsView
       _appForm.Drawer.DrawString(Convert.ToString(parScore), NUMBER_FONT, Brushes.Black, x - 5, y - 5);
     }
 
+    /// <summary>
+    /// Получает объект Brush c заданным цветом
+    /// </summary>
+    /// <param name="parColor">Цвет элемента</param>
+    /// <returns>Объект Brush</returns>
     private Brush GetPenWithColor(ItemColor parColor)
     {
       switch (parColor)
@@ -84,57 +121,100 @@ namespace WinFormsView
       throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Уничтожает платформу
+    /// </summary>
     public override void Drop()
     {
       Application.Exit();
       Environment.Exit(0);
     }
 
+    /// <summary>
+    /// Инициализирует платформу
+    /// </summary>
     public override void Initialize()
     {
       WidthPlatform = _appForm.ClientSize.Width;
       HeightPlatform = _appForm.ClientSize.Height;
-      
+
       Application.Run(_appForm);
     }
 
-    public override void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText)
+    /// <summary>
+    /// Печатает текст в выделенном прямоугольнике
+    /// </summary>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
+    /// <param name="parText">Текст</param>
+    /// <param name="parCursorVisible">Видимость курсора</param>
+    public override void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
       _appForm.Drawer.DrawString(parText, DEFAULT_FONT, Brushes.Blue, (float)TranslateBaseXToPlatformX(parX1), (float)TranslateBaseYToPlatformY(parY1));
     }
 
+    /// <summary>
+    /// Печатает текст
+    /// </summary>
+    /// <param name="parX"></param>
+    /// <param name="parY"></param>
+    /// <param name="parText"></param>
     public override void PrintText(float parX, float parY, string parText)
     {
-      throw new NotImplementedException();
+      _appForm.Drawer.DrawString(parText, DEFAULT_FONT, Brushes.Blue, (float)TranslateBaseXToPlatformX(parX), (float)TranslateBaseYToPlatformY(parY));
     }
 
-    public override void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText)
+    /// <summary>
+    /// Печатает текст в прямоугольнике
+    /// </summary>
+    /// <param name="parX1"></param>
+    /// <param name="parY1"></param>
+    /// <param name="parX2"></param>
+    /// <param name="parY2"></param>
+    /// <param name="parText"></param>
+    /// <param name="parCursorVisible"></param>
+    public override void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
       _appForm.Drawer.DrawString(parText, DEFAULT_FONT, Brushes.Black, TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1));
     }
 
+    /// <summary>
+    /// Обрабатывает событие клика на форме
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
     private void OnClick(object parSender, EventArgs parE)
     {
       CallClick();
     }
 
+    /// <summary>
+    /// Обрабатывает событие перерисовки формы
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
     private void OnPaint(object parSender, PaintEventArgs parE)
     {
       _appForm.BufferedDrawer.Render(parE.Graphics);
     }
 
+    /// <summary>
+    /// Обрабатывает событие работы с мышью на форме
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры собыия</param>
     private void OnMouseMove(object parSender, MouseEventArgs parE)
     {
-      if (parE.Button == MouseButtons.Left)
-      {
-        CallClick();
-      }
-      else
-      {
-        CallMove(this, new MoveEventArgs(TranslatePlatformXToBaseX(parE.X), TranslatePlatformYToBaseY(parE.Y)));
-      }
+      CallMove(new MoveEventArgs(TranslatePlatformXToBaseX(parE.X), TranslatePlatformYToBaseY(parE.Y)));
     }
 
+    /// <summary>
+    /// Обрабатывает событие закрытия формы
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
     private void OnClose(object parSender, EventArgs parE)
     {
       Drop();

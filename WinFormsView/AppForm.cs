@@ -1,25 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsView
 {
+  /// <summary>
+  /// Форма приложения
+  /// </summary>
   public partial class AppForm : Form
   {
+    /// <summary>
+    /// Объект буферной графики
+    /// </summary>
     private BufferedGraphics _bufferedDrawer;
 
+    /// <summary>
+    /// Признак работы потока вызова события перерисовки
+    /// </summary>
     private bool _isRun;
 
+    /// <summary>
+    /// Поток вызова события перерисовки
+    /// </summary>
     private Thread _repaintThread;
 
+    /// <summary>
+    /// Объект буферной графики
+    /// </summary>
     public BufferedGraphics BufferedDrawer
     {
       get
@@ -27,6 +35,10 @@ namespace WinFormsView
         return _bufferedDrawer;
       }
     }
+
+    /// <summary>
+    /// Объект поверхности рисования
+    /// </summary>
     public Graphics Drawer
     {
       get
@@ -34,6 +46,10 @@ namespace WinFormsView
         return _bufferedDrawer.Graphics;
       }
     }
+
+    /// <summary>
+    /// Конструктор
+    /// </summary>
     public AppForm()
     {
       InitializeComponent();
@@ -44,8 +60,6 @@ namespace WinFormsView
       
       int BorderWidth = (Width - ClientSize.Width) / 2;
       int TitlebarHeight = Height - ClientSize.Height - 2 * BorderWidth;
-      //Width = Screen.PrimaryScreen.Bounds.Width;
-      //Height = Screen.PrimaryScreen.Bounds.Height;
       BufferedGraphicsContext context = new BufferedGraphicsContext();
       _bufferedDrawer = context.Allocate(drawer, new Rectangle(0, 0, ClientSize.Width, ClientSize.Height));
 
@@ -56,16 +70,25 @@ namespace WinFormsView
       FormClosing += OnFormClosing;
     }
 
+    /// <summary>
+    /// Обрабатывает событие FormClosing
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
     private void OnFormClosing(object parSender, FormClosingEventArgs parE)
     {
       _isRun = false;
     }
 
+    /// <summary>
+    /// Вызывает событие перерисовки
+    /// </summary>
     private void CallPaint()
     {
       while (_isRun)
       {
         Invalidate();
+        Thread.Sleep(10);
       }
     }
   }
