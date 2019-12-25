@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Model;
 using View;
 
@@ -35,9 +31,9 @@ namespace Controller
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void OnKeyDown(object sender, EventArgs e)
+    private void OnKeyDown(object sender, KeyDownEventArgs e)
     {
-      _textField.AddChar('a');
+      _textField.AddChar(e.InputChar);
     }
 
     public override void Start()

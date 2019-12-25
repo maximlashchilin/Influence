@@ -11,7 +11,7 @@ namespace View
   {
     private EnterOfPlayers _enterOfPlayers;
 
-    //private 
+    private List<TextFieldView> _textFieldViews;
 
     public EnterOfPlayersView(EnterOfPlayers parEnterOfPlayers, Platform parPlatform) : base(parPlatform)
     {
@@ -22,12 +22,27 @@ namespace View
     public override void Draw()
     {
       Platform.Clear();
-      Platform.PrintTextInRectangle(35.0f, 10.0f, 55.0f, 25.0f, "Enter players");
+      Platform.PrintText(35.0f, 10.0f, "Enter names of players:");
 
       float delta = 10.0f;
+      //for (int i = 0; i < _textFieldViews.Count; i++)
+      //{
+      //  _textFieldViews[i].Draw();
+      //}
       for (int i = 0; i < _enterOfPlayers.NamesOfPlayers.Count; i++)
       {
-        Platform.PrintTextInRectangle(35.0f, (i * delta) + 30.0f, 55.0f, (i * delta) + 45.0f, _enterOfPlayers.NamesOfPlayers[i].Text);
+        if (_enterOfPlayers.NamesOfPlayers[i].ItemStatus != MenuItemStatus.Selected)
+        {
+          Platform.PrintTextInRectangle(35.0f, (i * delta) + 30.0f, 55.0f, (i * delta) + 45.0f, _enterOfPlayers.NamesOfPlayers[i].Text, true);
+        }
+      }
+
+      for (int i = 0; i < _enterOfPlayers.NamesOfPlayers.Count; i++)
+      {
+        if (_enterOfPlayers.NamesOfPlayers[i].ItemStatus == MenuItemStatus.Selected)
+        {
+          Platform.PrintMarkedTextInRectangle(35.0f, (i * delta) + 30.0f, 55.0f, (i * delta) + 45.0f, _enterOfPlayers.NamesOfPlayers[i].Text, true);
+        }
       }
     }
   }

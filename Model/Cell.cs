@@ -163,5 +163,10 @@ namespace Model
     {
       _cellStatus = CellStatus.NotChoosed;
     }
+
+    public bool IsCellFree()
+    {
+      return _owner == null;
+    }
   }
 }

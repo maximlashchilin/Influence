@@ -19,7 +19,7 @@ namespace View
 
     public override void Draw()
     {
-      Platform.PrintTextInRectangle(_button.X1, _button.Y1, _button.X2, _button.Y2, _button.Name);
+      Platform.PrintTextInRectangle(_button.X1, _button.Y1, _button.X2, _button.Y2, _button.Name, false);
     }
   }
 }

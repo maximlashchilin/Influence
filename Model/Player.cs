@@ -12,8 +12,12 @@ namespace Model
   public class Player
   {
     private readonly string _name;
-    private bool _signOfMove;
+
     private readonly ItemColor _itemColor;
+
+    private bool _signOfMove;
+
+    private int _score;
 
     public string Name
     {
@@ -30,6 +34,27 @@ namespace Model
         return _itemColor;
       }
     }
+
+    public int Score
+    {
+      get
+      {
+        return _score;
+      }
+      set
+      {
+        _score = value;
+      }
+    }
+
+    public bool IsActivePlayer
+    {
+      get
+      {
+        return _signOfMove;
+      }
+    }
+
     public Player(string parName, ItemColor parItemColor)
     {
       _name = parName;

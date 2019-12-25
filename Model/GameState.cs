@@ -1,10 +1,21 @@
 ﻿namespace Model
 {
+  /// <summary>
+  /// Состояния игры
+  /// </summary>
   public enum GameState
   {
+    /// <summary>
+    /// Выбор ячейки для атаки
+    /// </summary>
     Select,
+    /// <summary>
+    /// Атака ячейки
+    /// </summary>
     Atack,
-    ScoreSetting,
-    MovePassing
+    /// <summary>
+    /// Раздача очков
+    /// </summary>
+    ScoreDistributing
   }
 }

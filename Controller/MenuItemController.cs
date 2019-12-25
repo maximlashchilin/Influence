@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Controller.FactoriesOfGameStateControllers;
 using Model;
 using View;
 
@@ -50,7 +47,7 @@ namespace Controller
             CallChangeState(this, new ChangeStateArgs(new FactoryOfGameControllers(), ApplicationState.Gaming));
             break;
           case 1:
-            CallChangeState(this, new ChangeStateArgs(new FactoryOfGameControllers(), ApplicationState.Gaming));
+            CallChangeState(this, new ChangeStateArgs(new FactoryOfRecordsController(), ApplicationState.Gaming));
             break;
           case 2:
             CallChangeState(this, new ChangeStateArgs(new FactoryOfGameControllers(), ApplicationState.Gaming));
