@@ -33,7 +33,7 @@ namespace View
       {
         if (_enterOfPlayers.NamesOfPlayers[i].ItemStatus != MenuItemStatus.Selected)
         {
-          Platform.PrintTextInRectangle(35.0f, (i * delta) + 30.0f, 55.0f, (i * delta) + 45.0f, _enterOfPlayers.NamesOfPlayers[i].Text, true);
+          Platform.PrintTextInRectangle(35.0f, (i * delta) + 30.0f, 55.0f, (i * delta) + 35.0f, _enterOfPlayers.NamesOfPlayers[i].Text, false);
         }
       }
 
@@ -41,7 +41,7 @@ namespace View
       {
         if (_enterOfPlayers.NamesOfPlayers[i].ItemStatus == MenuItemStatus.Selected)
         {
-          Platform.PrintMarkedTextInRectangle(35.0f, (i * delta) + 30.0f, 55.0f, (i * delta) + 45.0f, _enterOfPlayers.NamesOfPlayers[i].Text, true);
+          Platform.PrintMarkedTextInRectangle(35.0f, (i * delta) + 30.0f, 55.0f, (i * delta) + 35.0f, _enterOfPlayers.NamesOfPlayers[i].Text, true);
         }
       }
     }
