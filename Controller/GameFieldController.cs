@@ -61,8 +61,7 @@ namespace Controller
     /// <param name="parE">Параметры события</param>
     private void OnButtonClick(object parSender, EventArgs parE)
     {
-      _game.CompleteAtack();
-      _game.Button.Name = "Pass move";
+      _game.CompleteAtackOrPassMove();
     }
 
     /// <summary>

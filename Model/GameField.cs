@@ -11,6 +11,9 @@ namespace Model
   /// </summary>
   public class GameField
   {
+    /// <summary>
+    /// Событие перерисовки игрового поля
+    /// </summary>
     public event dPaintHandler PaintEvent;
 
     /// <summary>
@@ -24,17 +27,18 @@ namespace Model
     private List<Player> _players;
 
     /// <summary>
-    /// Игрок, совершающий ход
+    /// Номер текущего игрока
     /// </summary>
     private int _currentPlayer;
-
-    private int _currentPlayerScore;
 
     /// <summary>
     /// Текущее состояние игры
     /// </summary>
     private GameState _currentGameState;
 
+    /// <summary>
+    /// Кнопка переключения состояний игры
+    /// </summary>
     private Button _button;
 
     /// <summary>
@@ -48,6 +52,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Кнопка переключения состояний игры
+    /// </summary>
     public Button Button
     {
       get
@@ -67,15 +74,13 @@ namespace Model
     /// <param name="parHorizontalSize"></param>
     public GameField(int parVerticalSize, int parHorizontalSize, List<Player> parPlayers)
     {
-      _cells = new Cell[parVerticalSize, parHorizontalSize];
+      _cells = new MapBuilder().BuildMap(parVerticalSize, parHorizontalSize);
       _players = parPlayers;
-      _currentPlayer = 0;
       _button = new Button(35.0f, 5.0f, 60.0f, 15.0f, "Complete atack");
     }
 
     public void Initialize()
     {
-      BuildMap();
       SetPlayers();
       _currentGameState = GameState.Select;
     }
@@ -83,41 +88,9 @@ namespace Model
     /// <summary>
     /// 
     /// </summary>
-    private void BuildMap()
-    {
-      int rows = _cells.GetUpperBound(0) + 1;
-      int colomns = _cells.GetUpperBound(1) + 1;
-      for (int i = 0; i < rows; i++)
-      {
-        for (int j = 0; j < colomns; j++)
-        {
-          if (i % 2 == 0)
-          {
-            _cells[i, j] = new Cell((j * 10 + 30) + 5, i * 10 + 30);
-          }
-          else
-          {
-            _cells[i, j] = new Cell(j * 10 + 30, i * 10 + 30);
-          }
-        }
-      }
-      
-      for (int i = 0; i < rows; i++)
-      {
-        if (i % 2 == 0)
-        {
-          _cells[i, _cells.GetUpperBound(1)] = null;
-        }
-      }
-
-      PaintEvent?.Invoke();
-    }
-    
-    /// <summary>
-    /// 
-    /// </summary>
     private void SetPlayers()
     {
+      _currentPlayer = 0;
       _cells[0, 0].Owner = _players[0];
       _cells[0, 2].Owner = _players[1];
 
@@ -130,13 +103,13 @@ namespace Model
     private void SelectCell()
     {
       Coords clickedCellCoords = GetFocusedCellCoords();
-      
+
       if (clickedCellCoords != null)
       {
         UnselectAllCells();
-        if (_cells[clickedCellCoords.I, clickedCellCoords.J]?.Owner == _players[_currentPlayer])
+        if (_cells[clickedCellCoords.I, clickedCellCoords.J]?.Owner == GetActivePlayer())
         {
-          _cells[clickedCellCoords.I, clickedCellCoords.J].CellStatus = CellStatus.Active;
+          _cells[clickedCellCoords.I, clickedCellCoords.J].ActiveCell();
           _currentGameState = GameState.Atack;
         }
       }
@@ -160,10 +133,21 @@ namespace Model
 
     private void DistributeScore()
     {
-      int numOfPoints = GetPlayerNumOfCells(_players[_currentPlayer]);
       Coords clickedCellCoords = GetFocusedCellCoords();
 
-      _button.CallPaintEvent();
+      if (null != clickedCellCoords)
+      {
+        if (_cells[clickedCellCoords.I, clickedCellCoords.J].Owner == GetActivePlayer())
+        {
+          if (GetActivePlayer().Score > 0)
+          {
+            GetActivePlayer().Score -= 1;
+            _cells[clickedCellCoords.I, clickedCellCoords.J].Score += 1;
+          }
+        }
+        PaintEvent?.Invoke();
+        _button.CallPaintEvent();
+      }
     }
 
     private void UnselectAllCells()
@@ -177,7 +161,7 @@ namespace Model
         {
           if (_cells[i, j] != null)
           {
-            _cells[i, j].CellStatus = CellStatus.NotChoosed;
+            _cells[i, j].DisactiveCell();
           }
         }
       }
@@ -195,9 +179,9 @@ namespace Model
     {
       if (IsMove(parSourceVerticalCoord, parSourceHorizontalCoord, parDestinationVerticalCoord, parDestinationHorizontalCoord)
           && _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score >= 1
-          && IsCellFree(parDestinationVerticalCoord, parDestinationHorizontalCoord))
+          && _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].IsCellFree())
       {
-        _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Owner = _players[0];
+        _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Owner = GetActivePlayer();
         _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Score = _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score - 1;
         _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score = 1;
         _cells[parSourceVerticalCoord, parSourceHorizontalCoord].CellStatus = CellStatus.NotChoosed;
@@ -207,16 +191,16 @@ namespace Model
       if (IsMove(parSourceVerticalCoord, parSourceHorizontalCoord, parDestinationVerticalCoord, parDestinationHorizontalCoord)
           && IsCellOccupied(parDestinationVerticalCoord, parDestinationHorizontalCoord))
       {
-        if (_cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score 
+        if (_cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score
             > _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Score)
         {
           _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score = 1;
           _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Score
-              = _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score - 1 
+              = _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score - 1
               - _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Score;
           _cells[parSourceVerticalCoord, parSourceHorizontalCoord].CellStatus = CellStatus.NotChoosed;
           _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].CellStatus = CellStatus.Active;
-          _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Owner = _players[_currentPlayer];
+          _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Owner = GetActivePlayer();
         }
         else
         {
@@ -276,18 +260,7 @@ namespace Model
       }
 
       return false;
-    }
-
-    /// <summary>
-    /// Проверить, свободна ли ячейка
-    /// </summary>
-    /// <param name="parVerticalCoord"></param>
-    /// <param name="parHorizontalCoord"></param>
-    /// <returns></returns>
-    private bool IsCellFree(int parVerticalCoord, int parHorizontalCoord)
-    {
-      return _cells[parVerticalCoord, parHorizontalCoord].Owner == null;
-    }
+    }    
 
     /// <summary>
     /// Проверить, занята ли ячейка другим игроком
@@ -297,7 +270,7 @@ namespace Model
     /// <returns></returns>
     private bool IsCellOccupied(int parVerticalCoord, int parHorizontalCoord)
     {
-      return _cells[parVerticalCoord, parHorizontalCoord].Owner != _players[_currentPlayer];
+      return _cells[parVerticalCoord, parHorizontalCoord].Owner != GetActivePlayer();
     }
 
     /// <summary>
@@ -305,7 +278,7 @@ namespace Model
     /// </summary>
     private void PassMove()
     {
-      if (_currentPlayer >= _players.Count)
+      if (_currentPlayer >= _players.Count - 1)
       {
         _currentPlayer = 0;
       }
@@ -313,6 +286,8 @@ namespace Model
       {
         _currentPlayer++;
       }
+
+      _currentGameState = GameState.Select;
       _button.CallPaintEvent();
     }
 
@@ -382,9 +357,25 @@ namespace Model
       return result;
     }
 
-    public void CompleteAtack()
+    public void CompleteAtackOrPassMove()
     {
-      _currentGameState = GameState.ScoreSetting;
+      switch (_currentGameState)
+      {
+        case GameState.Select:
+        case GameState.Atack:
+          {
+            GetActivePlayer().Score = CalculateScorePlayer();
+            _currentGameState = GameState.ScoreDistributing;
+            _button.Name = "Pass move";
+            break;
+          }
+        case GameState.ScoreDistributing:
+          {
+            PassMove();
+            _button.Name = "Complete atack";
+            break;
+          }
+      }
     }
 
     public void PerformGameAction()
@@ -397,13 +388,21 @@ namespace Model
         case GameState.Atack:
           AtackCell();
           break;
-        case GameState.ScoreSetting:
+        case GameState.ScoreDistributing:
           DistributeScore();
           break;
-        case GameState.MovePassing:
-          PassMove();
-          break;
       }
+    }
+
+    private int CalculateScorePlayer()
+    {
+      int scorePlayer = GetPlayerNumOfCells(GetActivePlayer());
+      return scorePlayer;
+    }
+
+    private Player GetActivePlayer()
+    {
+      return _players[_currentPlayer];
     }
   }
 }

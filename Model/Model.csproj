@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationModel.cs" />
     <Compile Include="ApplicationState.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Cell.cs" />
@@ -51,17 +50,20 @@
     <Compile Include="EnterOfPlayers.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="GameState.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="ItemColor.cs" />
+    <Compile Include="MapBuilder.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="MenuItemStatus.cs" />
-    <Compile Include="MoveEventArgs.cs" />
-    <Compile Include="MoveEventHandler.cs" />
     <Compile Include="PaintHandler.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Records.cs" />
     <Compile Include="TextField.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagramModel.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

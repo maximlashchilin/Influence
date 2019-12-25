@@ -45,11 +45,16 @@
     <Compile Include="ButtonView.cs" />
     <Compile Include="EnterOfPlayersView.cs" />
     <Compile Include="GameFieldView.cs" />
+    <Compile Include="HelperView.cs" />
+    <Compile Include="KeyDownEventArgs.cs" />
+    <Compile Include="KeyDownEventHandler.cs" />
     <Compile Include="MenuView.cs" />
     <Compile Include="MenuItemView.cs" />
+    <Compile Include="MoveEventArgs.cs" />
+    <Compile Include="MoveEventHandler.cs" />
     <Compile Include="Platform.cs" />
-    <Compile Include="PlatformType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecordsView.cs" />
     <Compile Include="TextFieldView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +62,9 @@
       <Project>{e7ca902f-3b21-421e-a8ba-ad0af38d7731}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagramView.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

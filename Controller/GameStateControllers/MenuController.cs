@@ -32,7 +32,7 @@ namespace Controller
       string menuName = "Main menu";
       _menu = new Menu(menuName);
       View = new MenuView(_menu, parPlatform);
-      _menu.AddItem(0, "New game");
+      _menu.AddItem(0, "Новая игра");
       _menu.AddItem(1, "Records");
       _menu.AddItem(2, "Help");
       _menu.AddItem(3, "Exit");

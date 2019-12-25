@@ -1,6 +1,6 @@
 ﻿using View;
 
-namespace Controller
+namespace Controller.FactoriesOfGameStateControllers
 {
   /// <summary>
   /// Фабрика контроллера меню
