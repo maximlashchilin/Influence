@@ -6,12 +6,12 @@
   public abstract class BaseView
   {
     /// <summary>
-    /// Текущая платформа
+    /// Объект платформы
     /// </summary>
     private Platform _platform;
 
     /// <summary>
-    /// Текущая платформа
+    /// Объект платформы
     /// </summary>
     public Platform Platform
     {
@@ -19,12 +19,12 @@
       {
         return _platform;
       }
-
     }
+
     /// <summary>
     /// Конструктор базового представления
     /// </summary>
-    /// <param name="parPlatform">Текущая платформа</param>
+    /// <param name="parPlatform">Объект платформы</param>
     public BaseView(Platform parPlatform)
     {
       _platform = parPlatform;

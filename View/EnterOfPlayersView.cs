@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Model;
 
 namespace View
@@ -18,7 +14,7 @@ namespace View
     private EnterOfPlayers _enterOfPlayers;
 
     /// <summary>
-    /// Список текстовых полей
+    /// Список представлений текстовых полей
     /// </summary>
     private List<TextFieldView> _textFieldViews;
 
@@ -26,11 +22,26 @@ namespace View
     /// Конструктор
     /// </summary>
     /// <param name="parEnterOfPlayers">Объект ввода игроков</param>
+    /// <param name="parTextFieldViews">Список представлений текстовых полей</param>
     /// <param name="parPlatform">Объект платформы</param>
-    public EnterOfPlayersView(EnterOfPlayers parEnterOfPlayers, Platform parPlatform) : base(parPlatform)
+    public EnterOfPlayersView(EnterOfPlayers parEnterOfPlayers, List<TextFieldView> parTextFieldViews, Platform parPlatform) : base(parPlatform)
     {
       _enterOfPlayers = parEnterOfPlayers;
+      _textFieldViews = parTextFieldViews;
+
       parEnterOfPlayers.PaintEvent += Draw;
+      SubcribeOnTextFieldEvents();
+    }
+
+    /// <summary>
+    /// Подписывает метод Draw на события перерисовки модели
+    /// </summary>
+    private void SubcribeOnTextFieldEvents()
+    {
+      foreach (TextField elItem in _enterOfPlayers.NamesOfPlayers)
+      {
+        elItem.PaintEvent += Draw;
+      }
     }
 
     /// <summary>
@@ -38,27 +49,28 @@ namespace View
     /// </summary>
     public override void Draw()
     {
+      const float X = 42.0f;
+      const float Y_HEAD = 20.0f;
+      const float Y_HINT = 60.0f;
+      const string HEAD = "Enter names of players:";
+      const string HINT = "Press Enter to start game";
+
       Platform.Clear();
-      Platform.PrintText(35.0f, 10.0f, "Enter names of players:");
-      Platform.PrintText(35.0f, 70.0f, "Press Enter to start game");
-      float delta = 10.0f;
-      //for (int i = 0; i < _textFieldViews.Count; i++)
-      //{
-      //  _textFieldViews[i].Draw();
-      //}
-      for (int i = 0; i < _enterOfPlayers.NamesOfPlayers.Count; i++)
+      Platform.PrintText(X, Y_HEAD, HEAD);
+      Platform.PrintText(X, Y_HINT, HINT);
+      for (int i = 0; i < _textFieldViews.Count; i++)
       {
-        if (_enterOfPlayers.NamesOfPlayers[i].ItemStatus != MenuItemStatus.Selected)
+        if (_enterOfPlayers.NamesOfPlayers[i].ItemStatus != ItemStatuses.Selected)
         {
-          Platform.PrintTextInRectangle(35.0f, (i * delta) + 30.0f, 55.0f, (i * delta) + 35.0f, _enterOfPlayers.NamesOfPlayers[i].Text, false);
+          _textFieldViews[i].Draw();
         }
       }
 
-      for (int i = 0; i < _enterOfPlayers.NamesOfPlayers.Count; i++)
+      for (int i = 0; i < _textFieldViews.Count; i++)
       {
-        if (_enterOfPlayers.NamesOfPlayers[i].ItemStatus == MenuItemStatus.Selected)
+        if (_enterOfPlayers.NamesOfPlayers[i].ItemStatus == ItemStatuses.Selected)
         {
-          Platform.PrintMarkedTextInRectangle(35.0f, (i * delta) + 30.0f, 55.0f, (i * delta) + 35.0f, _enterOfPlayers.NamesOfPlayers[i].Text, true);
+          _textFieldViews[i].Draw();
         }
       }
     }

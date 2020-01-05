@@ -37,6 +37,7 @@ namespace Controller
       _currentControllerInGameState = _enterOfPlayersController;
       _enterOfPlayersController.CompleteEnterOfPlayers += OnCompleteEnterOfPlayers;
       _platform = parPlatform;
+      _currentControllerInGameState.ChangeState += OnChangeState;
     }
 
     /// <summary>
@@ -50,6 +51,16 @@ namespace Controller
       _gameFieldController = new GameFieldController(parE.Players, _platform);
       _currentControllerInGameState = _gameFieldController;
       _enterOfPlayersController = null;
+    }
+
+    /// <summary>
+    /// Обрабатывает событие изменения состояния приложения
+    /// </summary>
+    /// <param name="parSender"></param>
+    /// <param name="parE"></param>
+    private void OnChangeState(object parSender, ChangeStateArgs parE)
+    {
+      CallChangeState(this, parE);
     }
 
     public override void Start()

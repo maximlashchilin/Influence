@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model;
+﻿using Model;
 
 namespace View
 {
@@ -20,9 +15,9 @@ namespace View
     /// <summary>
     /// Конструктор
     /// </summary>
-    /// <param name="parMenu">Объект меню</param>
     /// <param name="parPlatform">Объект платформы</param>
-    public MenuView(Menu parMenu, Platform parPlatform) : base(parPlatform)
+    /// <param name="parMenu">Объект меню</param>
+    public MenuView(Platform parPlatform, Menu parMenu) : base(parPlatform)
     {
       _menu = parMenu;
       _menu.ChangeStateEvent += Draw;
@@ -33,18 +28,24 @@ namespace View
     /// </summary>
     public override void Draw()
     {
-      float delta = 10.0f;
+      const string GAME_NAME = "Influence";
+      const float DELTA = 10.0f;
+      const float X = 48.0f;
+      const float Y = 10.0f;
+      const float X_POINT = 40.0f;
+      const float Y_POINT = 15.0f;
 
       Platform.Clear();
+      Platform.PrintText(X, Y, GAME_NAME);
       for (int i = 0; i < _menu.MenuItems.Count; i++)
       {
-        if (_menu.MenuItems[i].MenuItemStatus == MenuItemStatus.Selected)
+        if (_menu.MenuItems[i].MenuItemStatus == ItemStatuses.Selected)
         {
-          Platform.PrintMarkedTextInRectangle(40.0f, 5.0f + (i * delta), 60.0f, 7.0f + (i * delta), _menu.MenuItems[i].Name, false);
+          Platform.PrintMarkedTextInRectangle(X_POINT, Y_POINT + (i * DELTA), 60.0f, 17.0f + (i * DELTA), _menu.MenuItems[i].Name, false);
         }
         else
         {
-          Platform.PrintTextInRectangle(40.0f, 5.0f + (i * delta), 60.0f, 7.0f + (i * delta), _menu.MenuItems[i].Name, false);
+          Platform.PrintTextInRectangle(X_POINT, Y_POINT + (i * DELTA), 60.0f, 17.0f + (i * DELTA), _menu.MenuItems[i].Name, false);
         }
       }
     }

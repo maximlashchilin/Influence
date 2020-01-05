@@ -71,10 +71,10 @@ namespace Controller
       ChangeState(_currentState, _currentFactoryOfControllers);
       while (_currentState != ApplicationState.Exit)
       {
-        //if (_previousState != _currentState)
-        //{
+        if (_previousState != _currentState)
+        {
         //  ChangeState(_currentState, _currentFactoryOfControllers);
-        //}
+        }
       }
     }
 
@@ -103,11 +103,11 @@ namespace Controller
     /// Обрабатывает событие изменения
     /// состояния приложения
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parE">Параметры события</param>
     private void OnChangeState(object parSender, ChangeStateArgs parE)
     {
-      _currentController.View.Platform.UnsubscribeAllEvents();
+      _currentController.View?.Platform.UnsubscribeAllEvents();
       ChangeState(parE.ApplicationState, parE.FactoryOfContollers);
     }
   }

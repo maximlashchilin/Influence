@@ -26,7 +26,7 @@ namespace View
     /// <summary>
     /// Конструктор
     /// </summary>
-    /// <param name="parInputedChar"></param>
+    /// <param name="parInputedChar">Введенный символ</param>
     public KeyDownEventArgs(char parInputedChar)
     {
       _inputChar = parInputedChar;

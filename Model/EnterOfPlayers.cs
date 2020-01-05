@@ -24,11 +24,11 @@ namespace Model
 
     public EnterOfPlayers()
     {
-      _button = new Button(35.0f, 80.0f, 55.0f, 95.0f, "Next");
+      _button = new Button(42.0f, 80.0f, 55.0f, 95.0f, "Next");
       _playersFields = new List<TextField>(2);
-      _playersFields.Add(new TextField(0, 0, 0, 0, 0));
-      _playersFields.Add(new TextField(1, 0, 0, 0, 0));
-      _playersFields[0].ItemStatus = MenuItemStatus.Selected;
+      _playersFields.Add(new TextField(0, 38.0f, 30.0f, 60.0f, 35.0f));
+      _playersFields.Add(new TextField(1, 38.0f, 40.0f, 60.0f, 45.0f));
+      _playersFields[0].ItemStatus = ItemStatuses.Selected;
     }
 
     public void Initialize()
@@ -40,18 +40,18 @@ namespace Model
     {
       for (int i = 0; i < _playersFields.Count; i++)
       {
-        if (_playersFields[i].ItemStatus == MenuItemStatus.Selected)
+        if (_playersFields[i].ItemStatus == ItemStatuses.Selected)
         {
-          _playersFields[i].ItemStatus = MenuItemStatus.Unselected;
+          _playersFields[i].ItemStatus = ItemStatuses.Unselected;
 
           if (i == _playersFields.Count - 1)
           {
-            _playersFields[0].ItemStatus = MenuItemStatus.Selected;
+            _playersFields[0].ItemStatus = ItemStatuses.Selected;
             break;
           }
           else
           {
-            _playersFields[i + 1].ItemStatus = MenuItemStatus.Selected;
+            _playersFields[i + 1].ItemStatus = ItemStatuses.Selected;
             break;
           }
         }
@@ -64,18 +64,18 @@ namespace Model
     {
       for (int i = 0; i < _playersFields.Count; i++)
       {
-        if (_playersFields[i].ItemStatus == MenuItemStatus.Selected)
+        if (_playersFields[i].ItemStatus == ItemStatuses.Selected)
         {
-          _playersFields[i].ItemStatus = MenuItemStatus.Unselected;
+          _playersFields[i].ItemStatus = ItemStatuses.Unselected;
 
           if (i == 0)
           {
-            _playersFields[_playersFields.Count - 1].ItemStatus = MenuItemStatus.Selected;
+            _playersFields[_playersFields.Count - 1].ItemStatus = ItemStatuses.Selected;
             break;
           }
           else
           {
-            _playersFields[i - 1].ItemStatus = MenuItemStatus.Selected;
+            _playersFields[i - 1].ItemStatus = ItemStatuses.Selected;
             break;
           }
         }

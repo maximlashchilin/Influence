@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model;
+﻿using Model;
 
 namespace View
 {
@@ -20,11 +15,12 @@ namespace View
     /// <summary>
     /// Конструктор
     /// </summary>
-    /// <param name="parGameField">Объект игрового поля</param>
     /// <param name="parPlatform">Объект платформы</param>
-    public GameFieldView(GameField parGameField, Platform parPlatform) : base(parPlatform)
+    /// <param name="parGameField">Объект игрового поля</param>
+    public GameFieldView(Platform parPlatform, GameField parGameField) : base(parPlatform)
     {
       _gameField = parGameField;
+
       _gameField.PaintEvent += Draw;
     }
 
@@ -33,8 +29,11 @@ namespace View
     /// </summary>
     public override void Draw()
     {
-      int rows = _gameField.Cells.GetUpperBound(0) + 1;
-      int colomns = _gameField.Cells.GetUpperBound(1) + 1;
+      const float X_HINT = 42.0f;
+      const float Y_HINT = 90.0f;
+
+      int rows = _gameField.Cells.GetLength(0);
+      int colomns = _gameField.Cells.GetLength(1);
 
       Platform.Clear();
       for (int i = 0; i < rows; i++)
@@ -54,6 +53,9 @@ namespace View
           }
         }
       }
+
+      string currentPlayer = "Current player: " + _gameField.GetActivePlayer().Name;
+      Platform.PrintText(X_HINT, Y_HINT, currentPlayer);
     }
   }
 }

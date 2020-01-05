@@ -74,29 +74,15 @@ namespace Model
     /// <param name="parHorizontalSize"></param>
     public GameField(int parVerticalSize, int parHorizontalSize, List<Player> parPlayers)
     {
-      _cells = new MapBuilder().BuildMap(parVerticalSize, parHorizontalSize);
+      _cells = new MapBuilder().BuildMap(parVerticalSize, parHorizontalSize, parPlayers);
+      _currentGameState = GameState.Select;
       _players = parPlayers;
+      _currentPlayer = 0;
       _button = new Button(35.0f, 5.0f, 60.0f, 15.0f, "Complete atack");
     }
 
     public void Initialize()
     {
-      SetPlayers();
-      _currentGameState = GameState.Select;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private void SetPlayers()
-    {
-      _currentPlayer = 0;
-      _cells[0, 0].Owner = _players[0];
-      _cells[0, 2].Owner = _players[1];
-
-      _cells[0, 0].Score = 5;
-      _cells[0, 2].Score = 5;
-
       PaintEvent?.Invoke();
     }
 
@@ -400,7 +386,7 @@ namespace Model
       return scorePlayer;
     }
 
-    private Player GetActivePlayer()
+    public Player GetActivePlayer()
     {
       return _players[_currentPlayer];
     }

@@ -65,11 +65,11 @@ namespace Model
         _menuItems.Add(parId, new MenuItem(parId, parName));
         if (parId == 0)
         {
-          _menuItems[parId].MenuItemStatus = MenuItemStatus.Selected;
+          _menuItems[parId].MenuItemStatus = ItemStatuses.Selected;
         }
         else
         {
-          _menuItems[parId].MenuItemStatus = MenuItemStatus.Unselected;
+          _menuItems[parId].MenuItemStatus = ItemStatuses.Unselected;
         }
       }
     }
@@ -78,18 +78,18 @@ namespace Model
     {
       for (int i = 0; i < _menuItems.Count; i++)
       {
-        if (_menuItems[i].MenuItemStatus == MenuItemStatus.Selected)
+        if (_menuItems[i].MenuItemStatus == ItemStatuses.Selected)
         {
-          _menuItems[i].MenuItemStatus = MenuItemStatus.Unselected;
+          _menuItems[i].MenuItemStatus = ItemStatuses.Unselected;
 
           if (i == _menuItems.Count - 1)
           {
-            _menuItems[0].MenuItemStatus = MenuItemStatus.Selected;
+            _menuItems[0].MenuItemStatus = ItemStatuses.Selected;
             break;
           }
           else
           {
-            _menuItems[i + 1].MenuItemStatus = MenuItemStatus.Selected;
+            _menuItems[i + 1].MenuItemStatus = ItemStatuses.Selected;
             break;
           }
         }
@@ -102,18 +102,18 @@ namespace Model
     {
       for (int i = 0; i < _menuItems.Count; i++)
       {
-        if (_menuItems[i].MenuItemStatus == MenuItemStatus.Selected)
+        if (_menuItems[i].MenuItemStatus == ItemStatuses.Selected)
         {
-          _menuItems[i].MenuItemStatus = MenuItemStatus.Unselected;
+          _menuItems[i].MenuItemStatus = ItemStatuses.Unselected;
 
           if (i == 0)
           {
-            _menuItems[_menuItems.Count - 1].MenuItemStatus = MenuItemStatus.Selected;
+            _menuItems[_menuItems.Count - 1].MenuItemStatus = ItemStatuses.Selected;
             break;
           }
           else
           {
-            _menuItems[i - 1].MenuItemStatus = MenuItemStatus.Selected;
+            _menuItems[i - 1].MenuItemStatus = ItemStatuses.Selected;
             break;
           }
         }

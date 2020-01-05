@@ -1,30 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Model
 {
   public class Helper
   {
-    private string _helpText;
-
     public event dPaintHandler PaintEvent;
 
-    public Helper()
-    {
+    private const string HELP_FILE = "Help.txt";
 
+    private List<string> _helpText;
+
+    public List<string> HelpText
+    {
+      get
+      {
+        return _helpText;
+      }
     }
 
-    private void Initialize()
+    public void Initialize()
     {
+      _helpText = ReadTextFromFile(HELP_FILE);
 
+      PaintEvent?.Invoke();
     }
 
-    private string ReadTextFromFile()
+    private List<string> ReadTextFromFile(string parFileName)
     {
-      string result = "";
+      List<string> result = new List<string>();
+      using (StreamWriter writer = new StreamWriter(parFileName, true)) { writer.Close(); }
+      using (StreamReader reader = new StreamReader(parFileName))
+      {
+        string currentString = reader.ReadToEnd();
+        string[] lines = currentString.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (string line in lines)
+        {
+          result.Add(line);
+        }
+
+        reader.Close();
+      };
 
       return result;
     }

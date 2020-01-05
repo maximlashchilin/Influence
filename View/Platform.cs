@@ -39,6 +39,11 @@ namespace View
     public event EventHandler EscDown;
 
     /// <summary>
+    /// Событие нажатия Backspace
+    /// </summary>
+    public event EventHandler BackspaceDown;
+
+    /// <summary>
     /// Событие нажатия клавиши
     /// </summary>
     public event dKeyDownEventHandler KeyDown;
@@ -116,6 +121,14 @@ namespace View
     }
 
     /// <summary>
+    /// Вызывает событиие нажатия Backspace
+    /// </summary>
+    protected virtual void CallBackspaceDown()
+    {
+      BackspaceDown?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>
     /// Вызывает событие нажатия клавиши
     /// </summary>
     /// <param name="parE">Параметры события</param>
@@ -150,6 +163,8 @@ namespace View
       ArrowDown = null;
       EnterDown = null;
       KeyDown = null;
+      EscDown = null;
+      BackspaceDown = null;
       Move = null;
       Click = null;
     }
@@ -175,20 +190,22 @@ namespace View
     }
 
     /// <summary>
-    /// 
+    /// Переводит координату X платформы
+    /// в базовую координату X
     /// </summary>
-    /// <param name="parPlatformX"></param>
-    /// <returns></returns>
+    /// <param name="parPlatformX">Координата X платформы</param>
+    /// <returns>Базовая координата X</returns>
     public float TranslatePlatformXToBaseX(int parPlatformX)
     {
       return (float)parPlatformX / _widthPlatform * 100.0f;
     }
 
     /// <summary>
-    /// 
+    /// Переводит координату Y платформы
+    /// в базовую координату Y
     /// </summary>
-    /// <param name="parPlatformY"></param>
-    /// <returns></returns>
+    /// <param name="parPlatformY">Координата Y платформы</param>
+    /// <returns>Базовая координата Y</returns>
     public float TranslatePlatformYToBaseY(int parPlatformY)
     {
       return (float)parPlatformY / _heightPlatform * 100;
@@ -212,49 +229,49 @@ namespace View
     /// <summary>
     /// Печатает текст
     /// </summary>
-    /// <param name="parX"></param>
-    /// <param name="parY"></param>
-    /// <param name="parText"></param>
+    /// <param name="parX">Координата X</param>
+    /// <param name="parY">Координата Y</param>
+    /// <param name="parText">Текст</param>
     public abstract void PrintText(float parX, float parY, string parText);
 
     /// <summary>
     /// Отрисовывает прямоугольник
     /// </summary>
-    /// <param name="parX1"></param>
-    /// <param name="parY1"></param>
-    /// <param name="parX2"></param>
-    /// <param name="parY2"></param>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
     public abstract void DrawRectangle(float parX1, float parY1, float parX2, float parY2);
 
     /// <summary>
     /// Печатает текст в прямоугольнике
     /// </summary>
-    /// <param name="parX1"></param>
-    /// <param name="parY1"></param>
-    /// <param name="parX2"></param>
-    /// <param name="parY2"></param>
-    /// <param name="parText"></param>
-    /// <param name="parCursorVisible"></param>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
+    /// <param name="parText">Текст</param>
+    /// <param name="parCursorVisible">Видимость курсора</param>
     public abstract void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible);
 
     /// <summary>
     /// Печатает текст в выделенном прямоугольнике
     /// </summary>
-    /// <param name="parX1"></param>
-    /// <param name="parY1"></param>
-    /// <param name="parX2"></param>
-    /// <param name="parY2"></param>
-    /// <param name="parText"></param>
-    /// <param name="parCursorVisible"></param>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
+    /// <param name="parText">Текст</param>
+    /// <param name="parCursorVisible">Видимость курсора</param>
     public abstract void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible);
 
     /// <summary>
     /// Отрисовывает игровую ячейку
     /// </summary>
-    /// <param name="parX"></param>
-    /// <param name="parY"></param>
-    /// <param name="parScore"></param>
-    /// <param name="parColor"></param>
+    /// <param name="parX">Координата X</param>
+    /// <param name="parY">Координата Y</param>
+    /// <param name="parScore">Число очков ячейки</param>
+    /// <param name="parColor">Цвет ячейки</param>
     public abstract void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColor parColor);
   }
 }
