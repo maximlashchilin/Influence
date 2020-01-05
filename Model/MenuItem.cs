@@ -23,7 +23,7 @@ namespace Model
     /// <summary>
     /// Статус элемента меню
     /// </summary>
-    private MenuItemStatus _menuItemStatus;
+    private ItemStatuses _menuItemStatus;
     /// <summary>
     /// 
     /// </summary>
@@ -53,7 +53,7 @@ namespace Model
         return _name;
       }
     }
-    public MenuItemStatus MenuItemStatus
+    public ItemStatuses MenuItemStatus
     {
       get
       {

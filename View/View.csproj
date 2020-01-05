@@ -49,7 +49,6 @@
     <Compile Include="KeyDownEventArgs.cs" />
     <Compile Include="KeyDownEventHandler.cs" />
     <Compile Include="MenuView.cs" />
-    <Compile Include="MenuItemView.cs" />
     <Compile Include="MoveEventArgs.cs" />
     <Compile Include="MoveEventHandler.cs" />
     <Compile Include="Platform.cs" />

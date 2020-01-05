@@ -39,7 +39,7 @@ namespace Controller
     public GameFieldController(List<Player> parPlayers, Platform parPlatform)
     {
       _game = new GameField(VERTICAL_SIZE, HORIZONTAL_SIZE, parPlayers);
-      View = new GameFieldView(_game, parPlatform);
+      View = new GameFieldView(parPlatform, _game);
       _buttonController = new ButtonController(parPlatform, _game.Button);
       _game.Initialize();
       _buttonController.Initialize();
