@@ -12,7 +12,8 @@ namespace ConsoleView
   public class ConsolePlatform : Platform
   {
     /// <summary>
-    /// 
+    /// Команда, посылаемая, когда выбирается
+    /// пункт системного меню
     /// </summary>
     private const int WM_SYSCOMMAND = 0x0112;
 
@@ -26,6 +27,9 @@ namespace ConsoleView
     /// </summary>
     private EventListener _eventListener;
 
+    /// <summary>
+    /// Отрисовщик графики в консоли
+    /// </summary>
     private ConsoleDrawer _consoleDrawer;
 
     /// <summary>
@@ -87,7 +91,8 @@ namespace ConsoleView
     /// <param name="parE">Параметры события</param>
     public void ConsoleMouseEventHandler(object parSender, ConsoleMouseEventArgs parE)
     {
-      if (parE.ButtonState == 1)
+      const int BUTTON_IS_DOWN = 1;
+      if (parE.ButtonState == BUTTON_IS_DOWN)
       {
         CallClick();
       }
@@ -107,6 +112,8 @@ namespace ConsoleView
       const int ENTER_CODE = 13;
       const int ARROW_UP_CODE = 38;
       const int ARROW_DOWN_CODE = 40;
+      const int ESC_CODE = 27;
+      const int BACKSPACE_CODE = 8;
       if (parE.KeyDown)
       {
         switch (parE.VirtualKeyCode)
@@ -119,6 +126,12 @@ namespace ConsoleView
             break;
           case ARROW_DOWN_CODE:
             CallArrowDown();
+            break;
+          case ESC_CODE:
+            CallEscDown();
+            break;
+          case BACKSPACE_CODE:
+            CallBackspaceDown();
             break;
         }
 

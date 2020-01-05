@@ -90,13 +90,19 @@ namespace ConsoleView
       var handle = NativeMethodsProvider.GetStdHandle(NativeMethodsProvider.STD_INPUT_HANDLE);
 
       int mode = 0;
-      if (!(NativeMethodsProvider.GetConsoleMode(handle, ref mode))) { throw new Win32Exception(); }
+      if (!(NativeMethodsProvider.GetConsoleMode(handle, ref mode)))
+      {
+        throw new Win32Exception();
+      }
 
       mode |= NativeMethodsProvider.ENABLE_MOUSE_INPUT;
       mode &= ~NativeMethodsProvider.ENABLE_QUICK_EDIT_MODE;
       mode |= NativeMethodsProvider.ENABLE_EXTENDED_FLAGS;
 
-      if (!(NativeMethodsProvider.SetConsoleMode(handle, mode))) { throw new Win32Exception(); }
+      if (!(NativeMethodsProvider.SetConsoleMode(handle, mode)))
+      {
+        throw new Win32Exception();
+      }
 
       var record = new NativeMethodsProvider.INPUT_RECORD();
       uint recordLen = 0;

@@ -12,37 +12,40 @@ namespace ConsoleView
   public class NativeMethodsProvider
   {
     /// <summary>
-    /// 
+    /// Код стандартного устройства ввода
     /// </summary>
     public const Int32 STD_INPUT_HANDLE = -10;
 
     /// <summary>
-    /// 
+    /// Код активации мыши как устройства ввода
     /// </summary>
     public const Int32 ENABLE_MOUSE_INPUT = 0x0010;
 
     /// <summary>
-    /// 
+    /// Код, позволяющий использовать мышь для для выбора
+    /// и редактирования текста
     /// </summary>
     public const Int32 ENABLE_QUICK_EDIT_MODE = 0x0040;
 
     /// <summary>
-    /// 
+    /// Код, необходимый для включения и отключения
+    /// расширенных флагов
     /// </summary>
     public const Int32 ENABLE_EXTENDED_FLAGS = 0x0080;
 
     /// <summary>
-    /// 
+    /// Код событий клавиатуры
     /// </summary>
     public const Int32 KEY_EVENT = 1;
 
     /// <summary>
-    /// 
+    /// Код событий мыши
     /// </summary>
     public const Int32 MOUSE_EVENT = 2;
 
     /// <summary>
-    /// 
+    /// Используется для возвращения информации
+    /// о входных сообщениях в консольном входном буфере
     /// </summary>
     [DebuggerDisplay("EventType: {EventType}")]
     [StructLayout(LayoutKind.Explicit)]
@@ -57,7 +60,8 @@ namespace ConsoleView
     }
 
     /// <summary>
-    /// 
+    /// Используется для сообщения
+    /// о событиях ввода информации от мыши
     /// </summary>
     [DebuggerDisplay("{dwMousePosition.X}, {dwMousePosition.Y}")]
     public struct MOUSE_EVENT_RECORD
@@ -69,7 +73,8 @@ namespace ConsoleView
     }
 
     /// <summary>
-    /// 
+    /// Используется для хранения координат
+    /// текстового курсора
     /// </summary>
     [DebuggerDisplay("{X}, {Y}")]
     public struct COORD
@@ -79,7 +84,8 @@ namespace ConsoleView
     }
 
     /// <summary>
-    /// 
+    /// Используется для сообщения
+    /// о событиях ввода информации от клавиатуры
     /// </summary>
     [DebuggerDisplay("KeyCode: {wVirtualKeyCode}")]
     [StructLayout(LayoutKind.Explicit)]
@@ -103,12 +109,19 @@ namespace ConsoleView
     };
 
     /// <summary>
-    /// 
+    /// Дескриптор консоли
     /// </summary>
     public class ConsoleHandle : SafeHandleMinusOneIsInvalid
     {
+      /// <summary>
+      /// Конструктор
+      /// </summary>
       public ConsoleHandle() : base(false) { }
 
+      /// <summary>
+      /// Выполняет код, необходимый для освобождения дескриптора
+      /// </summary>
+      /// <returns></returns>
       protected override bool ReleaseHandle()
       {
         return true;
@@ -116,41 +129,44 @@ namespace ConsoleView
     }
 
     /// <summary>
-    /// 
+    /// Извлекает текущий режим буфера консоли
+    /// или текущий режим вывода
     /// </summary>
-    /// <param name="hConsoleHandle"></param>
-    /// <param name="lpMode"></param>
-    /// <returns></returns>
+    /// <param name="hConsoleHandle">Дескриптор консоли</param>
+    /// <param name="lpMode">Указатель на переменную, которая получает режим указанного буфера</param>
+    /// <returns>Код ошибки</returns>
     [DllImportAttribute("kernel32.dll", SetLastError = true)]
     [return: MarshalAsAttribute(UnmanagedType.Bool)]
     public static extern Boolean GetConsoleMode(ConsoleHandle hConsoleHandle, ref Int32 lpMode);
 
     /// <summary>
-    /// 
+    /// Извлекает дескриптор указанного стандартного устройства
     /// </summary>
-    /// <param name="nStdHandle"></param>
-    /// <returns></returns>
+    /// <param name="nStdHandle">Стандартное устройство</param>
+    /// <returns>Дескриптор указанного устройства</returns>
     [DllImportAttribute("kernel32.dll", SetLastError = true)]
     public static extern ConsoleHandle GetStdHandle(Int32 nStdHandle);
 
     /// <summary>
-    /// 
+    /// Читает данные из буфера консоли
+    /// и удаляет их из буфера
     /// </summary>
-    /// <param name="hConsoleInput"></param>
-    /// <param name="lpBuffer"></param>
-    /// <param name="nLength"></param>
-    /// <param name="lpNumberOfEventsRead"></param>
-    /// <returns></returns>
+    /// <param name="hConsoleInput">Дескриптор консоли</param>
+    /// <param name="lpBuffer">Указатель на массив структур INPUT_RECORD</param>
+    /// <param name="nLength">Размер массива lpBuffer</param>
+    /// <param name="lpNumberOfEventsRead">Указатель на переменную, которая получает количество входных записей</param>
+    /// <returns>Код ошибки</returns>
     [DllImportAttribute("kernel32.dll", SetLastError = true)]
     [return: MarshalAsAttribute(UnmanagedType.Bool)]
     public static extern Boolean ReadConsoleInput(ConsoleHandle hConsoleInput, ref INPUT_RECORD lpBuffer, UInt32 nLength, ref UInt32 lpNumberOfEventsRead);
 
     /// <summary>
-    /// 
+    /// Устанавливает режим буфера консоли
+    /// или режим вывода
     /// </summary>
-    /// <param name="hConsoleHandle"></param>
-    /// <param name="dwMode"></param>
-    /// <returns></returns>
+    /// <param name="hConsoleHandle">Дескриптор консоли</param>
+    /// <param name="dwMode">Устанавливаемый режим</param>
+    /// <returns>Код ошибки</returns>
     [DllImportAttribute("kernel32.dll", SetLastError = true)]
     [return: MarshalAsAttribute(UnmanagedType.Bool)]
     public static extern Boolean SetConsoleMode(ConsoleHandle hConsoleHandle, Int32 dwMode);

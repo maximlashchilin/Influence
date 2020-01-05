@@ -11,7 +11,7 @@ namespace Influence
     /// <summary>
     /// Точка входа в программу
     /// </summary>
-    /// <param name="args"></param>
+    /// <param name="args">Аргументы командной строки</param>
     static void Main(string[] args)
     {
       new MainController(new ConsolePlatform()).Start();

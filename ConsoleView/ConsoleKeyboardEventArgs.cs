@@ -15,7 +15,7 @@ namespace ConsoleView
     /// <summary>
     /// Цифровой код клавиши
     /// </summary>
-    private int _virtualKeyCode;
+    private int _keyCode;
 
     /// <summary>
     /// Признак нажатия клавиши
@@ -35,7 +35,7 @@ namespace ConsoleView
     {
       get
       {
-        return _virtualKeyCode;
+        return _keyCode;
       }
     }
 
@@ -47,7 +47,7 @@ namespace ConsoleView
     public ConsoleKeyboardEventArgs(bool parKeyDown, int parVirtualKeyCode)
     {
       _keyDown = parKeyDown;
-      _virtualKeyCode = parVirtualKeyCode;
+      _keyCode = parVirtualKeyCode;
     }
   }
 }
