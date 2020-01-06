@@ -5,3 +5,6 @@
 /Model/obj
 /View/bin
 /View/obj
+/UnitTestModel/bin
+/UnitTestModel/obj
+/TestResults/
