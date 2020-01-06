@@ -9,7 +9,7 @@ namespace Model
   /// <summary>
   /// Игровая ячейка
   /// </summary>
-  public class Cell
+  public class Cell : Coords
   {
     /// <summary>
     /// Максимальное число очков в ячейке
@@ -19,7 +19,7 @@ namespace Model
     /// <summary>
     /// Текущий статус ячейки
     /// </summary>
-    private CellStatus _cellStatus;
+    private CellStatuses _cellStatus;
 
     /// <summary>
     /// Число очков ячейки
@@ -44,7 +44,7 @@ namespace Model
     /// <summary>
     /// Текущий статус ячейки
     /// </summary>
-    public CellStatus CellStatus
+    public CellStatuses CellStatus
     {
       get
       {
@@ -67,7 +67,7 @@ namespace Model
       }
       set
       {
-        if (value > 0 || value <= MAX_SCORE)
+        if (value > 0 && value <= MAX_SCORE)
         {
           _score = value;
         }
@@ -98,10 +98,6 @@ namespace Model
       {
         return _x;
       }
-      set
-      {
-        _x = value;
-      }
     }
 
     /// <summary>
@@ -112,10 +108,6 @@ namespace Model
       get
       {
         return _y;
-      }
-      set
-      {
-        _y = value;
       }
     }
 
@@ -129,7 +121,7 @@ namespace Model
       _x = parX;
       _y = parY;
       _score = 0;
-      _cellStatus = CellStatus.NotChoosed;
+      _cellStatus = CellStatuses.NotChoosed;
     }
 
     /// <summary>
@@ -137,7 +129,10 @@ namespace Model
     /// </summary>
     public void IncreaseScore()
     {
-      _score++;
+      if (_score <= MAX_SCORE)
+      {
+        _score++;
+      }
     }
 
     /// <summary>
@@ -145,7 +140,10 @@ namespace Model
     /// </summary>
     public void DecreaseScore()
     {
-      _score--;
+      if (_score > 0)
+      {
+        _score--;
+      }
     }
 
     /// <summary>
@@ -153,7 +151,7 @@ namespace Model
     /// </summary>
     public void ActiveCell()
     {
-      _cellStatus = CellStatus.Active;
+      _cellStatus = CellStatuses.Active;
     }
 
     /// <summary>
@@ -161,9 +159,13 @@ namespace Model
     /// </summary>
     public void DisactiveCell()
     {
-      _cellStatus = CellStatus.NotChoosed;
+      _cellStatus = CellStatuses.NotChoosed;
     }
 
+    /// <summary>
+    /// Проверяет, имеет ли ячейка владельца
+    /// </summary>
+    /// <returns>Признак наличия владельца</returns>
     public bool IsCellFree()
     {
       return _owner == null;

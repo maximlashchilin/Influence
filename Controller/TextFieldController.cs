@@ -22,8 +22,10 @@ namespace Controller
     public TextFieldController(TextField parTextField, Platform parPlatform)
     {
       _textField = parTextField;
+      View = new TextFieldView(parPlatform, parTextField);
 
       parPlatform.KeyDown += OnKeyDown;
+      parPlatform.BackspaceDown += OnBackspaceDown;
     }
 
     /// <summary>
@@ -34,6 +36,11 @@ namespace Controller
     private void OnKeyDown(object sender, KeyDownEventArgs e)
     {
       _textField.AddChar(e.InputChar);
+    }
+
+    private void OnBackspaceDown(object sender, EventArgs e)
+    {
+      _textField.DeleteLastChar();
     }
 
     public override void Start()

@@ -13,13 +13,20 @@ namespace View
   public class HelperView : BaseView
   {
     /// <summary>
+    /// Объект справки
+    /// </summary>
+    private Helper _helper;
+
+    /// <summary>
     /// Конструктор
     /// </summary>
-    /// <param name="parHelper">Объект просмотра справки</param>
     /// <param name="parPlatform">Объект платформы</param>
-    public HelperView(Helper parHelper, Platform parPlatform) : base(parPlatform)
+    /// <param name="parHelper">Объект справки</param>
+    public HelperView(Platform parPlatform, Helper parHelper) : base(parPlatform)
     {
+      _helper = parHelper;
 
+      _helper.PaintEvent += Draw;
     }
 
     /// <summary>
@@ -27,7 +34,16 @@ namespace View
     /// </summary>
     public override void Draw()
     {
-      throw new NotImplementedException();
+      const float DELTA = 10.0f;
+      const float X = 40.0f;
+      const float Y = 15.0f;
+      const string HEAD_STRING = "Help";
+      Platform.Clear();
+      Platform.PrintText(X, Y, HEAD_STRING);
+      for (int i = 0; i < _helper.HelpText.Count; i++)
+      {
+        Platform.PrintText(X, Y + 20 + (i * DELTA), _helper.HelpText[i]);
+      }
     }
   }
 }

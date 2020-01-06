@@ -1,4 +1,6 @@
-﻿namespace Model
+﻿using System.Collections.Generic;
+
+namespace Model
 {
   /// <summary>
   /// Строитель карты
@@ -11,23 +13,46 @@
     /// <param name="parVerticalSize">Вертикальный размер</param>
     /// <param name="parHorizontalSize">Горизонтальный размер</param>
     /// <returns>Массив игровых ячеек</returns>
-    public Cell[,] BuildMap(int parVerticalSize, int parHorizontalSize)
+    public Cell[,] BuildMap(int parVerticalSize, int parHorizontalSize, List<Player> parPlayers)
     {
-      Cell[,] map = new Cell[parVerticalSize, parHorizontalSize];
+      Cell[,] map = CreateGameCells(parVerticalSize, parHorizontalSize);
+      map = SetPlayers(map, parPlayers);      
 
-      int rows = map.GetUpperBound(0) + 1;
-      int colomns = map.GetUpperBound(1) + 1;
+      return map;
+    }
+
+    /// <summary>
+    /// Создает массив игровых ячеек
+    /// </summary>
+    /// <param name="parVerticalSize">Вертикальный размер массива</param>
+    /// <param name="parHorizontalSize">Горизонтальный размер массива</param>
+    /// <returns>Массив ячеек</returns>
+    private Cell[,] CreateGameCells(int parVerticalSize, int parHorizontalSize)
+    {
+      const int DELTA = 10;
+      const int X = 30;
+      const int Y = 30;
+      const int Y_SHIFT = 5;
+
+      Cell[,] cells = new Cell[parVerticalSize, parHorizontalSize];
+
+      int rows = cells.GetLength(0);
+      int colomns = cells.GetLength(1);
       for (int i = 0; i < rows; i++)
       {
         for (int j = 0; j < colomns; j++)
         {
           if (i % 2 == 0)
           {
-            map[i, j] = new Cell((j * 10 + 30) + 5, i * 10 + 30);
+            cells[i, j] = new Cell(j * DELTA + Y + Y_SHIFT, i * DELTA + X);
+            cells[i, j].I = i;
+            cells[i, j].J = j;
           }
           else
           {
-            map[i, j] = new Cell(j * 10 + 30, i * 10 + 30);
+            cells[i, j] = new Cell(j * DELTA + Y, i * DELTA + X);
+            cells[i, j].I = i;
+            cells[i, j].J = j;
           }
         }
       }
@@ -36,9 +61,28 @@
       {
         if (i % 2 == 0)
         {
-          map[i, map.GetUpperBound(1)] = null;
+          cells[i, cells.GetUpperBound(1)] = null;
         }
       }
+
+      return cells;
+    }
+
+    /// <summary>
+    /// Устанавливает игроков для первоначальных ячеек
+    /// </summary>
+    /// <param name="parCells">Массив ячеек</param>
+    /// <param name="parPlayers">Список игроков</param>
+    /// <returns>Массив ячеек</returns>
+    private Cell[,] SetPlayers(Cell[,] parCells, List<Player> parPlayers)
+    {
+      Cell[,] map = parCells;
+
+      map[0, 0].Owner = parPlayers[0];
+      map[0, 2].Owner = parPlayers[1];
+
+      map[0, 0].Score = 5;
+      map[0, 2].Score = 5;
 
       return map;
     }

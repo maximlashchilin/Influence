@@ -31,17 +31,17 @@ namespace Controller
     {
       string menuName = "Main menu";
       _menu = new Menu(menuName);
-      View = new MenuView(_menu, parPlatform);
+      View = new MenuView(parPlatform, _menu);
       _menu.AddItem(0, "Новая игра");
-      _menu.AddItem(1, "Records");
-      _menu.AddItem(2, "Help");
-      _menu.AddItem(3, "Exit");
+      _menu.AddItem(1, "Рекорды");
+      _menu.AddItem(2, "Справка");
+      _menu.AddItem(3, "Выход");
       _menu.Initialize();
       _menuItemControllers = InitMenuItemsControllers(parPlatform, _menu.MenuItems.ToList());
 
       parPlatform.ArrowUp += OnArrowUp;
       parPlatform.ArrowDown += OnArrowDown;
-      Subscribe();
+      SubscribeOnChangeState();
     }
 
     public override void Start()
@@ -70,7 +70,7 @@ namespace Controller
     /// Подписывает на событие изменения состояния
     /// приложения
     /// </summary>
-    private void Subscribe()
+    private void SubscribeOnChangeState()
     {
       for (int i = 0; i < _menuItemControllers.Count; i++)
       {

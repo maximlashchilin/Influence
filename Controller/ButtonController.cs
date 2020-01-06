@@ -26,7 +26,7 @@ namespace Controller
     public ButtonController(Platform parPlatform, Button parButton)
     {
       _button = parButton;
-      View = new ButtonView(_button, parPlatform);
+      View = new ButtonView(parPlatform, _button);
 
       parPlatform.Click += OnClick;
     }

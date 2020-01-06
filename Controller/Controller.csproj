@@ -50,6 +50,7 @@
     <Compile Include="EnterOfPlayersController.cs" />
     <Compile Include="FactoriesOfGameStateControllers\FactoryOfContollers.cs" />
     <Compile Include="FactoriesOfGameStateControllers\FactoryOfGameControllers.cs" />
+    <Compile Include="FactoriesOfGameStateControllers\FactoryOfHelperControllers.cs" />
     <Compile Include="FactoriesOfGameStateControllers\FactoryOfMenuControllers.cs" />
     <Compile Include="FactoriesOfGameStateControllers\FactoryOfRecordsController.cs" />
     <Compile Include="GameStateControllers\GameController.cs" />

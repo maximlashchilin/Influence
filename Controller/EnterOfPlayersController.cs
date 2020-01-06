@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Model;
 using View;
+using Controller.FactoriesOfGameStateControllers;
 
 namespace Controller
 {
@@ -32,13 +33,19 @@ namespace Controller
     public EnterOfPlayersController(Platform parPlatform)
     {
       _enterOfPlayers = new EnterOfPlayers();
-      View = new EnterOfPlayersView(_enterOfPlayers, parPlatform);
       _textFieldControllers = InitizlizeTextFieldControllers(parPlatform, _enterOfPlayers.NamesOfPlayers);
+      View = new EnterOfPlayersView(_enterOfPlayers, GetTextFieldViews(), parPlatform);
       _enterOfPlayers.Initialize();
 
       parPlatform.ArrowUp += OnArrowUp;
       parPlatform.ArrowDown += OnArrowDown;
       parPlatform.EnterDown += OnEnterDown;
+      parPlatform.EscDown += OnEscDown;
+    }
+
+    private void OnEscDown(object sender, EventArgs e)
+    {
+      CallChangeState(this, new ChangeStateArgs(new FactoryOfMenuControllers(), ApplicationStates.MenuWork));
     }
 
     /// <summary>
@@ -56,6 +63,17 @@ namespace Controller
       }
 
       return controllers;
+    }
+
+    private List<TextFieldView> GetTextFieldViews()
+    {
+      List<TextFieldView> views = new List<TextFieldView>();
+      foreach (TextFieldController elTextFieldController in _textFieldControllers)
+      {
+        views.Add((TextFieldView)elTextFieldController.View);
+      }
+
+      return views;
     }
 
     /// <summary>

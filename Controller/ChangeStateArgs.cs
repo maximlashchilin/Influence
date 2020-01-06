@@ -17,7 +17,7 @@ namespace Controller
     /// <summary>
     /// Состояние приложения
     /// </summary>
-    private ApplicationState _applicationState;
+    private ApplicationStates _applicationState;
 
     /// <summary>
     /// Фабрика контроллеров
@@ -33,7 +33,7 @@ namespace Controller
     /// <summary>
     /// Состояние приложения
     /// </summary>
-    public ApplicationState ApplicationState
+    public ApplicationStates ApplicationState
     {
       get
       {
@@ -46,7 +46,7 @@ namespace Controller
     /// </summary>
     /// <param name="parFactory">Фабрика контроллеров</param>
     /// <param name="parState">Состояние приложения</param>
-    public ChangeStateArgs(FactoryOfContollers parFactory, ApplicationState parState)
+    public ChangeStateArgs(FactoryOfContollers parFactory, ApplicationStates parState)
     {
       _factoryOfContollers = parFactory;
       _applicationState = parState;

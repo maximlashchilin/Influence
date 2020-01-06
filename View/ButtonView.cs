@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model;
+﻿using Model;
 
 namespace View
 {
@@ -22,7 +17,7 @@ namespace View
     /// </summary>
     /// <param name="parButton">Объект кнопки</param>
     /// <param name="parPlatform">Объект платформы</param>
-    public ButtonView(Button parButton, Platform parPlatform) : base(parPlatform)
+    public ButtonView(Platform parPlatform, Button parButton) : base(parPlatform)
     {
       _button = parButton;
       _button.PaintEvent += Draw;

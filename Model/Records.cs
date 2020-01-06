@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace Model
@@ -29,31 +26,33 @@ namespace Model
       }
     }
 
-    public Records()
+    public void Initialize()
     {
-
-    }
-
-    private void Initialize()
-    {
-      _bestResults = new List<string>();
-      using (StreamWriter writer = new StreamWriter(DEFAULT_FILENAME, true)) { writer.Close(); }
-      using (StreamReader reader = new StreamReader(DEFAULT_FILENAME))
-      {
-        string result = reader.ReadToEnd();
-        string[] lines = result.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (string line in lines)
-        {
-          _bestResults.Add(line);
-        }
-
-        reader.Close();
-      }
+      _bestResults = ReadTextFromFile(DEFAULT_FILENAME);
 
       FilterBestResults(_bestResults);
 
       PaintEvent?.Invoke();
+    }
+
+    private List<string> ReadTextFromFile(string parFileName)
+    {
+      List<string> result = new List<string>();
+      using (StreamWriter writer = new StreamWriter(parFileName, true)) { writer.Close(); }
+      using (StreamReader reader = new StreamReader(parFileName))
+      {
+        string currentString = reader.ReadToEnd();
+        string[] lines = currentString.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (string line in lines)
+        {
+          result.Add(line);
+        }
+
+        reader.Close();
+      };
+
+      return result;
     }
 
     private void FilterBestResults(List<string> parRecords)

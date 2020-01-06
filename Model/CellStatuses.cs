@@ -3,7 +3,7 @@
   /// <summary>
   /// Статус ячейки
   /// </summary>
-  public enum CellStatus
+  public enum CellStatuses
   {
     /// <summary>
     /// Невыбранная

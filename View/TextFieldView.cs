@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model;
+﻿using Model;
 
 namespace View
 {
@@ -20,13 +15,11 @@ namespace View
     /// <summary>
     /// Конструктор
     /// </summary>
-    /// <param name="parTextField">Объект текстового поля</param>
     /// <param name="parPlatform">Объект платформы</param>
-    public TextFieldView(TextField parTextField, Platform parPlatform) : base(parPlatform)
+    /// <param name="parTextField">Объект текстового поля</param>
+    public TextFieldView(Platform parPlatform, TextField parTextField) : base(parPlatform)
     {
       _textField = parTextField;
-
-      _textField.PaintEvent += Draw;
     }
 
     /// <summary>
@@ -34,7 +27,14 @@ namespace View
     /// </summary>
     public override void Draw()
     {
-      
+      if (_textField.ItemStatus != ItemStatuses.Selected)
+      {
+        Platform.PrintTextInRectangle(_textField.X1, _textField.Y1, _textField.X2, _textField.Y2, _textField.Text, false);
+      }
+      else if (_textField.ItemStatus == ItemStatuses.Selected)
+      {
+        Platform.PrintMarkedTextInRectangle(_textField.X1, _textField.Y1, _textField.X2, _textField.Y2, _textField.Text, true);
+      }
     }
   }
 }

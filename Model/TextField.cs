@@ -8,6 +8,16 @@ namespace Model
   public class TextField
   {
     /// <summary>
+    /// 
+    /// </summary>
+    public event EventHandler Click;
+
+    /// <summary>
+    /// Событие перерисовки
+    /// </summary>
+    public event dPaintHandler PaintEvent;
+
+    /// <summary>
     /// Идентификатор
     /// </summary>
     private int _id;
@@ -18,42 +28,32 @@ namespace Model
     private float _x1;
 
     /// <summary>
-    /// 
+    /// Координата Y1
     /// </summary>
     private float _y1;
 
     /// <summary>
-    /// 
+    /// Координата X2
     /// </summary>
     private float _x2;
 
     /// <summary>
-    /// 
+    /// Координата Y2
     /// </summary>
     private float _y2;
 
     /// <summary>
-    /// 
+    /// Текст
     /// </summary>
     private string _text;
 
     /// <summary>
-    /// 
+    /// Статус текстового поля
     /// </summary>
-    private MenuItemStatus _itemStatus;
+    private ItemStatuses _itemStatus;
 
     /// <summary>
-    /// 
-    /// </summary>
-    public event EventHandler Click;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public event dPaintHandler PaintEvent;
-
-    /// <summary>
-    /// 
+    /// Идентификатор
     /// </summary>
     public int Id
     {
@@ -68,7 +68,7 @@ namespace Model
     }
 
     /// <summary>
-    /// 
+    /// Координата X1
     /// </summary>
     public float X1
     {
@@ -83,7 +83,7 @@ namespace Model
     }
 
     /// <summary>
-    /// 
+    /// Координата Y1
     /// </summary>
     public float Y1
     {
@@ -98,7 +98,7 @@ namespace Model
     }
 
     /// <summary>
-    /// 
+    /// Координата X2
     /// </summary>
     public float X2
     {
@@ -113,7 +113,7 @@ namespace Model
     }
 
     /// <summary>
-    /// 
+    /// Координата Y2
     /// </summary>
     public float Y2
     {
@@ -128,7 +128,7 @@ namespace Model
     }
 
     /// <summary>
-    /// 
+    /// Текст
     /// </summary>
     public string Text
     {
@@ -143,9 +143,9 @@ namespace Model
     }
 
     /// <summary>
-    /// 
+    /// Статус текстового поля
     /// </summary>
-    public MenuItemStatus ItemStatus
+    public ItemStatuses ItemStatus
     {
       get
       {
@@ -158,13 +158,13 @@ namespace Model
     }
 
     /// <summary>
-    /// 
+    /// Конструктор
     /// </summary>
-    /// <param name="parId"></param>
-    /// <param name="parX1"></param>
-    /// <param name="parY1"></param>
-    /// <param name="parX2"></param>
-    /// <param name="parY2"></param>
+    /// <param name="parId">Идентификатор</param>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
     public TextField(int parId, float parX1, float parY1, float parX2, float parY2)
     {
       _id = parId;
@@ -173,11 +173,11 @@ namespace Model
       _x2 = parX2;
       _y2 = parY2;
       _text = string.Empty;
-      _itemStatus = MenuItemStatus.Unselected;
+      _itemStatus = ItemStatuses.Unselected;
     }
 
     /// <summary>
-    /// 
+    /// Инициализирует текстовое поле
     /// </summary>
     public void Initialize()
     {
@@ -192,9 +192,13 @@ namespace Model
       Click?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Добавляет символ в текстовое поле
+    /// </summary>
+    /// <param name="parChar">Добавляемый символ</param>
     public void AddChar(char parChar)
     {
-      if (_itemStatus == MenuItemStatus.Selected)
+      if (_itemStatus == ItemStatuses.Selected)
       {
         _text += parChar;
       }
@@ -202,9 +206,12 @@ namespace Model
       PaintEvent?.Invoke();
     }
 
+    /// <summary>
+    /// Удаляет последний символ из текстового поля
+    /// </summary>
     public void DeleteLastChar()
     {
-      if (_itemStatus == MenuItemStatus.Selected)
+      if (_itemStatus == ItemStatuses.Selected && _text.Length > 0)
       {
         _text = _text.Substring(0, _text.Length - 1);
       }

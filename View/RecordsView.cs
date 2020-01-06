@@ -29,12 +29,15 @@ namespace View
     /// </summary>
     public override void Draw()
     {
-      float delta = 10.0f;
-
+      const float DELTA = 10.0f;
+      const float X = 40.0f;
+      const float Y = 15.0f;
+      const string HEAD_STRING = "Best game results";
       Platform.Clear();
+      Platform.PrintText(X, Y, HEAD_STRING);
       for (int i = 0; i < _records.BestResults.Count; i++)
       {
-        Platform.PrintText(40.0f, 5.0f + (i * delta), _records.BestResults[i]);
+        Platform.PrintText(X, Y + 20 + (i * DELTA), _records.BestResults[i]);
       }
     }
   }
