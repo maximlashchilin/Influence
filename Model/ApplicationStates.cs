@@ -3,7 +3,7 @@
   /// <summary>
   /// Состояния приложения
   /// </summary>
-  public enum ApplicationState
+  public enum ApplicationStates
   {
     /// <summary>
     /// Работа с меню

@@ -44,16 +44,16 @@ namespace Controller
         switch (_menuItem.Id)
         {
           case 0:
-            CallChangeState(this, new ChangeStateArgs(new FactoryOfGameControllers(), ApplicationState.Gaming));
+            CallChangeState(this, new ChangeStateArgs(new FactoryOfGameControllers(), ApplicationStates.Gaming));
             break;
           case 1:
-            CallChangeState(this, new ChangeStateArgs(new FactoryOfRecordsController(), ApplicationState.RecordsWatch));
+            CallChangeState(this, new ChangeStateArgs(new FactoryOfRecordsController(), ApplicationStates.RecordsWatch));
             break;
           case 2:
-            CallChangeState(this, new ChangeStateArgs(new FactoryOfHelperControllers(), ApplicationState.Help));
+            CallChangeState(this, new ChangeStateArgs(new FactoryOfHelperControllers(), ApplicationStates.Help));
             break;
           case 3:
-            CallChangeState(this, new ChangeStateArgs(null, ApplicationState.Exit));
+            CallChangeState(this, new ChangeStateArgs(null, ApplicationStates.Exit));
             break;
         }
       }

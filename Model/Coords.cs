@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model
+﻿namespace Model
 {
   /// <summary>
   /// Координаты ячейки в массиве
@@ -49,17 +43,6 @@ namespace Model
       {
         _j = value;
       }
-    }
-
-    /// <summary>
-    /// Конструктор координат ячейки в массиве
-    /// </summary>
-    /// <param name="parI">Индекс ряда</param>
-    /// <param name="parJ">Индекс колонки</param>
-    public Coords(int parI, int parJ)
-    {
-      _i = parI;
-      _j = parJ;
     }
   }
 }

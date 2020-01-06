@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Model
@@ -17,9 +14,10 @@ namespace Model
     public event dPaintHandler PaintEvent;
 
     /// <summary>
-    /// Ячейки игрового поля
+    /// Объект класса, который отвечает за логику
+    /// выполнения ходов
     /// </summary>
-    private Cell[,] _cells;
+    private MoveRunner _moveRunner;
 
     /// <summary>
     /// Текущие игроки
@@ -48,7 +46,7 @@ namespace Model
     {
       get
       {
-        return _cells;
+        return _moveRunner.Cells;
       }
     }
 
@@ -68,34 +66,41 @@ namespace Model
     }
 
     /// <summary>
-    /// Конструктор игрового поля
+    /// Конструктор
     /// </summary>
-    /// <param name="parVerticalSize"></param>
-    /// <param name="parHorizontalSize"></param>
+    /// <param name="parVerticalSize">Вертикальный размер поля</param>
+    /// <param name="parHorizontalSize">Горизонтальный размер поля</param>
+    /// <param name="parPlayers">Список игроков</param>
     public GameField(int parVerticalSize, int parHorizontalSize, List<Player> parPlayers)
     {
-      _cells = new MapBuilder().BuildMap(parVerticalSize, parHorizontalSize, parPlayers);
+      _moveRunner = new MoveRunner(new MapBuilder().BuildMap(parVerticalSize, parHorizontalSize, parPlayers));
       _currentGameState = GameState.Select;
       _players = parPlayers;
       _currentPlayer = 0;
       _button = new Button(35.0f, 5.0f, 60.0f, 15.0f, "Complete atack");
     }
 
+    /// <summary>
+    /// Инициализирует игровое поле
+    /// </summary>
     public void Initialize()
     {
       PaintEvent?.Invoke();
     }
 
+    /// <summary>
+    /// Выбирает ячейку
+    /// </summary>
     private void SelectCell()
     {
-      Coords clickedCellCoords = GetFocusedCellCoords();
+      Cell clickedCell = GetFocusedCell();
 
-      if (clickedCellCoords != null)
+      if (clickedCell != null)
       {
         UnselectAllCells();
-        if (_cells[clickedCellCoords.I, clickedCellCoords.J]?.Owner == GetActivePlayer())
+        if (clickedCell?.Owner == GetActivePlayer())
         {
-          _cells[clickedCellCoords.I, clickedCellCoords.J].ActiveCell();
+          clickedCell.ActiveCell();
           _currentGameState = GameState.Atack;
         }
       }
@@ -103,32 +108,42 @@ namespace Model
       _button.CallPaintEvent();
     }
 
+    /// <summary>
+    /// Производит атаку на ячейку
+    /// </summary>
     private void AtackCell()
     {
-      Coords selectedCellCoords = GetSelectedCellCoords();
-      Coords clickedCellCoords = GetFocusedCellCoords();
+      Cell selectedCell = GetSelectedCell();
+      Cell clickedCell = GetFocusedCell();
 
-      if (selectedCellCoords != null && clickedCellCoords != null)
+      if (selectedCell != null && clickedCell != null)
       {
-        Move(selectedCellCoords.I, selectedCellCoords.J, clickedCellCoords.I, clickedCellCoords.J);
+        _moveRunner.Move(selectedCell, clickedCell, GetActivePlayer());
+      }
+      else
+      {
+        _currentGameState = GameState.Select;
       }
 
       PaintEvent?.Invoke();
       _button.CallPaintEvent();
     }
 
+    /// <summary>
+    /// Раздает очки
+    /// </summary>
     private void DistributeScore()
     {
-      Coords clickedCellCoords = GetFocusedCellCoords();
+      Cell clickedCellCoords = GetFocusedCell();
 
       if (null != clickedCellCoords)
       {
-        if (_cells[clickedCellCoords.I, clickedCellCoords.J].Owner == GetActivePlayer())
+        if (clickedCellCoords.Owner == GetActivePlayer())
         {
           if (GetActivePlayer().Score > 0)
           {
             GetActivePlayer().Score -= 1;
-            _cells[clickedCellCoords.I, clickedCellCoords.J].Score += 1;
+            clickedCellCoords.Score += 1;
           }
         }
         PaintEvent?.Invoke();
@@ -136,131 +151,28 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Снимает выделение со всех ячеек
+    /// </summary>
     private void UnselectAllCells()
     {
-      int rows = _cells.GetLength(0);
-      int colomns = _cells.GetLength(1);
+      int rows = Cells.GetLength(0);
+      int colomns = Cells.GetLength(1);
 
       for (int i = 0; i < rows; i++)
       {
         for (int j = 0; j < colomns; j++)
         {
-          if (_cells[i, j] != null)
+          if (Cells[i, j] != null)
           {
-            _cells[i, j].DisactiveCell();
+            Cells[i, j].DisactiveCell();
           }
         }
       }
     }
 
     /// <summary>
-    /// Выполнить занятие ячейки
-    /// </summary>
-    /// <param name="parSourceVerticalCoord"></param>
-    /// <param name="parSourceHorizontalCoord"></param>
-    /// <param name="parDestinationVerticalCoord"></param>
-    /// <param name="parDestinationHorizontalCoord"></param>
-    private void Move(int parSourceVerticalCoord, int parSourceHorizontalCoord,
-        int parDestinationVerticalCoord, int parDestinationHorizontalCoord)
-    {
-      if (IsMove(parSourceVerticalCoord, parSourceHorizontalCoord, parDestinationVerticalCoord, parDestinationHorizontalCoord)
-          && _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score >= 1
-          && _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].IsCellFree())
-      {
-        _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Owner = GetActivePlayer();
-        _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Score = _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score - 1;
-        _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score = 1;
-        _cells[parSourceVerticalCoord, parSourceHorizontalCoord].CellStatus = CellStatus.NotChoosed;
-        _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].CellStatus = CellStatus.Active;
-      }
-
-      if (IsMove(parSourceVerticalCoord, parSourceHorizontalCoord, parDestinationVerticalCoord, parDestinationHorizontalCoord)
-          && IsCellOccupied(parDestinationVerticalCoord, parDestinationHorizontalCoord))
-      {
-        if (_cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score
-            > _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Score)
-        {
-          _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score = 1;
-          _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Score
-              = _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score - 1
-              - _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Score;
-          _cells[parSourceVerticalCoord, parSourceHorizontalCoord].CellStatus = CellStatus.NotChoosed;
-          _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].CellStatus = CellStatus.Active;
-          _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Owner = GetActivePlayer();
-        }
-        else
-        {
-          _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Score = _cells[parDestinationVerticalCoord, parDestinationHorizontalCoord].Score - (_cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score - 1);
-          _cells[parSourceVerticalCoord, parSourceHorizontalCoord].Score = 1;
-        }
-      }
-    }
-
-    /// <summary>
-    /// Проверить, возможен ли ход из исходной ячейки
-    /// в ячейку назначения
-    /// </summary>
-    /// <param name="parSourceVerticalCoord"></param>
-    /// <param name="parSourceHorizontalCoord"></param>
-    /// <param name="parDestinationVerticalCoord"></param>
-    /// <param name="parDestinationHorizontalCoord"></param>
-    /// <returns></returns>
-    private bool IsMove(int parSourceVerticalCoord, int parSourceHorizontalCoord,
-        int parDestinationVerticalCoord, int parDestinationHorizontalCoord)
-    {
-      if (parDestinationHorizontalCoord < 0 || parDestinationVerticalCoord < 0)
-      {
-        return false;
-      }
-
-      if (parDestinationVerticalCoord > _cells.GetUpperBound(0) || parDestinationHorizontalCoord > _cells.GetUpperBound(1))
-      {
-        return false;
-      }
-
-      if (_cells[parDestinationVerticalCoord, parSourceHorizontalCoord] == null)
-      {
-        return false;
-      }
-
-      if ((parSourceHorizontalCoord + 1 == parDestinationHorizontalCoord) && (parSourceVerticalCoord == parDestinationVerticalCoord)
-        || (parSourceHorizontalCoord - 1 == parDestinationHorizontalCoord) && (parSourceVerticalCoord == parDestinationVerticalCoord))
-      {
-        return true;
-      }
-
-      if ((parSourceVerticalCoord + 1 == parDestinationVerticalCoord) && (parSourceHorizontalCoord == parDestinationHorizontalCoord)
-        || (parSourceVerticalCoord - 1 == parDestinationVerticalCoord) && (parSourceHorizontalCoord == parDestinationHorizontalCoord))
-      {
-        return true;
-      }
-
-      if ((parSourceVerticalCoord % 2 == 0) && (parSourceHorizontalCoord - 1 == parDestinationHorizontalCoord))
-      {
-        return true;
-      }
-
-      if ((parSourceVerticalCoord % 2 == 1) && (parSourceHorizontalCoord + 1 == parDestinationHorizontalCoord))
-      {
-        return true;
-      }
-
-      return false;
-    }    
-
-    /// <summary>
-    /// Проверить, занята ли ячейка другим игроком
-    /// </summary>
-    /// <param name="parVerticalCoord"></param>
-    /// <param name="parHorizontalCoord"></param>
-    /// <returns></returns>
-    private bool IsCellOccupied(int parVerticalCoord, int parHorizontalCoord)
-    {
-      return _cells[parVerticalCoord, parHorizontalCoord].Owner != GetActivePlayer();
-    }
-
-    /// <summary>
-    /// Передать ход следующему игроку
+    /// Передает ход следующему игроку
     /// </summary>
     private void PassMove()
     {
@@ -277,21 +189,26 @@ namespace Model
       _button.CallPaintEvent();
     }
 
-    private Coords GetFocusedCellCoords()
+    /// <summary>
+    /// Получает ячейку, на которую
+    /// наведен курсор
+    /// </summary>
+    /// <returns>Объект ячейки</returns>
+    private Cell GetFocusedCell()
     {
       Cursor cursor = Cursor.GetInstance();
-      int rows = _cells.GetUpperBound(0) + 1;
-      int colomns = _cells.GetUpperBound(1) + 1;
+      int rows = Cells.GetUpperBound(0) + 1;
+      int colomns = Cells.GetUpperBound(1) + 1;
       for (int i = 0; i < rows; i++)
       {
         for (int j = 0; j < colomns; j++)
         {
-          if (null != _cells[i, j])
+          if (null != Cells[i, j])
           {
-            if ((cursor.X >= _cells[i, j].X - 1.5f) && (cursor.Y >= _cells[i, j].Y - 1.5f)
-                && (cursor.X <= _cells[i, j].X + 1.5f) && (cursor.Y <= _cells[i, j].Y + 1.5f))
+            if ((cursor.X >= Cells[i, j].X - 1.5f) && (cursor.Y >= Cells[i, j].Y - 1.5f)
+                && (cursor.X <= Cells[i, j].X + 1.5f) && (cursor.Y <= Cells[i, j].Y + 1.5f))
             {
-              return new Coords(i, j);
+              return Cells[i, j];
             }
           }
         }
@@ -300,19 +217,23 @@ namespace Model
       return null;
     }
 
-    private Coords GetSelectedCellCoords()
+    /// <summary>
+    /// Получает выбранную ячейку
+    /// </summary>
+    /// <returns>Объект ячейки</returns>
+    private Cell GetSelectedCell()
     {
-      int rows = _cells.GetUpperBound(0) + 1;
-      int colomns = _cells.GetUpperBound(1) + 1;
+      int rows = Cells.GetLength(0);
+      int colomns = Cells.GetLength(1);
       for (int i = 0; i < rows; i++)
       {
         for (int j = 0; j < colomns; j++)
         {
-          if (null != _cells[i, j])
+          if (null != Cells[i, j])
           {
-            if (_cells[i, j].CellStatus == CellStatus.Active)
+            if (Cells[i, j].CellStatus == CellStatuses.Active)
             {
-              return new Coords(i, j);
+              return Cells[i, j];
             }
           }
         }
@@ -321,18 +242,23 @@ namespace Model
       return null;
     }
 
+    /// <summary>
+    /// Получает число ячеек игрока
+    /// </summary>
+    /// <param name="parPlayer">Объект игрока</param>
+    /// <returns>Число ячеек</returns>
     private int GetPlayerNumOfCells(Player parPlayer)
     {
       int result = 0;
-      int rows = _cells.GetUpperBound(0) + 1;
-      int colomns = _cells.GetUpperBound(1) + 1;
+      int rows = Cells.GetLength(0);
+      int colomns = Cells.GetLength(1);
       for (int i = 0; i < rows; i++)
       {
         for (int j = 0; j < colomns; j++)
         {
-          if (null != _cells[i, j])
+          if (null != Cells[i, j])
           {
-            if (_cells[i, j].Owner == parPlayer)
+            if (Cells[i, j].Owner == parPlayer)
             {
               result++;
             }
@@ -343,6 +269,9 @@ namespace Model
       return result;
     }
 
+    /// <summary>
+    /// Завершает атаку или передает ход
+    /// </summary>
     public void CompleteAtackOrPassMove()
     {
       switch (_currentGameState)
@@ -364,6 +293,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Выполняет одно из игровых действий
+    /// </summary>
     public void PerformGameAction()
     {
       switch (_currentGameState)
@@ -380,12 +312,20 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Вычисляет счет текущего игрока
+    /// </summary>
+    /// <returns>Счет текущего игрока</returns>
     private int CalculateScorePlayer()
     {
       int scorePlayer = GetPlayerNumOfCells(GetActivePlayer());
       return scorePlayer;
     }
 
+    /// <summary>
+    /// Возвращает текущего игрока
+    /// </summary>
+    /// <returns>Текущий игрок</returns>
     public Player GetActivePlayer()
     {
       return _players[_currentPlayer];
