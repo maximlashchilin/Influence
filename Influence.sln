@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "View\View.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controller", "Controller\Controller.csproj", "{1C1A78AD-126E-4EED-9DDC-90C73A475E36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestModel", "UnitTestModel\UnitTestModel.csproj", "{11051A87-F75B-45FD-9E79-24C75A868301}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfluenceForms", "InfluenceForms\InfluenceForms.csproj", "{90DE3855-5713-46B6-8B2C-A8689221933B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsView", "WinFormsView\WinFormsView.csproj", "{4210846F-ABA4-4599-9CBB-ADF03F26A87F}"
@@ -31,6 +33,10 @@ Global
 		{1C1A78AD-126E-4EED-9DDC-90C73A475E36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C1A78AD-126E-4EED-9DDC-90C73A475E36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C1A78AD-126E-4EED-9DDC-90C73A475E36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11051A87-F75B-45FD-9E79-24C75A868301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11051A87-F75B-45FD-9E79-24C75A868301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11051A87-F75B-45FD-9E79-24C75A868301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11051A87-F75B-45FD-9E79-24C75A868301}.Release|Any CPU.Build.0 = Release|Any CPU
 		{90DE3855-5713-46B6-8B2C-A8689221933B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{90DE3855-5713-46B6-8B2C-A8689221933B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90DE3855-5713-46B6-8B2C-A8689221933B}.Release|Any CPU.ActiveCfg = Release|Any CPU

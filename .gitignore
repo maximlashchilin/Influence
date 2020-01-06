@@ -5,6 +5,9 @@
 /Model/obj
 /View/bin
 /View/obj
+/UnitTestModel/bin
+/UnitTestModel/obj
+/TestResults/
 /WinFormsView/bin
 /WinFormsView/obj
 /InfluenceForms/bin
