@@ -39,7 +39,7 @@ namespace Controller
     /// <param name="parE">Параметры события</param>
     private void OnEscDown(object parSender, EventArgs parE)
     {
-      CallChangeState(this, new ChangeStateArgs(new FactoryOfMenuControllers(), ApplicationState.MenuWork));
+      CallChangeState(this, new ChangeStateArgs(new FactoryOfMenuControllers(), ApplicationStates.MenuWork));
     }
 
     public override void Start()

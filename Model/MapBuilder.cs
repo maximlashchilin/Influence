@@ -21,6 +21,12 @@ namespace Model
       return map;
     }
 
+    /// <summary>
+    /// Создает массив игровых ячеек
+    /// </summary>
+    /// <param name="parVerticalSize">Вертикальный размер массива</param>
+    /// <param name="parHorizontalSize">Горизонтальный размер массива</param>
+    /// <returns>Массив ячеек</returns>
     private Cell[,] CreateGameCells(int parVerticalSize, int parHorizontalSize)
     {
       const int DELTA = 10;
@@ -39,10 +45,14 @@ namespace Model
           if (i % 2 == 0)
           {
             cells[i, j] = new Cell(j * DELTA + Y + Y_SHIFT, i * DELTA + X);
+            cells[i, j].I = i;
+            cells[i, j].J = j;
           }
           else
           {
             cells[i, j] = new Cell(j * DELTA + Y, i * DELTA + X);
+            cells[i, j].I = i;
+            cells[i, j].J = j;
           }
         }
       }
@@ -58,6 +68,12 @@ namespace Model
       return cells;
     }
 
+    /// <summary>
+    /// Устанавливает игроков для первоначальных ячеек
+    /// </summary>
+    /// <param name="parCells">Массив ячеек</param>
+    /// <param name="parPlayers">Список игроков</param>
+    /// <returns>Массив ячеек</returns>
     private Cell[,] SetPlayers(Cell[,] parCells, List<Player> parPlayers)
     {
       Cell[,] map = parCells;

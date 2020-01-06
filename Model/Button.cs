@@ -1,27 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model
 {
+  /// <summary>
+  /// Кнопка
+  /// </summary>
   public class Button
   {
-    private string _name;
-
-    private float _x1;
-
-    private float _y1;
-
-    private float _x2;
-
-    private float _y2;
-
+    /// <summary>
+    /// Событие нажатия на кнопку
+    /// </summary>
     public event EventHandler Click;
 
+    /// <summary>
+    /// Событие перерисовки кнопки
+    /// </summary>
     public event dPaintHandler PaintEvent;
 
+    /// <summary>
+    /// Название кнопки
+    /// </summary>
+    private string _name;
+
+    /// <summary>
+    /// Координата X1
+    /// </summary>
+    private float _x1;
+
+    /// <summary>
+    /// Координата Y1
+    /// </summary>
+    private float _y1;
+
+    /// <summary>
+    /// Координата X2
+    /// </summary>
+    private float _x2;
+
+    /// <summary>
+    /// Координата Y2
+    /// </summary>
+    private float _y2;
+
+    /// <summary>
+    /// Название кнопки
+    /// </summary>
     public string Name
     {
       get
@@ -34,6 +57,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Координата X1
+    /// </summary>
     public float X1
     {
       get
@@ -46,6 +72,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Координата Y1
+    /// </summary>
     public float Y1
     {
       get
@@ -58,6 +87,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Координата X2
+    /// </summary>
     public float X2
     {
       get
@@ -70,6 +102,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Координата Y2
+    /// </summary>
     public float Y2
     {
       get
@@ -82,6 +117,14 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
+    /// <param name="parName">Название</param>
     public Button(float parX1, float parY1, float parX2, float parY2, string parName)
     {
       _x1 = parX1;
@@ -91,6 +134,9 @@ namespace Model
       _name = parName;
     }
 
+    /// <summary>
+    /// Вызывает событие нажатия на кнопку
+    /// </summary>
     public void CallClick()
     {
       Cursor cursor = Cursor.GetInstance();
@@ -101,6 +147,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Вызывает событие перерисовки
+    /// </summary>
     public void CallPaintEvent()
     {
       PaintEvent?.Invoke();

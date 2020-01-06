@@ -1,19 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Model
 {
+  /// <summary>
+  /// Отвечает за ввод игроков
+  /// </summary>
   public class EnterOfPlayers
   {
+    /// <summary>
+    /// Событие перерисовки
+    /// </summary>
     public event dPaintHandler PaintEvent;
 
+    /// <summary>
+    /// Список текстовых полей
+    /// </summary>
     private List<TextField> _playersFields;
 
+    /// <summary>
+    /// Объект кнопки
+    /// </summary>
     private Button _button;
 
+    /// <summary>
+    /// Список текстовых полей
+    /// </summary>
     public List<TextField> NamesOfPlayers
     {
       get
@@ -22,6 +33,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
     public EnterOfPlayers()
     {
       _button = new Button(42.0f, 80.0f, 55.0f, 95.0f, "Next");
@@ -31,11 +45,17 @@ namespace Model
       _playersFields[0].ItemStatus = ItemStatuses.Selected;
     }
 
+    /// <summary>
+    /// Инициализирует ввод имен игроков
+    /// </summary>
     public void Initialize()
     {
       PaintEvent?.Invoke();
     }
 
+    /// <summary>
+    /// Переводит фокус на следующее текстовое поле
+    /// </summary>
     public void Next()
     {
       for (int i = 0; i < _playersFields.Count; i++)
@@ -60,6 +80,9 @@ namespace Model
       PaintEvent?.Invoke();
     }
 
+    /// <summary>
+    /// Переводит фокус на предыдущее текстовое поле
+    /// </summary>
     public void Previous()
     {
       for (int i = 0; i < _playersFields.Count; i++)

@@ -45,7 +45,7 @@ namespace Controller
 
     private void OnEscDown(object sender, EventArgs e)
     {
-      CallChangeState(this, new ChangeStateArgs(new FactoryOfMenuControllers(), ApplicationState.MenuWork));
+      CallChangeState(this, new ChangeStateArgs(new FactoryOfMenuControllers(), ApplicationStates.MenuWork));
     }
 
     /// <summary>

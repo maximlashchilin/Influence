@@ -11,6 +11,9 @@ namespace Model
   /// </summary>
   public class Cursor
   {
+    /// <summary>
+    /// Объект курсора
+    /// </summary>
     private static Cursor _instance;
 
     /// <summary>
@@ -51,7 +54,7 @@ namespace Model
     }
 
     /// <summary>
-    /// Конструктор курсора
+    /// Конструктор
     /// </summary>
     /// <param name="parX">Координата X</param>
     /// <param name="parY">Координата Y</param>
@@ -61,6 +64,10 @@ namespace Model
       _y = parY;
     }
 
+    /// <summary>
+    /// Получает экземпляр курсора
+    /// </summary>
+    /// <returns>Объект курсора</returns>
     public static Cursor GetInstance()
     {
       if (null == _instance)
