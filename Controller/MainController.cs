@@ -58,8 +58,9 @@ namespace Controller
       _currentState = ApplicationStates.MenuWork;
       _previousState = _currentState;
       _currentFactoryOfControllers = new FactoryOfMenuControllers();
-      _mainControllerThread = new Thread(ProcessCurrentStatus);
-      _mainControllerThread.Start();
+      //_mainControllerThread = new Thread(ProcessCurrentStatus);
+      //_mainControllerThread.Start();
+      ProcessCurrentStatus();
       _platform.Initialize();
     }
 
@@ -69,9 +70,9 @@ namespace Controller
     private void ProcessCurrentStatus()
     {
       ChangeState(_currentState, _currentFactoryOfControllers);
-      while (_currentState != ApplicationStates.Exit)
+      //while (_currentState != ApplicationStates.Exit)
       {
-        if (_previousState != _currentState)
+        //if (_previousState != _currentState)
         {
         //  ChangeState(_currentState, _currentFactoryOfControllers);
         }
