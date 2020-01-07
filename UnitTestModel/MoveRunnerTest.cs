@@ -75,11 +75,15 @@ namespace UnitTestModel
       Assert.IsFalse(result);
     }
 
+    /// <summary>
+    /// Подготавливает список игроков
+    /// </summary>
+    /// <returns>Список игроков</returns>
     private List<Player> ReadyPlayers()
     {
       List<Player> testPlayers = new List<Player>();
-      testPlayers.Add(new Player("Player1", ItemColor.Red));
-      testPlayers.Add(new Player("Player2", ItemColor.Green));
+      testPlayers.Add(new Player("Player1", ItemColors.Red));
+      testPlayers.Add(new Player("Player2", ItemColors.Green));
 
       return testPlayers;
     }

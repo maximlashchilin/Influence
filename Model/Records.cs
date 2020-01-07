@@ -4,16 +4,34 @@ using System.IO;
 
 namespace Model
 {
+  /// <summary>
+  /// Отвечает за просмотр рекордов
+  /// </summary>
   public class Records
   {
+    /// <summary>
+    /// Событие перерисовки
+    /// </summary>
     public event dPaintHandler PaintEvent;
 
+    /// <summary>
+    /// Число выводимых результатов
+    /// </summary>
     private const int NUM_OF_RECORDS = 5;
 
+    /// <summary>
+    /// Имя файла
+    /// </summary>
     private const string DEFAULT_FILENAME = "Records.txt";
 
+    /// <summary>
+    /// Список результатов
+    /// </summary>
     private List<string> _bestResults;
 
+    /// <summary>
+    /// Список результатов
+    /// </summary>
     public List<string> BestResults
     {
       get
@@ -26,6 +44,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Инициализирует просмотре рекордов
+    /// </summary>
     public void Initialize()
     {
       _bestResults = ReadTextFromFile(DEFAULT_FILENAME);
@@ -35,10 +56,15 @@ namespace Model
       PaintEvent?.Invoke();
     }
 
+    /// <summary>
+    /// Читает текст из файла
+    /// </summary>
+    /// <param name="parFileName">Имя файла</param>
+    /// <returns>Список строк</returns>
     private List<string> ReadTextFromFile(string parFileName)
     {
       List<string> result = new List<string>();
-      using (StreamWriter writer = new StreamWriter(parFileName, true)) { writer.Close(); }
+      //using (StreamWriter writer = new StreamWriter(parFileName, true)) { writer.Close(); }
       using (StreamReader reader = new StreamReader(parFileName))
       {
         string currentString = reader.ReadToEnd();
@@ -55,6 +81,10 @@ namespace Model
       return result;
     }
 
+    /// <summary>
+    /// Фильтрует результаты
+    /// </summary>
+    /// <param name="parRecords">Список результатов</param>
     private void FilterBestResults(List<string> parRecords)
     {
       parRecords.Sort();

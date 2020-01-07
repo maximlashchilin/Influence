@@ -1,40 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model
+﻿namespace Model
 {
   /// <summary>
   /// Элемент меню
   /// </summary>
   public class MenuItem
   {
-    #region Поля класса
     /// <summary>
     /// Идентификатор элемента меню
     /// </summary>
     private int _id;
+
     /// <summary>
     /// Название элемента меню
     /// </summary>
     private string _name;
+
     /// <summary>
     /// Статус элемента меню
     /// </summary>
     private ItemStatuses _menuItemStatus;
-    /// <summary>
-    /// 
-    /// </summary>
-    public delegate void dChangeStatusHandler();
-    /// <summary>
-    /// Событие изменения статуса элемента
-    /// </summary>
-    public event dChangeStatusHandler ChangeStatus;
-    #endregion
 
-    #region Свойства класса
+    /// <summary>
+    /// Идентификатор элемента меню
+    /// </summary>
     public int Id
     {
       get
@@ -44,7 +32,7 @@ namespace Model
     }
 
     /// <summary>
-    /// 
+    /// Название элемента меню
     /// </summary>
     public string Name
     {
@@ -53,6 +41,10 @@ namespace Model
         return _name;
       }
     }
+
+    /// <summary>
+    /// Статус элемента меню
+    /// </summary>
     public ItemStatuses MenuItemStatus
     {
       get
@@ -64,27 +56,16 @@ namespace Model
         _menuItemStatus = value;
       }
     }
-    #endregion
 
-    #region Конструктор класса
     /// <summary>
-    /// 
+    /// Конструктор
     /// </summary>
-    /// <param name="parId"></param>
-    /// <param name="parName"></param>
+    /// <param name="parId">Идентификатор</param>
+    /// <param name="parName">Название элемента</param>
     public MenuItem(int parId, string parName)
     {
       _id = parId;
       _name = parName;
-    }
-    #endregion
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void CallChangeStatus()
-    {
-      ChangeStatus?.Invoke();
     }
   }
 }

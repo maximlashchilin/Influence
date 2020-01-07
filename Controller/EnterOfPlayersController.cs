@@ -43,7 +43,12 @@ namespace Controller
       parPlatform.EscDown += OnEscDown;
     }
 
-    private void OnEscDown(object sender, EventArgs e)
+    /// <summary>
+    /// Обрабатывает нажатие Esc
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
+    private void OnEscDown(object parSender, EventArgs parE)
     {
       CallChangeState(this, new ChangeStateArgs(new FactoryOfMenuControllers(), ApplicationStates.MenuWork));
     }
@@ -53,7 +58,7 @@ namespace Controller
     /// </summary>
     /// <param name="parPlatform">Платформа</param>
     /// <param name="parTextFields">Текстовые поля</param>
-    /// <returns></returns>
+    /// <returns>Список контроллеров текстовых полей</returns>
     private List<TextFieldController> InitizlizeTextFieldControllers(Platform parPlatform, List<TextField> parTextFields)
     {
       List<TextFieldController> controllers = new List<TextFieldController>();
@@ -65,6 +70,10 @@ namespace Controller
       return controllers;
     }
 
+    /// <summary>
+    /// Получает представления текстовых полей
+    /// </summary>
+    /// <returns>Список представлений текстовых полей</returns>
     private List<TextFieldView> GetTextFieldViews()
     {
       List<TextFieldView> views = new List<TextFieldView>();
@@ -79,13 +88,13 @@ namespace Controller
     /// <summary>
     /// Обрабатывает нажатие кнопки Enter
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parE">Параметры события</param>
     private void OnEnterDown(object parSender, EventArgs parE)
     {
       List<Player> players = new List<Player>();
-      players.Add(new Player(_enterOfPlayers.NamesOfPlayers[0].Text, ItemColor.Red));
-      players.Add(new Player(_enterOfPlayers.NamesOfPlayers[1].Text, ItemColor.Green));
+      players.Add(new Player(_enterOfPlayers.NamesOfPlayers[0].Text, ItemColors.Red));
+      players.Add(new Player(_enterOfPlayers.NamesOfPlayers[1].Text, ItemColors.Green));
 
       CompleteEnterOfPlayers(this, new CompleteEnterOfPlayersArgs(players));
     }
@@ -93,7 +102,7 @@ namespace Controller
     /// <summary>
     /// Обрабатывает нажатие стрелки вниз
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parE">Параметры события</param>
     private void OnArrowDown(object parSender, EventArgs parE)
     {
@@ -103,16 +112,11 @@ namespace Controller
     /// <summary>
     /// Обрабатывает нажатие стрелки вверх
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parE">Параметры события</param>
     private void OnArrowUp(object parSender, EventArgs parE)
     {
       _enterOfPlayers.Previous();
-    }
-
-    public override void Start()
-    {
-      throw new NotImplementedException();
     }
   }
 }

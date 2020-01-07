@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Model;
+﻿using Model;
 using View;
 using Controller.FactoriesOfGameStateControllers;
 
@@ -21,11 +20,6 @@ namespace Controller
     private ApplicationStates _currentState;
 
     /// <summary>
-    /// Предыдущее состояние
-    /// </summary>
-    private ApplicationStates _previousState;
-
-    /// <summary>
     /// Экземпляр текущего контроллера состояния
     /// приложения
     /// </summary>
@@ -35,11 +29,6 @@ namespace Controller
     /// Экземпляр текущей фабрики контроллера
     /// </summary>
     private FactoryOfContollers _currentFactoryOfControllers;
-
-    /// <summary>
-    /// Поток главного контроллера
-    /// </summary>
-    private Thread _mainControllerThread;
 
     /// <summary>
     /// Конструктор
@@ -56,27 +45,9 @@ namespace Controller
     public void Start()
     {
       _currentState = ApplicationStates.MenuWork;
-      _previousState = _currentState;
       _currentFactoryOfControllers = new FactoryOfMenuControllers();
-      //_mainControllerThread = new Thread(ProcessCurrentStatus);
-      //_mainControllerThread.Start();
-      ProcessCurrentStatus();
-      _platform.Initialize();
-    }
-
-    /// <summary>
-    /// Обрабатывает текущее состояние приложения
-    /// </summary>
-    private void ProcessCurrentStatus()
-    {
       ChangeState(_currentState, _currentFactoryOfControllers);
-      //while (_currentState != ApplicationStates.Exit)
-      {
-        //if (_previousState != _currentState)
-        {
-        //  ChangeState(_currentState, _currentFactoryOfControllers);
-        }
-      }
+      _platform.Initialize();
     }
 
     /// <summary>
@@ -86,7 +57,6 @@ namespace Controller
     /// <param name="parFactoryOfContollers">Фабрика контроллера</param>
     private void ChangeState(ApplicationStates parState, FactoryOfContollers parFactoryOfContollers)
     { 
-      _previousState = _currentState;
       _currentState = parState;
       _currentFactoryOfControllers = parFactoryOfContollers;
       if (parState != ApplicationStates.Exit)

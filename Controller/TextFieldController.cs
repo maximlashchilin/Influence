@@ -18,7 +18,7 @@ namespace Controller
     /// Конструктор
     /// </summary>
     /// <param name="parTextField">Текстовое поле</param>
-    /// <param name="parPlatform">Платформа</param>
+    /// <param name="parPlatform">Объект платформы</param>
     public TextFieldController(TextField parTextField, Platform parPlatform)
     {
       _textField = parTextField;
@@ -31,21 +31,21 @@ namespace Controller
     /// <summary>
     /// Обрабатывает событие нажатия клавиши
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void OnKeyDown(object sender, KeyDownEventArgs e)
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
+    private void OnKeyDown(object parSender, KeyDownEventArgs parE)
     {
-      _textField.AddChar(e.InputChar);
+      _textField.AddChar(parE.InputChar);
     }
 
-    private void OnBackspaceDown(object sender, EventArgs e)
+    /// <summary>
+    /// Обрабатывает нажатие Backspace
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
+    private void OnBackspaceDown(object parSender, EventArgs parE)
     {
       _textField.DeleteLastChar();
-    }
-
-    public override void Start()
-    {
-      throw new NotImplementedException();
     }
   }
 }

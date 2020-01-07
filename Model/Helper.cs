@@ -4,12 +4,24 @@ using System.IO;
 
 namespace Model
 {
+  /// <summary>
+  /// Справки
+  /// </summary>
   public class Helper
   {
+    /// <summary>
+    /// Событие перерисовки
+    /// </summary>
     public event dPaintHandler PaintEvent;
 
+    /// <summary>
+    /// Имя файла
+    /// </summary>
     private const string HELP_FILE = "Help.txt";
 
+    /// <summary>
+    /// 
+    /// </summary>
     private List<string> _helpText;
 
     public List<string> HelpText

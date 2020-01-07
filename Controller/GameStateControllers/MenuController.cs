@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Model;
 using View;
 
@@ -44,11 +42,6 @@ namespace Controller
       SubscribeOnChangeState();
     }
 
-    public override void Start()
-    {
-      
-    }
-
     /// <summary>
     /// Инициализирует контроллеры элементов меню
     /// </summary>
@@ -79,19 +72,9 @@ namespace Controller
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="parSender"></param>
-    /// <param name="parEventArgs"></param>
-    private void OnMove(object parSender, MoveEventArgs parEventArgs)
-    {
-
-    }
-
-    /// <summary>
     /// Обрабатывает нажатие стрелки вверх
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parEventArgs">Параметры события</param>
     private void OnArrowUp(object parSender, EventArgs parEventArgs)
     {

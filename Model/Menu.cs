@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Model
 {
@@ -11,6 +7,11 @@ namespace Model
   /// </summary>
   public class Menu
   {
+    /// <summary>
+    /// Событие перерисовки
+    /// </summary>
+    public event dPaintHandler PaintEvent;
+
     /// <summary>
     /// Название меню
     /// </summary>
@@ -22,12 +23,8 @@ namespace Model
     private SortedList<int, MenuItem> _menuItems = new SortedList<int, MenuItem>();
 
     /// <summary>
-    /// 
+    /// Название меню
     /// </summary>
-    public delegate void dChangeSelectedElement();
-
-    public event dChangeSelectedElement ChangeStateEvent;
-
     public string Name
     {
       get
@@ -36,6 +33,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Список пунктов меню
+    /// </summary>
     public SortedList<int, MenuItem> MenuItems
     {
       get
@@ -48,16 +48,28 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parName">Название меню</param>
     public Menu(string parName)
     {
       _name = parName;
     }
 
+    /// <summary>
+    /// Инициализирует меню
+    /// </summary>
     public void Initialize()
     {
-      ChangeStateEvent?.Invoke();
+      PaintEvent?.Invoke();
     }
 
+    /// <summary>
+    /// Добавляет элемент в меню
+    /// </summary>
+    /// <param name="parId">Идентификатор</param>
+    /// <param name="parName">Название пункта</param>
     public void AddItem(int parId, string parName)
     {
       if (null != parName)
@@ -74,6 +86,9 @@ namespace Model
       }
     }
 
+    /// <summary>
+    /// Переводит фокус на следующиий элемент меню
+    /// </summary>
     public void Next()
     {
       for (int i = 0; i < _menuItems.Count; i++)
@@ -95,9 +110,12 @@ namespace Model
         }
       }
 
-      ChangeStateEvent?.Invoke();
+      PaintEvent?.Invoke();
     }
 
+    /// <summary>
+    /// Переводит фокус на предыдущий элемент меню
+    /// </summary>
     public void Previous()
     {
       for (int i = 0; i < _menuItems.Count; i++)
@@ -119,7 +137,7 @@ namespace Model
         }
       }
 
-      ChangeStateEvent?.Invoke();
+      PaintEvent?.Invoke();
     }
   }
 }

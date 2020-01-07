@@ -12,6 +12,7 @@ namespace Model
     /// </summary>
     /// <param name="parVerticalSize">Вертикальный размер</param>
     /// <param name="parHorizontalSize">Горизонтальный размер</param>
+    /// <param name="parPlayers">Список игроков</param>
     /// <returns>Массив игровых ячеек</returns>
     public Cell[,] BuildMap(int parVerticalSize, int parHorizontalSize, List<Player> parPlayers)
     {

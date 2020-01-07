@@ -24,19 +24,13 @@ namespace Controller
     {
       _menuItem = parMenuItem;
       parPlatform.EnterDown += OnEnter;
-      parPlatform.Click += OnClick;
-    }
-
-    public override void Start()
-    {
-      throw new NotImplementedException();
     }
 
     /// <summary>
     /// Обрабатывает событие нажатия клавиши Enter
     /// </summary>
-    /// <param name="parSender"></param>
-    /// <param name="parE"></param>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
     private void OnEnter(object parSender, EventArgs parE)
     {
       if (_menuItem.MenuItemStatus == ItemStatuses.Selected)
@@ -57,11 +51,6 @@ namespace Controller
             break;
         }
       }
-    }
-
-    private void OnClick(object parSender, EventArgs parE)
-    {
-
     }
   }
 }
