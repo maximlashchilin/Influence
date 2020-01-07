@@ -36,8 +36,11 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(800, 450);
       this.DoubleBuffered = true;
+      this.MaximizeBox = false;
+      this.MinimizeBox = false;
       this.Name = "AppForm";
       this.Text = "AppForm";
+      this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
       this.ResumeLayout(false);
 
     }

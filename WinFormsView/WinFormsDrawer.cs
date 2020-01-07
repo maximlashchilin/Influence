@@ -1,26 +1,40 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Threading;
 
 namespace WinFormsView
 {
+  /// <summary>
+  /// Отвечает за перерисовку формы
+  /// </summary>
   public class WinFormsDrawer
   {
+    /// <summary>
+    /// Объект формы
+    /// </summary>
     private AppForm _appForm;
 
-    //private Timer _timer;
+    /// <summary>
+    /// Поток вызова события перерисовки
+    /// </summary>
+    private Thread _paintThread;
 
-    private Thread thread;
+    /// <summary>
+    /// Признак работы потока
+    /// </summary>
+    private bool _isRun;
 
-    private bool isRun;
+    private object _syncObj = new object();
 
     /// <summary>
     /// Объект буферной графики
     /// </summary>
     private BufferedGraphics _bufferedDrawer;
 
+    /// <summary>
+    /// Объект формы
+    /// </summary>
     public AppForm AppForm
     {
       get
@@ -29,6 +43,9 @@ namespace WinFormsView
       }
     }
 
+    /// <summary>
+    /// Объект Graphics
+    /// </summary>
     public Graphics Graphics
     {
       get
@@ -37,11 +54,18 @@ namespace WinFormsView
       }
     }
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parAppForm">Объект формы</param>
     public WinFormsDrawer(AppForm parAppForm)
     {
       _appForm = parAppForm;
     }
 
+    /// <summary>
+    /// Инициализирует WinFormsDrawer
+    /// </summary>
     public void Initialize()
     {
       _appForm.Text = "Influence";
@@ -52,41 +76,43 @@ namespace WinFormsView
       BufferedGraphicsContext context = new BufferedGraphicsContext();
       _bufferedDrawer = context.Allocate(drawer, new Rectangle(0, 0, _appForm.ClientSize.Width, _appForm.ClientSize.Height));
 
+      _paintThread = new Thread(CallPaint);
+      _isRun = true;      
+
       _appForm.Paint += OnPaint;
-      _appForm.FormClosing += _appForm_FormClosing;
-      thread = new Thread(CallP);
-      isRun = true;
-      thread.Start();
-    //  _timer = new Timer()
-    //  {
-    //    Interval = 10
-    //};
-      //_timer.Tick += CallPaint;
-      //_timer.Start();
+      _appForm.FormClosing += OnFormClosing;
+      _appForm.Shown += OnShown;
     }
 
-    private void _appForm_FormClosing(object sender, FormClosingEventArgs e)
+    private void OnShown(object sender, System.EventArgs e)
     {
-      isRun = false;
+      _paintThread.Start();
+    }
+
+
+    /// <summary>
+    /// Обрабатывает событие FormClosing
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
+    private void OnFormClosing(object parSender, FormClosingEventArgs parE)
+    {
+      _isRun = false;
     }
 
     /// <summary>
-    /// Вызывает событие перерисовки
+    /// Вызывает событие перерисовки формы
+    /// в потоке
     /// </summary>
-    private void CallPaint(object parSender, EventArgs parE)
+    private void CallPaint()
     {
-      lock (this)
+      while (_isRun)
       {
-
-      }
+        lock (_syncObj)
+        {
           _appForm.Invalidate();
-    }
-
-    private void CallP()
-    {
-      while (isRun)
-      {
-        _appForm.Invalidate();
+          Thread.Sleep(10);
+        }
       }
     }
 

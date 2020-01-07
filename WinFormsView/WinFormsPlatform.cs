@@ -14,13 +14,16 @@ namespace WinFormsView
     /// <summary>
     /// Шрифт по умолчанию
     /// </summary>
-    private static readonly Font DEFAULT_FONT = new Font(FontFamily.GenericSansSerif, 18, FontStyle.Bold);
+    private static readonly Font DEFAULT_FONT = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
 
     /// <summary>
     /// Шрифт для цифр
     /// </summary>
     private static readonly Font NUMBER_FONT = new Font(FontFamily.GenericSansSerif, 8, FontStyle.Bold);
 
+    /// <summary>
+    /// Объект класса WinFormsDrawer
+    /// </summary>
     private WinFormsDrawer _winFormsDrawer;
 
     /// <summary>
@@ -30,6 +33,8 @@ namespace WinFormsView
     {
       _winFormsDrawer = new WinFormsDrawer(new AppForm());
       _winFormsDrawer.Initialize();
+      WidthPlatform = _winFormsDrawer.AppForm.ClientSize.Width;
+      HeightPlatform = _winFormsDrawer.AppForm.ClientSize.Height;
       _winFormsDrawer.AppForm.Click += OnClick;
       _winFormsDrawer.AppForm.MouseMove += OnMouseMove;
       _winFormsDrawer.AppForm.KeyDown += OnKeyDown;
@@ -54,6 +59,12 @@ namespace WinFormsView
         case Keys.Enter:
           CallEnterDown();
           break;
+        case Keys.Back:
+          CallBackspaceDown();
+          break;
+        case Keys.Escape:
+          CallEscDown();
+          break;
       }
 
       if (parE.KeyCode >= Keys.A && parE.KeyCode <= Keys.Z)
@@ -77,7 +88,7 @@ namespace WinFormsView
     /// <param name="parY">Координата Y</param>
     /// <param name="parScore">Счёт</param>
     /// <param name="parColor">Цвет</param>
-    public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColor parColor)
+    public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColors parColor)
     {
       int x = TranslateBaseXToPlatformX(parX);
       int y = TranslateBaseYToPlatformY(parY);
@@ -99,15 +110,15 @@ namespace WinFormsView
     /// </summary>
     /// <param name="parColor">Цвет элемента</param>
     /// <returns>Объект Brush</returns>
-    private Brush GetPenWithColor(ItemColor parColor)
+    private Brush GetPenWithColor(ItemColors parColor)
     {
       switch (parColor)
       {
-        case ItemColor.Red:
+        case ItemColors.Red:
           return Brushes.Red;
-        case ItemColor.Green:
+        case ItemColors.Green:
           return Brushes.Green;
-        case ItemColor.Default:
+        case ItemColors.Default:
         default:
           return Brushes.Gray;
       }
@@ -115,7 +126,9 @@ namespace WinFormsView
 
     public override void DrawRectangle(float parX1, float parY1, float parX2, float parY2)
     {
-      throw new NotImplementedException();
+      float width = TranslateBaseXToPlatformX(parX2) - TranslateBaseXToPlatformX(parX1);
+      float height = TranslateBaseYToPlatformY(parY2) - TranslateBaseYToPlatformY(parY1);
+      _winFormsDrawer.Graphics.DrawRectangle(Pens.Black, TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1), width, height);
     }
 
     /// <summary>
@@ -124,7 +137,7 @@ namespace WinFormsView
     public override void Drop()
     {
       Application.Exit();
-      Environment.Exit(0);
+      //Environment.Exit(0);
     }
 
     /// <summary>
@@ -132,8 +145,6 @@ namespace WinFormsView
     /// </summary>
     public override void Initialize()
     {
-      WidthPlatform = _winFormsDrawer.AppForm.ClientSize.Width;
-      HeightPlatform = _winFormsDrawer.AppForm.ClientSize.Height;
       Application.Run(_winFormsDrawer.AppForm);
     }
 
@@ -152,7 +163,7 @@ namespace WinFormsView
       if (parCursorVisible)
       {
         Pen pen = Pens.Black;
-        _winFormsDrawer.Graphics.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY2)));
+        _winFormsDrawer.Graphics.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 16, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 16, TranslateBaseYToPlatformY(parY2)));
       }
     }
 
@@ -178,11 +189,14 @@ namespace WinFormsView
     /// <param name="parCursorVisible"></param>
     public override void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
-      _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Black, TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1));
+      DrawRectangle(parX1, parY1, parX2, parY2);
+      float width = TranslateBaseXToPlatformX(parX2) - TranslateBaseXToPlatformX(parX1);
+      float height = TranslateBaseYToPlatformY(parY2) - TranslateBaseYToPlatformY(parY1);
+      _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Black, TranslateBaseXToPlatformX(parX1) + width / 2, TranslateBaseYToPlatformY(parY1));
       if (parCursorVisible)
       {
         Pen pen = Pens.Black;
-        _winFormsDrawer.Graphics.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY2)));
+        _winFormsDrawer.Graphics.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 16, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 16, TranslateBaseYToPlatformY(parY2)));
       }
     }
 
