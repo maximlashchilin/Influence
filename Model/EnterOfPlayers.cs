@@ -18,11 +18,6 @@ namespace Model
     private List<TextField> _playersFields;
 
     /// <summary>
-    /// Объект кнопки
-    /// </summary>
-    private Button _button;
-
-    /// <summary>
     /// Список текстовых полей
     /// </summary>
     public List<TextField> NamesOfPlayers
@@ -38,7 +33,6 @@ namespace Model
     /// </summary>
     public EnterOfPlayers()
     {
-      _button = new Button(42.0f, 80.0f, 55.0f, 95.0f, "Next");
       _playersFields = new List<TextField>(2);
       _playersFields.Add(new TextField(0, 38.0f, 30.0f, 60.0f, 35.0f));
       _playersFields.Add(new TextField(1, 38.0f, 40.0f, 60.0f, 45.0f));

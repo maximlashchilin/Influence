@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Model
@@ -12,6 +13,11 @@ namespace Model
     /// Событие перерисовки игрового поля
     /// </summary>
     public event dPaintHandler PaintEvent;
+
+    /// <summary>
+    /// Событие окончания игры
+    /// </summary>
+    public event EventHandler FinishedEvent;
 
     /// <summary>
     /// Объект класса, который отвечает за логику
@@ -38,6 +44,11 @@ namespace Model
     /// Кнопка переключения состояний игры
     /// </summary>
     private Button _button;
+
+    /// <summary>
+    /// Объект класса, отвечающего за запись игрового результата
+    /// </summary>
+    private RecordsWriter _recordsWriter;
 
     /// <summary>
     /// Ячейки игрового поля
@@ -77,7 +88,19 @@ namespace Model
       _currentGameState = GameState.Select;
       _players = parPlayers;
       _currentPlayer = 0;
-      _button = new Button(35.0f, 5.0f, 60.0f, 15.0f, "Complete atack");
+      _button = new Button(35.0f, 5.0f, 60.0f, 10.0f, "Complete atack");
+      _recordsWriter = new RecordsWriter();
+      FinishedEvent += OnFinishedEvent;
+    }
+
+    /// <summary>
+    /// Обрабатывает событие окончания игры
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
+    private void OnFinishedEvent(object parSender, EventArgs parE)
+    {
+      _recordsWriter.RecordResult(GetActivePlayer());
     }
 
     /// <summary>
@@ -95,17 +118,15 @@ namespace Model
     {
       Cell clickedCell = GetFocusedCell();
 
+      UnselectAllCells();
       if (clickedCell != null)
       {
-        UnselectAllCells();
         if (clickedCell?.Owner == GetActivePlayer())
         {
           clickedCell.ActiveCell();
           _currentGameState = GameState.Atack;
         }
       }
-
-      _button.CallPaintEvent();
     }
 
     /// <summary>
@@ -113,16 +134,25 @@ namespace Model
     /// </summary>
     private void AtackCell()
     {
+
       Cell selectedCell = GetSelectedCell();
       Cell clickedCell = GetFocusedCell();
 
       if (selectedCell != null && clickedCell != null)
       {
-        _moveRunner.Move(selectedCell, clickedCell, GetActivePlayer());
-      }
-      else
-      {
-        _currentGameState = GameState.Select;
+        if (clickedCell?.Owner == GetActivePlayer())
+        {
+          _currentGameState = GameState.Select;
+        }
+        else
+        {
+          _moveRunner.Move(selectedCell, clickedCell, GetActivePlayer());
+          if (IsFinishedGame())
+          {
+            _currentGameState = GameState.Finished;
+            FinishedEvent?.Invoke(this, EventArgs.Empty);
+          }
+        }
       }
 
       PaintEvent?.Invoke();
@@ -291,6 +321,8 @@ namespace Model
             break;
           }
       }
+      PaintEvent?.Invoke();
+      _button.CallPaintEvent();
     }
 
     /// <summary>
@@ -329,6 +361,31 @@ namespace Model
     public Player GetActivePlayer()
     {
       return _players[_currentPlayer];
+    }
+
+    /// <summary>
+    /// Проверяет, окончена ли игра
+    /// </summary>
+    /// <returns>Признак окончания игры</returns>
+    private bool IsFinishedGame()
+    {
+      int rows = Cells.GetLength(0);
+      int colomns = Cells.GetLength(1);
+      for (int i = 0; i < rows; i++)
+      {
+        for (int j = 0; j < colomns; j++)
+        {
+          if (null != Cells[i, j])
+          {
+            if (Cells[i, j].Owner != null && Cells[i, j].Owner != GetActivePlayer())
+            {
+              return false;
+            }
+          }
+        }
+      }
+
+      return true;
     }
   }
 }

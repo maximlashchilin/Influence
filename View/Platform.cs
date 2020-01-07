@@ -272,6 +272,6 @@ namespace View
     /// <param name="parY">Координата Y</param>
     /// <param name="parScore">Число очков ячейки</param>
     /// <param name="parColor">Цвет ячейки</param>
-    public abstract void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColor parColor);
+    public abstract void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColors parColor);
   }
 }

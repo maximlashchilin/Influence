@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Controller.FactoriesOfGameStateControllers;
 using Model;
 using View;
 
@@ -45,13 +45,19 @@ namespace Controller
       _buttonController.Initialize();
       _game.Button.Click += OnButtonClick;
 
+      parPlatform.EscDown += OnEscDown;
       parPlatform.Move += OnMove;
       parPlatform.Click += OnClick;
     }
 
-    public override void Start()
+    /// <summary>
+    /// Обрабатывает нажатие Esc
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
+    private void OnEscDown(object parSender, EventArgs parE)
     {
-      throw new NotImplementedException();
+      CallChangeState(this, new ChangeStateArgs(new FactoryOfMenuControllers(), ApplicationStates.MenuWork));
     }
 
     /// <summary>

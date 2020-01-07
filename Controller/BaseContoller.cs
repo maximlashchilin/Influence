@@ -32,8 +32,6 @@ namespace Controller
       }
     }
 
-    public abstract void Start();
-
     /// <summary>
     /// Вызывает событие изменения состояния приложения
     /// </summary>

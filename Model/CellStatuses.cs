@@ -1,7 +1,7 @@
 ﻿namespace Model
 {
   /// <summary>
-  /// Статус ячейки
+  /// Статусы ячейки
   /// </summary>
   public enum CellStatuses
   {

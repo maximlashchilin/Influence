@@ -8,11 +8,6 @@ namespace Model
   public class TextField
   {
     /// <summary>
-    /// 
-    /// </summary>
-    public event EventHandler Click;
-
-    /// <summary>
     /// Событие перерисовки
     /// </summary>
     public event dPaintHandler PaintEvent;
@@ -182,14 +177,6 @@ namespace Model
     public void Initialize()
     {
       PaintEvent?.Invoke();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void CallClick()
-    {
-      Click?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>

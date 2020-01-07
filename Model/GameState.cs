@@ -16,6 +16,10 @@
     /// <summary>
     /// Раздача очков
     /// </summary>
-    ScoreDistributing
+    ScoreDistributing,
+    /// <summary>
+    /// Игра окончена
+    /// </summary>
+    Finished
   }
 }
