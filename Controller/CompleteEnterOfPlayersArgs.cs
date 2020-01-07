@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Model;
 
 namespace Controller
@@ -13,12 +10,12 @@ namespace Controller
   public class CompleteEnterOfPlayersArgs : EventArgs
   {
     /// <summary>
-    /// Игроки
+    /// Список игроков
     /// </summary>
     private List<Player> _players;
 
     /// <summary>
-    /// Игроки
+    /// Список игроков
     /// </summary>
     public List<Player> Players
     {
@@ -31,7 +28,7 @@ namespace Controller
     /// <summary>
     /// Конструктор
     /// </summary>
-    /// <param name="parPlayers">Игроки</param>
+    /// <param name="parPlayers">Список игроков</param>
     public CompleteEnterOfPlayersArgs(List<Player> parPlayers)
     {
       _players = parPlayers;

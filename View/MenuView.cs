@@ -20,7 +20,7 @@ namespace View
     public MenuView(Platform parPlatform, Menu parMenu) : base(parPlatform)
     {
       _menu = parMenu;
-      _menu.ChangeStateEvent += Draw;
+      _menu.PaintEvent += Draw;
     }
 
     /// <summary>

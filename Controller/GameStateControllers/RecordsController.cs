@@ -37,10 +37,5 @@ namespace Controller
     {
       CallChangeState(this, new ChangeStateArgs(new FactoryOfMenuControllers(), ApplicationStates.MenuWork));
     }
-
-    public override void Start()
-    {
-      throw new NotImplementedException();
-    }
   }
 }

@@ -43,18 +43,19 @@
           && parDestinationCell.IsCellFree())
       {
         parDestinationCell.Owner = parCurrentPlayer;
-        parDestinationCell.DecreaseScore();
+        parDestinationCell.Score = parSourceCell.Score - 1;
         parSourceCell.Score = 1;
         parSourceCell.DisactiveCell();
         parDestinationCell.ActiveCell();
       }
       else if (IsMove(parSourceCell.I, parSourceCell.J, parDestinationCell.I, parDestinationCell.J)
+          && parSourceCell.Score > 1
           && IsCellOccupied(parDestinationCell, parCurrentPlayer))
       {
         if (parSourceCell.Score > parDestinationCell.Score)
         {
           parSourceCell.Score = 1;
-          parDestinationCell.Score = parSourceCell.Score - 1 - parDestinationCell.Score;
+          parDestinationCell.Score = parSourceCell.Score - parDestinationCell.Score;
           parSourceCell.DisactiveCell();
           parDestinationCell.ActiveCell();
           parDestinationCell.Owner = parCurrentPlayer;

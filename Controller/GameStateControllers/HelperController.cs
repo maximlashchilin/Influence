@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Controller.FactoriesOfGameStateControllers;
 using Model;
 using View;
@@ -40,11 +36,6 @@ namespace Controller
     private void OnEscDown(object parSender, EventArgs parE)
     {
       CallChangeState(this, new ChangeStateArgs(new FactoryOfMenuControllers(), ApplicationStates.MenuWork));
-    }
-
-    public override void Start()
-    {
-      throw new NotImplementedException();
     }
   }
 }
