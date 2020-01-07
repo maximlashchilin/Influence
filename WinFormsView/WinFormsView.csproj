@@ -49,6 +49,7 @@
     <Compile Include="AppForm.Designer.cs">
       <DependentUpon>AppForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinFormsDrawer.cs" />
     <Compile Include="WinFormsPlatform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

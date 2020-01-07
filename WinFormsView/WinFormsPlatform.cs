@@ -14,29 +14,26 @@ namespace WinFormsView
     /// <summary>
     /// Шрифт по умолчанию
     /// </summary>
-    private static readonly Font DEFAULT_FONT = new Font(FontFamily.GenericSansSerif, 21, FontStyle.Bold);
+    private static readonly Font DEFAULT_FONT = new Font(FontFamily.GenericSansSerif, 18, FontStyle.Bold);
 
     /// <summary>
     /// Шрифт для цифр
     /// </summary>
     private static readonly Font NUMBER_FONT = new Font(FontFamily.GenericSansSerif, 8, FontStyle.Bold);
 
-    /// <summary>
-    /// Экземпляр формы
-    /// </summary>
-    private AppForm _appForm;
+    private WinFormsDrawer _winFormsDrawer;
 
     /// <summary>
     /// Конструктор
     /// </summary>
     public WinFormsPlatform()
     {
-      _appForm = new AppForm();
-      _appForm.Click += OnClick;
-      _appForm.MouseMove += OnMouseMove;
-      _appForm.KeyDown += OnKeyDown;
-      _appForm.FormClosing += OnClose;
-      _appForm.Paint += OnPaint;
+      _winFormsDrawer = new WinFormsDrawer(new AppForm());
+      _winFormsDrawer.Initialize();
+      _winFormsDrawer.AppForm.Click += OnClick;
+      _winFormsDrawer.AppForm.MouseMove += OnMouseMove;
+      _winFormsDrawer.AppForm.KeyDown += OnKeyDown;
+      _winFormsDrawer.AppForm.FormClosing += OnClose;
     }
 
     /// <summary>
@@ -70,7 +67,7 @@ namespace WinFormsView
     /// </summary>
     public override void Clear()
     {
-      _appForm.Drawer.Clear(Color.White);
+      _winFormsDrawer.Graphics.Clear(Color.White);
     }
 
     /// <summary>
@@ -93,8 +90,8 @@ namespace WinFormsView
       points[4] = new Point(x - 10, y + 5);
       points[5] = new Point(x - 10, y - 5);
 
-      _appForm.Drawer.FillPolygon(GetPenWithColor(parColor), points);
-      _appForm.Drawer.DrawString(Convert.ToString(parScore), NUMBER_FONT, Brushes.Black, x - 5, y - 5);
+      _winFormsDrawer.Graphics.FillPolygon(GetPenWithColor(parColor), points);
+      _winFormsDrawer.Graphics.DrawString(Convert.ToString(parScore), NUMBER_FONT, Brushes.Black, x - 5, y - 5);
     }
 
     /// <summary>
@@ -135,10 +132,9 @@ namespace WinFormsView
     /// </summary>
     public override void Initialize()
     {
-      WidthPlatform = _appForm.ClientSize.Width;
-      HeightPlatform = _appForm.ClientSize.Height;
-
-      Application.Run(_appForm);
+      WidthPlatform = _winFormsDrawer.AppForm.ClientSize.Width;
+      HeightPlatform = _winFormsDrawer.AppForm.ClientSize.Height;
+      Application.Run(_winFormsDrawer.AppForm);
     }
 
     /// <summary>
@@ -152,11 +148,11 @@ namespace WinFormsView
     /// <param name="parCursorVisible">Видимость курсора</param>
     public override void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
-      _appForm.Drawer.DrawString(parText, DEFAULT_FONT, Brushes.Blue, (float)TranslateBaseXToPlatformX(parX1), (float)TranslateBaseYToPlatformY(parY1));
+      _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Blue, (float)TranslateBaseXToPlatformX(parX1), (float)TranslateBaseYToPlatformY(parY1));
       if (parCursorVisible)
       {
         Pen pen = Pens.Black;
-        _appForm.Drawer.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY2)));
+        _winFormsDrawer.Graphics.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY2)));
       }
     }
 
@@ -168,7 +164,7 @@ namespace WinFormsView
     /// <param name="parText"></param>
     public override void PrintText(float parX, float parY, string parText)
     {
-      _appForm.Drawer.DrawString(parText, DEFAULT_FONT, Brushes.Blue, (float)TranslateBaseXToPlatformX(parX), (float)TranslateBaseYToPlatformY(parY));
+      _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Blue, (float)TranslateBaseXToPlatformX(parX), (float)TranslateBaseYToPlatformY(parY));
     }
 
     /// <summary>
@@ -182,11 +178,11 @@ namespace WinFormsView
     /// <param name="parCursorVisible"></param>
     public override void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
-      _appForm.Drawer.DrawString(parText, DEFAULT_FONT, Brushes.Black, TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1));
+      _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Black, TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1));
       if (parCursorVisible)
       {
         Pen pen = Pens.Black;
-        _appForm.Drawer.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY2)));
+        _winFormsDrawer.Graphics.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 20, TranslateBaseYToPlatformY(parY2)));
       }
     }
 
@@ -198,16 +194,6 @@ namespace WinFormsView
     private void OnClick(object parSender, EventArgs parE)
     {
       CallClick();
-    }
-
-    /// <summary>
-    /// Обрабатывает событие перерисовки формы
-    /// </summary>
-    /// <param name="parSender">Источник события</param>
-    /// <param name="parE">Параметры события</param>
-    private void OnPaint(object parSender, PaintEventArgs parE)
-    {
-      _appForm.BufferedDrawer.Render(parE.Graphics);
     }
 
     /// <summary>
