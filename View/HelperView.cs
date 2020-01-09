@@ -34,7 +34,7 @@ namespace View
     /// </summary>
     public override void Draw()
     {
-      const float DELTA = 10.0f;
+      const float DELTA = 4.0f;
       const float X = 40.0f;
       const float Y = 15.0f;
       const string HEAD_STRING = "Help";
@@ -42,8 +42,10 @@ namespace View
       Platform.PrintText(X, Y, HEAD_STRING);
       for (int i = 0; i < _helper.HelpText.Count; i++)
       {
-        Platform.PrintText(X, Y + 20 + (i * DELTA), _helper.HelpText[i]);
+        Platform.PrintText(X - 5, Y + 7 + (i * DELTA), _helper.HelpText[i]);
       }
+
+      Platform.CallReadyFrame();
     }
   }
 }

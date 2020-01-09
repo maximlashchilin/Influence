@@ -48,6 +48,8 @@ namespace View
           Platform.PrintTextInRectangle(X_POINT, Y_POINT + (i * DELTA), 60.0f, 17.0f + (i * DELTA), _menu.MenuItems[i].Name, false);
         }
       }
+
+      Platform.CallReadyFrame();
     }
   }
 }

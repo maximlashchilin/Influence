@@ -3,7 +3,7 @@
   /// <summary>
   /// Состояния игры
   /// </summary>
-  public enum GameState
+  public enum GameStates
   {
     /// <summary>
     /// Выбор ячейки для атаки

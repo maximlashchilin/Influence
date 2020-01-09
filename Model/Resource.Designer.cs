@@ -59,5 +59,24 @@ namespace Model {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The goal of the game is to capture the cells
+        ///of the playing field. Select a cell of your 
+        ///color, the number of points of which is more
+        ///than one, and click on the neighboring cell 
+        ///to capture it. After you have run out of such 
+        ///cells, click on the &quot;Complete attack&quot; button. 
+        ///You will switch to the point distribution mode. 
+        ///Click on your cell to add points to it. 
+        ///After you finish the distribution of points,
+        ///click on the &quot;Pass move&quot; button and transfer 
+        ///the mouse to another player..
+        /// </summary>
+        public static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
     }
 }

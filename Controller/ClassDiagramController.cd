@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Controller.BaseContoller" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAABAAAAACAgAAAAAAA=</HashCode>
+      <FileName>BaseContoller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.ButtonController" Collapsed="true">
+    <Position X="3.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAACAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ButtonController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.ChangeStateArgs" Collapsed="true">
+    <Position X="12.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAgCAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ChangeStateArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.CompleteEnterOfPlayersArgs" Collapsed="true">
+    <Position X="14.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CompleteEnterOfPlayersArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.EnterOfPlayersController" Collapsed="true">
+    <Position X="6.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAABAAAAAAIggAQAAAAIAAAAAQAAAAAAAAAAAgA=</HashCode>
+      <FileName>EnterOfPlayersController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.GameFieldController" Collapsed="true">
+    <Position X="6.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAAAQAAAAAAAAQAAAAAACAAAAAAIAAAAAAAAAAgQ=</HashCode>
+      <FileName>GameFieldController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.GameController" Collapsed="true">
+    <Position X="11.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAABAAAAAAAAAAAACAAAAAIAAAAEAAEAAAAAAAAAAA=</HashCode>
+      <FileName>GameStateControllers\GameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.HelperController" Collapsed="true">
+    <Position X="13.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAgA=</HashCode>
+      <FileName>GameStateControllers\HelperController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.MenuController" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACABAAAAAAAAAAAAgAAAAAIAAAACAAAAAAAACAAAQA=</HashCode>
+      <FileName>GameStateControllers\MenuController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.RecordsController" Collapsed="true">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>GameStateControllers\RecordsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.MainController" Collapsed="true">
+    <Position X="12.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgBAAAACAABAAAACAAAAAAABAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>MainController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.MenuItemController" Collapsed="true">
+    <Position X="11.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>MenuItemController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.TextFieldController" Collapsed="true">
+    <Position X="14.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgIAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>TextFieldController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.FactoriesOfGameStateControllers.FactoryOfContollers" Collapsed="true">
+    <Position X="6.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FactoriesOfGameStateControllers\FactoryOfContollers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.FactoriesOfGameStateControllers.FactoryOfGameControllers" Collapsed="true">
+    <Position X="3" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FactoriesOfGameStateControllers\FactoryOfGameControllers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.FactoriesOfGameStateControllers.FactoryOfHelperControllers" Collapsed="true">
+    <Position X="5.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FactoriesOfGameStateControllers\FactoryOfHelperControllers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.FactoriesOfGameStateControllers.FactoryOfMenuControllers" Collapsed="true">
+    <Position X="7.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FactoriesOfGameStateControllers\FactoryOfMenuControllers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller.FactoriesOfGameStateControllers.FactoryOfRecordsController" Collapsed="true">
+    <Position X="9.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FactoriesOfGameStateControllers\FactoryOfRecordsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Delegate Name="Controller.dChangeStateHandler" Collapsed="true">
+    <Position X="12.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ChangeStateHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="Controller.dCompleteEnterOfPlayers" Collapsed="true">
+    <Position X="14.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CompleteEnterOfPlayersHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

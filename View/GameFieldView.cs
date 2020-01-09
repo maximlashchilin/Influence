@@ -10,18 +10,34 @@ namespace View
     /// <summary>
     /// Объект игрового поля
     /// </summary>
-    public GameField _gameField;
+    private GameField _gameField;
+
+    /// <summary>
+    /// Объект представления кнопки
+    /// </summary>
+    private ButtonView _buttonView;
 
     /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parPlatform">Объект платформы</param>
     /// <param name="parGameField">Объект игрового поля</param>
-    public GameFieldView(Platform parPlatform, GameField parGameField) : base(parPlatform)
+    /// /// <param name="parButtonView">Объект представления кнопки</param>
+    public GameFieldView(Platform parPlatform, GameField parGameField, ButtonView parButtonView) : base(parPlatform)
     {
       _gameField = parGameField;
+      _buttonView = parButtonView;
 
       _gameField.PaintEvent += Draw;
+      SubscribeOnButtonViewEvent();
+    }
+
+    /// <summary>
+    /// Подписывает метод Draw на событие перерисовки кнопки
+    /// </summary>
+    private void SubscribeOnButtonViewEvent()
+    {
+      _gameField.Button.PaintEvent += Draw;
     }
 
     /// <summary>
@@ -56,6 +72,8 @@ namespace View
 
       string currentPlayer = "Current player: " + _gameField.GetActivePlayer().Name;
       Platform.PrintText(X_HINT, Y_HINT, currentPlayer);
+      _buttonView.Draw();
+      Platform.CallReadyFrame();
     }
   }
 }

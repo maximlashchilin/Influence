@@ -39,8 +39,8 @@ namespace Controller
     public GameFieldController(List<Player> parPlayers, Platform parPlatform)
     {
       _game = new GameField(VERTICAL_SIZE, HORIZONTAL_SIZE, parPlayers);
-      View = new GameFieldView(parPlatform, _game);
       _buttonController = new ButtonController(parPlatform, _game.Button);
+      View = new GameFieldView(parPlatform, _game, (ButtonView)_buttonController.View);
       _game.Initialize();
       _buttonController.Initialize();
       _game.Button.Click += OnButtonClick;
@@ -63,7 +63,7 @@ namespace Controller
     /// <summary>
     /// Обрабатывает нажатие на кнопку
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parE">Параметры события</param>
     private void OnButtonClick(object parSender, EventArgs parE)
     {
@@ -73,7 +73,7 @@ namespace Controller
     /// <summary>
     /// Обрабатывает событие клика по поверхности платформы
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parE">Параметры события</param>
     private void OnClick(object parSender, EventArgs parE)
     {
@@ -83,7 +83,7 @@ namespace Controller
     /// <summary>
     /// Обрабатывает событие перемещения мыши
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parE">Параметры события</param>
     private void OnMove(object parSender, MoveEventArgs parE)
     {
