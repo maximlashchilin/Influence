@@ -11,4 +11,5 @@
 /WinFormsView/bin
 /WinFormsView/obj
 /InfluenceForms/bin
+!/InfluenceForms/bin/Records.txt
 /InfluenceForms/obj

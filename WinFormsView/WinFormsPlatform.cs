@@ -159,6 +159,9 @@ namespace WinFormsView
     /// <param name="parCursorVisible">Видимость курсора</param>
     public override void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
+      DrawRectangle(parX1, parY1, parX2, parY2);
+      float width = TranslateBaseXToPlatformX(parX2) - TranslateBaseXToPlatformX(parX1);
+      float height = TranslateBaseYToPlatformY(parY2) - TranslateBaseYToPlatformY(parY1);
       _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Blue, (float)TranslateBaseXToPlatformX(parX1), (float)TranslateBaseYToPlatformY(parY1));
       if (parCursorVisible)
       {
