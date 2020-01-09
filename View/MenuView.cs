@@ -41,11 +41,11 @@ namespace View
       {
         if (_menu.MenuItems[i].MenuItemStatus == ItemStatuses.Selected)
         {
-          Platform.PrintMarkedTextInRectangle(X_POINT, Y_POINT + (i * DELTA), 60.0f, 17.0f + (i * DELTA), _menu.MenuItems[i].Name, false);
+          Platform.PrintMarkedTextInRectangle(X_POINT, Y_POINT + (i * DELTA), 60.0f, Y_POINT + 7 + (i * DELTA), _menu.MenuItems[i].Name, false);
         }
         else
         {
-          Platform.PrintTextInRectangle(X_POINT, Y_POINT + (i * DELTA), 60.0f, 17.0f + (i * DELTA), _menu.MenuItems[i].Name, false);
+          Platform.PrintTextInRectangle(X_POINT, Y_POINT + (i * DELTA), 60.0f, Y_POINT + 7 + (i * DELTA), _menu.MenuItems[i].Name, false);
         }
       }
 
