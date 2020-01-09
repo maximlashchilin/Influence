@@ -11,4 +11,5 @@
 /ConsoleView/bin
 /ConsoleView/obj
 /Influence/bin
+!/Influence/bin/Records.txt
 /Influence/obj

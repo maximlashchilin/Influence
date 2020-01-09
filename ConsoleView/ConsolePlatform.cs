@@ -42,11 +42,11 @@ namespace ConsoleView
     /// <summary>
     /// Отправляет сообщение окну
     /// </summary>
-    /// <param name="hWnd">Указатель окна</param>
-    /// <param name="wMsg"></param>
-    /// <param name="wParam"></param>
-    /// <param name="lParam"></param>
-    /// <returns></returns>
+    /// <param name="hWnd">Дескриптор окна</param>
+    /// <param name="wMsg">Сообщение</param>
+    /// <param name="wParam">Дополнительная информация</param>
+    /// <param name="lParam">Дополнительная информация</param>
+    /// <returns>Результат обработки</returns>
     [DllImport("user32.dll")]
     public static extern int SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
@@ -64,6 +64,7 @@ namespace ConsoleView
       _eventListener = EventListener.GetIntance();
       _eventListener.ConsoleMouseEvent += ConsoleMouseEventHandler;
       _eventListener.ConsoleKeyboardEvent += ConsoleKeyboardEventHandler;
+      ReadyFrame += Render;
     }
 
     /// <summary>
@@ -87,7 +88,7 @@ namespace ConsoleView
     /// <summary>
     /// Обрабатывает событие работы с мышью в консоли
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parE">Параметры события</param>
     public void ConsoleMouseEventHandler(object parSender, ConsoleMouseEventArgs parE)
     {
@@ -105,7 +106,7 @@ namespace ConsoleView
     /// <summary>
     /// Обрабатывает событие работы с клавиатурой в консоли
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parE">Параметры события</param>
     public void ConsoleKeyboardEventHandler(object parSender, ConsoleKeyboardEventArgs parE)
     {
@@ -114,6 +115,8 @@ namespace ConsoleView
       const int ARROW_DOWN_CODE = 40;
       const int ESC_CODE = 27;
       const int BACKSPACE_CODE = 8;
+      const int A_CODE = 65;
+      const int Z_CODE = 90;
       if (parE.KeyDown)
       {
         switch (parE.VirtualKeyCode)
@@ -135,7 +138,7 @@ namespace ConsoleView
             break;
         }
 
-        if (parE.VirtualKeyCode >= 65 && parE.VirtualKeyCode <= 90)
+        if (parE.VirtualKeyCode >= A_CODE && parE.VirtualKeyCode <= Z_CODE)
         {
           CallKeyDown(new KeyDownEventArgs(Convert.ToChar(parE.VirtualKeyCode)));
         }
@@ -143,11 +146,21 @@ namespace ConsoleView
     }
 
     /// <summary>
+    /// Отрисовывает кадр
+    /// </summary>
+    /// <param name="parSender">Источник события</param>
+    /// <param name="parE">Параметры события</param>
+    private void Render(object parSender, EventArgs parE)
+    {
+      _consoleDrawer.Draw();
+    }
+
+    /// <summary>
     /// Очищает поверхность отображения платформы
     /// </summary>
     public override void Clear()
     {
-      _consoleDrawer.Draw();
+      _consoleDrawer.Clear();
     }
 
     /// <summary>
@@ -158,40 +171,38 @@ namespace ConsoleView
     /// <param name="parY">Координата Y</param>
     /// <param name="parScore">Количество очков</param>
     /// <param name="parColor">Цвет</param>
-    public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColor parColor)
+    public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColors parColor)
     {
       Console.CursorVisible = false;
-      if (parColor != ItemColor.Default)
+      short attribute = 15;
+      if (parColor != ItemColors.Default)
       {
-        if (parColor == ItemColor.Green)
+        if (parColor == ItemColors.Green)
         {
-          Console.ForegroundColor = ConsoleColor.Green;
+          attribute = 10;
         }
-        else if (parColor == ItemColor.Red)
+        else if (parColor == ItemColors.Red)
         {
-          Console.ForegroundColor = ConsoleColor.Red;
+          attribute = 4;
         }
       }
-      Console.SetCursorPosition(TranslateBaseXToPlatformX(parX) - 1, TranslateBaseYToPlatformY(parY) - 1);
-      Console.WriteLine("/─\\");
-      Console.SetCursorPosition(TranslateBaseXToPlatformX(parX) - 1, TranslateBaseYToPlatformY(parY));
-      Console.WriteLine("│" + Convert.ToString(parScore) + "│");
-      Console.SetCursorPosition(TranslateBaseXToPlatformX(parX) - 1, TranslateBaseYToPlatformY(parY) + 1);
-      Console.WriteLine("\\_/");
-
-      Console.ResetColor();
+      _consoleDrawer.SetBufferCursor((short)(TranslateBaseXToPlatformX(parX) - 1), (short)(TranslateBaseYToPlatformY(parY) - 1));
+      _consoleDrawer.WriteInBuffer("/─\\", attribute);
+      _consoleDrawer.SetBufferCursor((short)(TranslateBaseXToPlatformX(parX) - 1), (short)TranslateBaseYToPlatformY(parY));
+      _consoleDrawer.WriteInBuffer("|" + Convert.ToString(parScore) + "|", attribute);
+      _consoleDrawer.SetBufferCursor((short)(TranslateBaseXToPlatformX(parX) - 1), (short)(TranslateBaseYToPlatformY(parY) + 1));
+      _consoleDrawer.WriteInBuffer("\\_/", attribute);
     }
 
     /// <summary>
-    /// 
+    /// Отрисовывает прямоугольник
     /// </summary>
-    /// <param name="parX1"></param>
-    /// <param name="parY1"></param>
-    /// <param name="parX2"></param>
-    /// <param name="parY2"></param>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
     public override void DrawRectangle(float parX1, float parY1, float parX2, float parY2)
     {
-      throw new NotImplementedException();
     }
 
     /// <summary>
@@ -203,8 +214,8 @@ namespace ConsoleView
     public override void PrintText(float parX, float parY, string parText)
     {
       Console.CursorVisible = false;
-      Console.SetCursorPosition(TranslateBaseXToPlatformX(parX), TranslateBaseYToPlatformY(parY));
-      Console.Write(parText);
+      _consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX), (short)TranslateBaseYToPlatformY(parY));
+      _consoleDrawer.WriteInBuffer(parText, 15);
     }
 
     /// <summary>
@@ -217,19 +228,17 @@ namespace ConsoleView
     /// <param name="parText">Текст</param>
     public override void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
-      StringBuilder s = new StringBuilder("┌");
-      for (int i = TranslateBaseXToPlatformX(parX1) + 1; i < TranslateBaseXToPlatformX(parX2); i++)
-      {
-        s.Append("─");
-      }
-      s.Append("┐").Append("\n");
-
-      for (int i = 0; i < TranslateBaseXToPlatformX(parX1); i++)
+      Console.CursorVisible = false;
+      StringBuilder s = new StringBuilder();
+      for (int i = TranslateBaseXToPlatformX(parX1); i <= TranslateBaseXToPlatformX(parX2); i++)
       {
         s.Append(" ");
       }
+      _consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX1), (short)TranslateBaseYToPlatformY(parY1));
+      _consoleDrawer.WriteInBuffer(s.ToString(), 15);
+      s.Clear();
 
-      s.Append("│");
+      s.Append(" ");
       int numbersOfLeftSpaces = (int)Math.Floor((TranslateBaseXToPlatformX(parX2) - TranslateBaseXToPlatformX(parX1) - parText.Length - 1) / 2.0f);
       for (int i = 0; i < numbersOfLeftSpaces; i++)
       {
@@ -238,36 +247,28 @@ namespace ConsoleView
       s.Append(parText);
 
       int numbersOfRightSpaces = TranslateBaseXToPlatformX(parX2) - TranslateBaseXToPlatformX(parX1) - parText.Length - 1 - numbersOfLeftSpaces;
-      for (int i = 0; i < numbersOfRightSpaces; i++)
+      for (int i = 0; i <= numbersOfRightSpaces; i++)
       {
         s.Append(" ");
       }
-      s.Append("│").Append("\n");
+      _consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX1), (short)(TranslateBaseYToPlatformY(parY1) + 1));
+      _consoleDrawer.WriteInBuffer(s.ToString(), 15);
+      s.Clear();
 
-      for (int i = 0; i < TranslateBaseXToPlatformX(parX1); i++)
+      s.Append(" ");
+      for (int i = TranslateBaseXToPlatformX(parX1) + 1; i <= TranslateBaseXToPlatformX(parX2); i++)
       {
         s.Append(" ");
       }
-      s.Append("└");
-      for (int i = TranslateBaseXToPlatformX(parX1) + 1; i < TranslateBaseXToPlatformX(parX2); i++)
-      {
-        s.Append("─");
-      }
-      s.Append("┘");
 
-      Console.SetCursorPosition(TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1));
-      //_consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX1), (short)TranslateBaseYToPlatformY(parY1));
-      //_consoleDrawer.WriteInBuffer(s.ToString());
-      Console.WriteLine(s);
+      _consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX1), (short)TranslateBaseYToPlatformY(parY1));
+      _consoleDrawer.WriteInBuffer(s.ToString(), 15);
 
       if (parCursorVisible)
       {
         Console.SetCursorPosition(TranslateBaseXToPlatformX(parX1) + numbersOfLeftSpaces + parText.Length + 1, TranslateBaseYToPlatformY(parY1) + 1);
         Console.CursorVisible = parCursorVisible;
       }
-      
-      //_consoleDrawer.SetBufferCursor((short)(TranslateBaseXToPlatformX(parX1) + numbersOfLeftSpaces + parText.Length + 1), (short)(TranslateBaseYToPlatformY(parY1) + 1));
-      //_consoleDrawer.Draw();
     }
 
     /// <summary>
@@ -280,20 +281,17 @@ namespace ConsoleView
     /// <param name="parText">Текст</param>
     public override void PrintMarkedTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
-      StringBuilder s = new StringBuilder("┌");
-      Console.ForegroundColor = ConsoleColor.Blue;
-      for (int i = TranslateBaseXToPlatformX(parX1) + 1; i < TranslateBaseXToPlatformX(parX2); i++)
-      {
-        s.Append("─");
-      }
-      s.Append("┐").Append("\n");
-
-      for (int i = 0; i < TranslateBaseXToPlatformX(parX1); i++)
+      Console.CursorVisible = false;
+      StringBuilder s = new StringBuilder();
+      for (int i = TranslateBaseXToPlatformX(parX1); i <= TranslateBaseXToPlatformX(parX2); i++)
       {
         s.Append(" ");
       }
+      _consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX1), (short)TranslateBaseYToPlatformY(parY1));
+      _consoleDrawer.WriteInBuffer(s.ToString(), 0x001f);
+      s.Clear();
 
-      s.Append("│");
+      s.Append(" ");
       int numbersOfLeftSpaces = (int)Math.Floor((TranslateBaseXToPlatformX(parX2) - TranslateBaseXToPlatformX(parX1) - parText.Length - 1) / 2.0f);
       for (int i = 0; i < numbersOfLeftSpaces; i++)
       {
@@ -302,35 +300,28 @@ namespace ConsoleView
       s.Append(parText);
 
       int numbersOfRightSpaces = TranslateBaseXToPlatformX(parX2) - TranslateBaseXToPlatformX(parX1) - parText.Length - 1 - numbersOfLeftSpaces;
-      for (int i = 0; i < numbersOfRightSpaces; i++)
+      for (int i = 0; i <= numbersOfRightSpaces; i++)
       {
         s.Append(" ");
       }
-      s.Append("│").Append("\n");
+      _consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX1), (short)(TranslateBaseYToPlatformY(parY1)+1));
+      _consoleDrawer.WriteInBuffer(s.ToString(), 0x001f);
+      s.Clear();
 
-      for (int i = 0; i < TranslateBaseXToPlatformX(parX1); i++)
+      s.Append(" ");
+      for (int i = TranslateBaseXToPlatformX(parX1) + 1; i <= TranslateBaseXToPlatformX(parX2); i++)
       {
         s.Append(" ");
       }
-      s.Append("└");
-      for (int i = TranslateBaseXToPlatformX(parX1) + 1; i < TranslateBaseXToPlatformX(parX2); i++)
-      {
-        s.Append("─");
-      }
-      s.Append("┘");
 
-      Console.SetCursorPosition(TranslateBaseXToPlatformX(parX1), TranslateBaseYToPlatformY(parY1));
-      //_consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX1), (short)TranslateBaseYToPlatformY(parY1));
-      //_consoleDrawer.WriteInBuffer(s.ToString());
-      Console.WriteLine(s);
-      //_consoleDrawer.SetBufferCursor((short)(TranslateBaseXToPlatformX(parX1) + numbersOfLeftSpaces + parText.Length + 1), (short)(TranslateBaseYToPlatformY(parY1) + 1));
-      //_consoleDrawer.Draw();
+      _consoleDrawer.SetBufferCursor((short)TranslateBaseXToPlatformX(parX1), (short)(TranslateBaseYToPlatformY(parY1) + 2));
+      _consoleDrawer.WriteInBuffer(s.ToString(), 0x001f);
+      _consoleDrawer.SetBufferCursor((short)(TranslateBaseXToPlatformX(parX1) + numbersOfLeftSpaces + parText.Length + 1), (short)(TranslateBaseYToPlatformY(parY1) + 1));
       if (parCursorVisible)
       {
         Console.SetCursorPosition(TranslateBaseXToPlatformX(parX1) + numbersOfLeftSpaces + parText.Length + 1, TranslateBaseYToPlatformY(parY1) + 1);
         Console.CursorVisible = parCursorVisible;
       }
-      Console.ForegroundColor = ConsoleColor.White;
     }
   }
 }

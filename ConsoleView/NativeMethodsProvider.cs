@@ -51,10 +51,19 @@ namespace ConsoleView
     [StructLayout(LayoutKind.Explicit)]
     public struct INPUT_RECORD
     {
+      /// <summary>
+      /// Тип события
+      /// </summary>
       [FieldOffset(0)]
       public Int16 EventType;
+      /// <summary>
+      /// Информация о событии клавиатуры
+      /// </summary>
       [FieldOffset(4)]
       public KEY_EVENT_RECORD KeyEvent;
+      /// <summary>
+      /// Информация о событии мыши
+      /// </summary>
       [FieldOffset(4)]
       public MOUSE_EVENT_RECORD MouseEvent;
     }
@@ -66,9 +75,21 @@ namespace ConsoleView
     [DebuggerDisplay("{dwMousePosition.X}, {dwMousePosition.Y}")]
     public struct MOUSE_EVENT_RECORD
     {
+      /// <summary>
+      /// Положение курсора
+      /// </summary>
       public COORD dwMousePosition;
+      /// <summary>
+      /// Код нажатой клавиши
+      /// </summary>
       public Int32 dwButtonState;
+      /// <summary>
+      /// 
+      /// </summary>
       public Int32 dwControlKeyState;
+      /// <summary>
+      /// 
+      /// </summary>
       public Int32 dwEventFlags;
     }
 
@@ -79,7 +100,13 @@ namespace ConsoleView
     [DebuggerDisplay("{X}, {Y}")]
     public struct COORD
     {
+      /// <summary>
+      /// Координата X
+      /// </summary>
       public UInt16 X;
+      /// <summary>
+      /// Координата Y
+      /// </summary>
       public UInt16 Y;
     }
 
@@ -91,19 +118,40 @@ namespace ConsoleView
     [StructLayout(LayoutKind.Explicit)]
     public struct KEY_EVENT_RECORD
     {
+      /// <summary>
+      /// Признак нажатия клавиши
+      /// </summary>
       [FieldOffset(0)]
       [MarshalAsAttribute(UnmanagedType.Bool)]
       public Boolean bKeyDown;
+      /// <summary>
+      /// Число повторений
+      /// </summary>
       [FieldOffset(4)]
       public UInt16 wRepeatCount;
+      /// <summary>
+      /// Код клавиши
+      /// </summary>
       [FieldOffset(6)]
       public UInt16 wVirtualKeyCode;
+      /// <summary>
+      /// Аппаратно зависимый код клавиши
+      /// </summary>
       [FieldOffset(8)]
       public UInt16 wVirtualScanCode;
+      /// <summary>
+      /// Символ Unicode
+      /// </summary>
       [FieldOffset(10)]
       public Char UnicodeChar;
+      /// <summary>
+      /// Символ ASCII
+      /// </summary>
       [FieldOffset(10)]
       public Byte AsciiChar;
+      /// <summary>
+      /// Состояние управляющих клавиш
+      /// </summary>
       [FieldOffset(12)]
       public Int32 dwControlKeyState;
     };
@@ -121,7 +169,7 @@ namespace ConsoleView
       /// <summary>
       /// Выполняет код, необходимый для освобождения дескриптора
       /// </summary>
-      /// <returns></returns>
+      /// <returns>Код ошибки</returns>
       protected override bool ReleaseHandle()
       {
         return true;
