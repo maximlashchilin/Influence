@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Model.Button" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAIAAQEAAAAAAADAAQCAIABAAAAAQAAAAAAAgA=</HashCode>
+      <FileName>Button.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Cell" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACgACIBIQAAggAAAAiAAAABAAAAAAAAAAAAAAAYgg=</HashCode>
+      <FileName>Cell.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Coords" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAgAAAAAAAAACABAAA=</HashCode>
+      <FileName>Coords.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Cursor" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAIAIQAAAAAAAAAAAAQBAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>Cursor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.EnterOfPlayers" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAEAwAAAAAAABAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>EnterOfPlayers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.GameField" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACAACAEjIEAQMEAAIEAQAAAJAABAQQAAAQBAAAIAQ=</HashCode>
+      <FileName>GameField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Helper" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAgEAQAAAAAIAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.MapBuilder" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAIAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>MapBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Menu" Collapsed="true">
+    <Position X="6.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAgIAAAAAAEAxAAAAAAAAQAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.MenuItem" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAAAAAAAAAABAAAQAAACAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>MenuItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.MoveRunner" Collapsed="true">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgIAAAAABAAIAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MoveRunner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Player" Collapsed="true">
+    <Position X="4.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAEAAAggAAAAAAAQAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Records" Collapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAEAQAAEAAAAAIAAAAAAQAAAAAAAAQAAAE=</HashCode>
+      <FileName>Records.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.RecordsWriter" Collapsed="true">
+    <Position X="8.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RecordsWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Resource" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.TextField" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACIAAQEAQAAAgBDAAQAAKABAAAIAAAACAAAAAA=</HashCode>
+      <FileName>TextField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Model.ApplicationStates" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAIAAAoAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>ApplicationStates.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Model.CellStatuses" Collapsed="true">
+    <Position X="4.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>CellStatuses.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Model.GameState" Collapsed="true">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAIAQAAAAAA=</HashCode>
+      <FileName>GameState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Model.ItemColors" Collapsed="true">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAIAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>ItemColors.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Model.ItemStatuses" Collapsed="true">
+    <Position X="3" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAI=</HashCode>
+      <FileName>ItemStatuses.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="Model.dPaintHandler" Collapsed="true">
+    <Position X="3" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PaintHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

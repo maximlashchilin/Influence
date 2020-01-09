@@ -49,7 +49,7 @@
     <Compile Include="Cursor.cs" />
     <Compile Include="EnterOfPlayers.cs" />
     <Compile Include="GameField.cs" />
-    <Compile Include="GameState.cs" />
+    <Compile Include="GameStates.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="ItemColors.cs" />
     <Compile Include="MapBuilder.cs" />
@@ -77,6 +77,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagramModel.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

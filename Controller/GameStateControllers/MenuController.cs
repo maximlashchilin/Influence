@@ -30,10 +30,10 @@ namespace Controller
       string menuName = "Main menu";
       _menu = new Menu(menuName);
       View = new MenuView(parPlatform, _menu);
-      _menu.AddItem(0, "Новая игра");
-      _menu.AddItem(1, "Рекорды");
-      _menu.AddItem(2, "Справка");
-      _menu.AddItem(3, "Выход");
+      _menu.AddItem(0, "New game");
+      _menu.AddItem(1, "Records");
+      _menu.AddItem(2, "Help");
+      _menu.AddItem(3, "Exit");
       _menu.Initialize();
       _menuItemControllers = InitMenuItemsControllers(parPlatform, _menu.MenuItems.ToList());
 

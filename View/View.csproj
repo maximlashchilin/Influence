@@ -62,5 +62,8 @@
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagramView.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

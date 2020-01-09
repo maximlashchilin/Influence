@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Model
 {
   /// <summary>
-  /// Класс игрового поля
+  /// Игровое поле
   /// </summary>
   public class GameField
   {
@@ -38,7 +37,7 @@ namespace Model
     /// <summary>
     /// Текущее состояние игры
     /// </summary>
-    private GameState _currentGameState;
+    private GameStates _currentGameState;
 
     /// <summary>
     /// Кнопка переключения состояний игры
@@ -85,7 +84,7 @@ namespace Model
     public GameField(int parVerticalSize, int parHorizontalSize, List<Player> parPlayers)
     {
       _moveRunner = new MoveRunner(new MapBuilder().BuildMap(parVerticalSize, parHorizontalSize, parPlayers));
-      _currentGameState = GameState.Select;
+      _currentGameState = GameStates.Select;
       _players = parPlayers;
       _currentPlayer = 0;
       _button = new Button(35.0f, 5.0f, 60.0f, 10.0f, "Complete atack");
@@ -100,7 +99,35 @@ namespace Model
     /// <param name="parE">Параметры события</param>
     private void OnFinishedEvent(object parSender, EventArgs parE)
     {
+      GetActivePlayer().Score = GetPlayerScore(GetActivePlayer());
       _recordsWriter.RecordResult(GetActivePlayer());
+    }
+
+    /// <summary>
+    /// Получает счет игрока
+    /// </summary>
+    /// <param name="parPlayer">Объект игрока</param>
+    /// <returns>Счет игрока</returns>
+    private int GetPlayerScore(Player parPlayer)
+    {
+      int result = 0;
+      int rows = Cells.GetLength(0);
+      int colomns = Cells.GetLength(1);
+      for (int i = 0; i < rows; i++)
+      {
+        for (int j = 0; j < colomns; j++)
+        {
+          if (null != Cells[i, j])
+          {
+            if (Cells[i, j].Owner == parPlayer)
+            {
+              result += Cells[i, j].Score;
+            }
+          }
+        }
+      }
+
+      return result;
     }
 
     /// <summary>
@@ -124,7 +151,7 @@ namespace Model
         if (clickedCell?.Owner == GetActivePlayer())
         {
           clickedCell.ActiveCell();
-          _currentGameState = GameState.Atack;
+          _currentGameState = GameStates.Atack;
         }
       }
     }
@@ -142,14 +169,14 @@ namespace Model
       {
         if (clickedCell?.Owner == GetActivePlayer())
         {
-          _currentGameState = GameState.Select;
+          _currentGameState = GameStates.Select;
         }
         else
         {
           _moveRunner.Move(selectedCell, clickedCell, GetActivePlayer());
           if (IsFinishedGame())
           {
-            _currentGameState = GameState.Finished;
+            _currentGameState = GameStates.Finished;
             FinishedEvent?.Invoke(this, EventArgs.Empty);
           }
         }
@@ -215,7 +242,7 @@ namespace Model
         _currentPlayer++;
       }
 
-      _currentGameState = GameState.Select;
+      _currentGameState = GameStates.Select;
       _button.CallPaintEvent();
     }
 
@@ -306,15 +333,15 @@ namespace Model
     {
       switch (_currentGameState)
       {
-        case GameState.Select:
-        case GameState.Atack:
+        case GameStates.Select:
+        case GameStates.Atack:
           {
             GetActivePlayer().Score = CalculateScorePlayer();
-            _currentGameState = GameState.ScoreDistributing;
+            _currentGameState = GameStates.ScoreDistributing;
             _button.Name = "Pass move";
             break;
           }
-        case GameState.ScoreDistributing:
+        case GameStates.ScoreDistributing:
           {
             PassMove();
             _button.Name = "Complete atack";
@@ -332,13 +359,13 @@ namespace Model
     {
       switch (_currentGameState)
       {
-        case GameState.Select:
+        case GameStates.Select:
           SelectCell();
           break;
-        case GameState.Atack:
+        case GameStates.Atack:
           AtackCell();
           break;
-        case GameState.ScoreDistributing:
+        case GameStates.ScoreDistributing:
           DistributeScore();
           break;
       }

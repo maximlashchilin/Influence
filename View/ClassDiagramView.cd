@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="View.BaseView" Collapsed="true">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAACAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>BaseView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.ButtonView" Collapsed="true">
+    <Position X="5.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ButtonView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.EnterOfPlayersView" Collapsed="true">
+    <Position X="7.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAgAAAAAAAAAAAAAAAQAAAAAAAACAAAA=</HashCode>
+      <FileName>EnterOfPlayersView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.GameFieldView" Collapsed="true">
+    <Position X="9" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAACBAAAAA=</HashCode>
+      <FileName>GameFieldView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.HelperView" Collapsed="true">
+    <Position X="3.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>HelperView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.KeyDownEventArgs" Collapsed="true">
+    <Position X="3.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KeyDownEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.MenuView" Collapsed="true">
+    <Position X="9.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>MenuView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.MoveEventArgs" Collapsed="true">
+    <Position X="5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>MoveEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.Platform" Collapsed="true">
+    <Position X="3.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAFAiAyKIAQiSBIAAIAIJgLABoAAAAAAEIBCABgAgA=</HashCode>
+      <FileName>Platform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.RecordsView" Collapsed="true">
+    <Position X="11.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RecordsView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.TextFieldView" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TextFieldView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Delegate Name="View.dKeyDownEventHandler" Collapsed="true">
+    <Position X="7.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KeyDownEventHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="View.dMoveEventHander" Collapsed="true">
+    <Position X="9" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>MoveEventHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
