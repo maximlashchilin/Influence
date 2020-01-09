@@ -43,7 +43,7 @@ namespace Model
       {
         for (int j = 0; j < colomns; j++)
         {
-          if (i % 2 == 0)
+          if (i % 2 == 1)
           {
             cells[i, j] = new Cell(j * DELTA + Y + Y_SHIFT, i * DELTA + X);
             cells[i, j].I = i;
@@ -60,7 +60,7 @@ namespace Model
 
       for (int i = 0; i < rows; i++)
       {
-        if (i % 2 == 0)
+        if (i % 2 == 1)
         {
           cells[i, cells.GetUpperBound(1)] = null;
         }
@@ -80,10 +80,10 @@ namespace Model
       Cell[,] map = parCells;
 
       map[0, 0].Owner = parPlayers[0];
-      map[0, 2].Owner = parPlayers[1];
+      map[0, 3].Owner = parPlayers[1];
 
       map[0, 0].Score = 5;
-      map[0, 2].Score = 5;
+      map[0, 3].Score = 5;
 
       return map;
     }

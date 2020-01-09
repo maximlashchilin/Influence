@@ -84,17 +84,22 @@
     public bool IsMove(int parSourceVerticalCoord, int parSourceHorizontalCoord,
         int parDestinationVerticalCoord, int parDestinationHorizontalCoord)
     {
-      if (parDestinationHorizontalCoord < 0 || parDestinationVerticalCoord < 0)
+      if (parDestinationHorizontalCoord < 0 || parDestinationVerticalCoord < 0
+          || parSourceVerticalCoord < 0 || parSourceHorizontalCoord < 0)
       {
         return false;
       }
 
-      if (parDestinationVerticalCoord > _cells.GetUpperBound(0) || parDestinationHorizontalCoord > _cells.GetUpperBound(1))
+      if (parDestinationVerticalCoord > _cells.GetUpperBound(0)
+          || parDestinationHorizontalCoord > _cells.GetUpperBound(1)
+          || parSourceVerticalCoord > _cells.GetUpperBound(0)
+          || parSourceHorizontalCoord > _cells.GetUpperBound(1))
       {
         return false;
       }
 
-      if (_cells[parDestinationVerticalCoord, parDestinationHorizontalCoord] == null)
+      if (_cells[parDestinationVerticalCoord, parDestinationHorizontalCoord] == null
+          || _cells[parSourceVerticalCoord, parSourceHorizontalCoord] == null)
       {
         return false;
       }

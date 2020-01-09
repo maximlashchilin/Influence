@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model
+﻿namespace Model
 {
   /// <summary>
   /// Игровая ячейка
@@ -125,7 +119,7 @@ namespace Model
     }
 
     /// <summary>
-    /// Метод увеличения счёта на единицу
+    /// Увеличивает счёт на единицу
     /// </summary>
     public void IncreaseScore()
     {
@@ -136,7 +130,7 @@ namespace Model
     }
 
     /// <summary>
-    /// Метод уменьшения счёта на единицу
+    /// Уменьшает счёт на единицу
     /// </summary>
     public void DecreaseScore()
     {
@@ -147,7 +141,7 @@ namespace Model
     }
 
     /// <summary>
-    /// Метод, делающий ячейку активной
+    /// Делает ячейку активной
     /// </summary>
     public void ActiveCell()
     {
@@ -155,7 +149,7 @@ namespace Model
     }
 
     /// <summary>
-    /// Метод, делающий ячейку неактивной
+    /// Делает ячейку неактивной
     /// </summary>
     public void DisactiveCell()
     {

@@ -45,7 +45,7 @@ namespace Model
     }
 
     /// <summary>
-    /// Инициализирует просмотре рекордов
+    /// Инициализирует просмотр рекордов
     /// </summary>
     public void Initialize()
     {
@@ -64,7 +64,7 @@ namespace Model
     private List<string> ReadTextFromFile(string parFileName)
     {
       List<string> result = new List<string>();
-      //using (StreamWriter writer = new StreamWriter(parFileName, true)) { writer.Close(); }
+      using (StreamWriter writer = new StreamWriter(parFileName, true)) { writer.Close(); }
       using (StreamReader reader = new StreamReader(parFileName))
       {
         string currentString = reader.ReadToEnd();

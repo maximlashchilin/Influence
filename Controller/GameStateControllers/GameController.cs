@@ -50,6 +50,7 @@ namespace Controller
       _platform.UnsubscribeAllEvents();
       _gameFieldController = new GameFieldController(parE.Players, _platform);
       _currentControllerInGameState = _gameFieldController;
+      _currentControllerInGameState.ChangeState += OnChangeState;
       _enterOfPlayersController = null;
     }
 
@@ -60,6 +61,7 @@ namespace Controller
     /// <param name="parE">Параметры события</param>
     private void OnChangeState(object parSender, ChangeStateArgs parE)
     {
+      _platform.UnsubscribeAllEvents();
       CallChangeState(this, parE);
     }
   }

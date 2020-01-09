@@ -20,7 +20,6 @@ namespace View
     public ButtonView(Platform parPlatform, Button parButton) : base(parPlatform)
     {
       _button = parButton;
-      _button.PaintEvent += Draw;
     }
 
     /// <summary>
@@ -28,7 +27,7 @@ namespace View
     /// </summary>
     public override void Draw()
     {
-      Platform.PrintTextInRectangle(_button.X1, _button.Y1, _button.X2, _button.Y2, _button.Name, false);
+      Platform.PrintMarkedTextInRectangle(_button.X1, _button.Y1, _button.X2, _button.Y2, _button.Name, false);
     }
   }
 }

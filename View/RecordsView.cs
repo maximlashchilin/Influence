@@ -39,6 +39,8 @@ namespace View
       {
         Platform.PrintText(X, Y + 20 + (i * DELTA), _records.BestResults[i]);
       }
+
+      Platform.CallReadyFrame();
     }
   }
 }

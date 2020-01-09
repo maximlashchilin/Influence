@@ -9,6 +9,11 @@ namespace View
   public abstract class Platform
   {
     /// <summary>
+    /// Событие готовности кадра
+    /// </summary>
+    public event EventHandler ReadyFrame;
+
+    /// <summary>
     /// Ширина платформы
     /// </summary>
     private int _widthPlatform;
@@ -152,6 +157,14 @@ namespace View
     protected virtual void CallClick()
     {
       Click?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>
+    /// Вызывает событие готовности кадра
+    /// </summary>
+    public void CallReadyFrame()
+    {
+      ReadyFrame?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>

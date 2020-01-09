@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 
 namespace Model
 {
   /// <summary>
-  /// Справки
+  /// Справка
   /// </summary>
   public class Helper
   {
@@ -34,9 +35,17 @@ namespace Model
 
     public void Initialize()
     {
-      _helpText = ReadTextFromFile(HELP_FILE);
-
+      string text = Resource.Help;
+      //_helpText = ReadTextFromFile(HELP_FILE);
+      _helpText = SplitOnStrings(text);
       PaintEvent?.Invoke();
+    }
+
+    private List<string> SplitOnStrings(string parText)
+    {
+      string[] strings = parText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+     
+      return strings.ToList<string>();
     }
 
     private List<string> ReadTextFromFile(string parFileName)
