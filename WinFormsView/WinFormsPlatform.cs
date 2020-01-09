@@ -124,6 +124,13 @@ namespace WinFormsView
       }
     }
 
+    /// <summary>
+    /// Отрисовывает прямоугольник
+    /// </summary>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
     public override void DrawRectangle(float parX1, float parY1, float parX2, float parY2)
     {
       float width = TranslateBaseXToPlatformX(parX2) - TranslateBaseXToPlatformX(parX1);
@@ -137,7 +144,6 @@ namespace WinFormsView
     public override void Drop()
     {
       Application.Exit();
-      //Environment.Exit(0);
     }
 
     /// <summary>
@@ -162,20 +168,23 @@ namespace WinFormsView
       DrawRectangle(parX1, parY1, parX2, parY2);
       float width = TranslateBaseXToPlatformX(parX2) - TranslateBaseXToPlatformX(parX1);
       float height = TranslateBaseYToPlatformY(parY2) - TranslateBaseYToPlatformY(parY1);
-      _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Blue, (float)TranslateBaseXToPlatformX(parX1), (float)TranslateBaseYToPlatformY(parY1));
+      _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Blue, TranslateBaseXToPlatformX(parX1) + width / 2 - parText.Length * 16 / 2, TranslateBaseYToPlatformY(parY1) + 10);
       if (parCursorVisible)
       {
         Pen pen = Pens.Black;
-        _winFormsDrawer.Graphics.DrawLine(pen, new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 16, TranslateBaseYToPlatformY(parY1)), new Point(TranslateBaseXToPlatformX(parX1) + parText.Length * 16, TranslateBaseYToPlatformY(parY2)));
+        _winFormsDrawer.Graphics.DrawLine(pen, 
+          new Point((int)(TranslateBaseXToPlatformX(parX1) + width / 2 - parText.Length * 16 / 2 + parText.Length * 16), 
+          TranslateBaseYToPlatformY(parY1)), new Point((int)(TranslateBaseXToPlatformX(parX1) + width / 2 - parText.Length * 16 / 2 + parText.Length * 16), 
+          TranslateBaseYToPlatformY(parY2)));
       }
     }
 
     /// <summary>
     /// Печатает текст
     /// </summary>
-    /// <param name="parX"></param>
-    /// <param name="parY"></param>
-    /// <param name="parText"></param>
+    /// <param name="parX">Координата X</param>
+    /// <param name="parY">Координата Y</param>
+    /// <param name="parText">Текст</param>
     public override void PrintText(float parX, float parY, string parText)
     {
       _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Blue, (float)TranslateBaseXToPlatformX(parX), (float)TranslateBaseYToPlatformY(parY));
@@ -184,18 +193,18 @@ namespace WinFormsView
     /// <summary>
     /// Печатает текст в прямоугольнике
     /// </summary>
-    /// <param name="parX1"></param>
-    /// <param name="parY1"></param>
-    /// <param name="parX2"></param>
-    /// <param name="parY2"></param>
-    /// <param name="parText"></param>
-    /// <param name="parCursorVisible"></param>
+    /// <param name="parX1">Координата X1</param>
+    /// <param name="parY1">Координата Y1</param>
+    /// <param name="parX2">Координата X2</param>
+    /// <param name="parY2">Координата Y2</param>
+    /// <param name="parText">Текст</param>
+    /// <param name="parCursorVisible">Видимость курсора</param>
     public override void PrintTextInRectangle(float parX1, float parY1, float parX2, float parY2, string parText, bool parCursorVisible)
     {
       DrawRectangle(parX1, parY1, parX2, parY2);
       float width = TranslateBaseXToPlatformX(parX2) - TranslateBaseXToPlatformX(parX1);
       float height = TranslateBaseYToPlatformY(parY2) - TranslateBaseYToPlatformY(parY1);
-      _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Black, TranslateBaseXToPlatformX(parX1) + width / 2, TranslateBaseYToPlatformY(parY1));
+      _winFormsDrawer.Graphics.DrawString(parText, DEFAULT_FONT, Brushes.Black, TranslateBaseXToPlatformX(parX1) + width / 2 - parText.Length * 16 / 2, TranslateBaseYToPlatformY(parY1) + 10);
       if (parCursorVisible)
       {
         Pen pen = Pens.Black;
