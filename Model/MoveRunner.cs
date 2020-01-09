@@ -54,8 +54,8 @@
       {
         if (parSourceCell.Score > parDestinationCell.Score)
         {
-          parSourceCell.Score = 1;
           parDestinationCell.Score = parSourceCell.Score - parDestinationCell.Score;
+          parSourceCell.Score = 1;
           parSourceCell.DisactiveCell();
           parDestinationCell.ActiveCell();
           parDestinationCell.Owner = parCurrentPlayer;
