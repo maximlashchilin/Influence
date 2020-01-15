@@ -5,7 +5,7 @@ namespace Controller.FactoriesOfGameStateControllers
   /// <summary>
   /// Фабрика контроллера игры
   /// </summary>
-  class FactoryOfGameControllers : FactoryOfContollers
+  public class FactoryOfGameControllers : FactoryOfContollers
   {
     /// <summary>
     /// Создает контроллер состояния игры
