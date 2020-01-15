@@ -50,6 +50,11 @@ namespace Model
     private RecordsWriter _recordsWriter;
 
     /// <summary>
+    /// Сообщение о выигрыше
+    /// </summary>
+    private string _winMessage;
+
+    /// <summary>
     /// Ячейки игрового поля
     /// </summary>
     public Cell[,] Cells
@@ -72,6 +77,17 @@ namespace Model
       set
       {
         _button = value;
+      }
+    }
+
+    /// <summary>
+    /// Сообщение о выигрыше
+    /// </summary>
+    public string WinMessage
+    {
+      get
+      {
+        return _winMessage;
       }
     }
 
@@ -101,6 +117,7 @@ namespace Model
     {
       GetActivePlayer().Score = GetPlayerScore(GetActivePlayer());
       _recordsWriter.RecordResult(GetActivePlayer());
+      _winMessage = GetActivePlayer().Name + " win";
     }
 
     /// <summary>
@@ -154,6 +171,8 @@ namespace Model
           _currentGameState = GameStates.Atack;
         }
       }
+
+      PaintEvent?.Invoke();
     }
 
     /// <summary>
@@ -170,6 +189,8 @@ namespace Model
         if (clickedCell?.Owner == GetActivePlayer())
         {
           _currentGameState = GameStates.Select;
+          selectedCell.DisactiveCell();
+          clickedCell.ActiveCell();
         }
         else
         {
@@ -242,6 +263,7 @@ namespace Model
         _currentPlayer++;
       }
 
+      UnselectAllCells();
       _currentGameState = GameStates.Select;
       _button.CallPaintEvent();
     }
@@ -336,6 +358,7 @@ namespace Model
         case GameStates.Select:
         case GameStates.Atack:
           {
+            UnselectAllCells();
             GetActivePlayer().Score = CalculateScorePlayer();
             _currentGameState = GameStates.ScoreDistributing;
             _button.Name = "Pass move";
@@ -343,6 +366,7 @@ namespace Model
           }
         case GameStates.ScoreDistributing:
           {
+            UnselectAllCells();
             PassMove();
             _button.Name = "Complete atack";
             break;

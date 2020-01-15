@@ -46,7 +46,7 @@ namespace View
     public override void Draw()
     {
       const float X_HINT = 42.0f;
-      const float Y_HINT = 90.0f;
+      const float Y_HINT = 85.0f;
 
       int rows = _gameField.Cells.GetLength(0);
       int colomns = _gameField.Cells.GetLength(1);
@@ -60,11 +60,14 @@ namespace View
           {
             if (null != _gameField.Cells[i, j].Owner)
             {
-              Platform.DrawHexagonWithScore(_gameField.Cells[i, j].X, _gameField.Cells[i, j].Y, _gameField.Cells[i, j].Score, _gameField.Cells[i, j].Owner.ItemColor);
+              Platform.DrawHexagonWithScore(
+                  _gameField.Cells[i, j].X, _gameField.Cells[i, j].Y,
+                  _gameField.Cells[i, j].Score, _gameField.Cells[i, j].Owner.ItemColor,
+                  _gameField.Cells[i, j].CellStatus == CellStatuses.Active);
             }
             else
             {
-              Platform.DrawHexagonWithScore(_gameField.Cells[i, j].X, _gameField.Cells[i, j].Y, _gameField.Cells[i, j].Score, ItemColors.Default);
+              Platform.DrawHexagonWithScore(_gameField.Cells[i, j].X, _gameField.Cells[i, j].Y, _gameField.Cells[i, j].Score, ItemColors.Default, false);
             }
           }
         }
@@ -72,6 +75,7 @@ namespace View
 
       string currentPlayer = "Current player: " + _gameField.GetActivePlayer().Name;
       Platform.PrintText(X_HINT, Y_HINT, currentPlayer);
+      Platform.PrintText(X_HINT, Y_HINT + 5, _gameField.WinMessage);
       _buttonView.Draw();
       Platform.CallReadyFrame();
     }

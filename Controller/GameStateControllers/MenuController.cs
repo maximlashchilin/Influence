@@ -84,7 +84,7 @@ namespace Controller
     /// <summary>
     /// Обрабатывает нажатие стрелки вниз
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parEventArgs">Параметры события</param>
     private void OnArrowDown(object parSender, EventArgs parEventArgs)
     {
@@ -94,7 +94,7 @@ namespace Controller
     /// <summary>
     /// Обрабатывает изменение состояния приложения
     /// </summary>
-    /// <param name="parSender">Отправитель события</param>
+    /// <param name="parSender">Источник события</param>
     /// <param name="parE">Параметры события</param>
     private void OnChangeState(object parSender, ChangeStateArgs parE)
     {
