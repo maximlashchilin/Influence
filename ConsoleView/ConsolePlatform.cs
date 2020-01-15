@@ -115,6 +115,7 @@ namespace ConsoleView
       const int ARROW_DOWN_CODE = 40;
       const int ESC_CODE = 27;
       const int BACKSPACE_CODE = 8;
+      const int TAB_DOWN_CODE = 9;
       const int A_CODE = 65;
       const int Z_CODE = 90;
       if (parE.KeyDown)
@@ -135,6 +136,9 @@ namespace ConsoleView
             break;
           case BACKSPACE_CODE:
             CallBackspaceDown();
+            break;
+          case TAB_DOWN_CODE:
+            CallTabDown();
             break;
         }
 
