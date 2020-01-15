@@ -8,6 +8,11 @@
 /UnitTestModel/bin
 /UnitTestModel/obj
 /TestResults/
+/WinFormsView/bin
+/WinFormsView/obj
+/InfluenceForms/bin
+!/InfluenceForms/bin/Records.txt
+/InfluenceForms/obj
 /ConsoleView/bin
 /ConsoleView/obj
 /Influence/bin

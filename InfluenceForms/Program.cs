@@ -1,0 +1,21 @@
+﻿using System;
+using System.Windows.Forms;
+using Controller;
+using WinFormsView;
+
+namespace InfluenceForms
+{
+  static class Program
+  {
+    /// <summary>
+    /// Главная точка входа для приложения.
+    /// </summary>
+    [STAThread]
+    static void Main()
+    {
+      Application.EnableVisualStyles();
+      Application.SetCompatibleTextRenderingDefault(false);
+      new MainController(new WinFormsPlatform()).Start();
+    }
+  }
+}
