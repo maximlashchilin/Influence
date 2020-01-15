@@ -66,7 +66,7 @@ namespace WinFormsView
           CallEscDown();
           break;
         case Keys.Tab:
-          // CallTabDown();
+          CallTabDown();
           break;
       }
 
