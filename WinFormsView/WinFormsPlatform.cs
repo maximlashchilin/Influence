@@ -65,6 +65,9 @@ namespace WinFormsView
         case Keys.Escape:
           CallEscDown();
           break;
+        case Keys.Tab:
+          // CallTabDown();
+          break;
       }
 
       if (parE.KeyCode >= Keys.A && parE.KeyCode <= Keys.Z)
@@ -88,21 +91,37 @@ namespace WinFormsView
     /// <param name="parY">Координата Y</param>
     /// <param name="parScore">Счёт</param>
     /// <param name="parColor">Цвет</param>
-    public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColors parColor)
+    /// <param name="parDecorativity">Выделение ячейки</param>
+    public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColors parColor, bool parDecorativity)
     {
+      int firstDistance = 10;
+      int secondDistance = 5;
       int x = TranslateBaseXToPlatformX(parX);
       int y = TranslateBaseYToPlatformY(parY);
       Point[] points = new Point[6];
 
-      points[0] = new Point(x, y - 10);
-      points[1] = new Point(x + 10, y - 5);
-      points[2] = new Point(x + 10, y + 5);
-      points[3] = new Point(x, y + 10);
-      points[4] = new Point(x - 10, y + 5);
-      points[5] = new Point(x - 10, y - 5);
+      points[0] = new Point(x, y - firstDistance);
+      points[1] = new Point(x + firstDistance, y - secondDistance);
+      points[2] = new Point(x + firstDistance, y + secondDistance);
+      points[3] = new Point(x, y + firstDistance);
+      points[4] = new Point(x - firstDistance, y + secondDistance);
+      points[5] = new Point(x - firstDistance, y - secondDistance);
 
       _winFormsDrawer.Graphics.FillPolygon(GetPenWithColor(parColor), points);
-      _winFormsDrawer.Graphics.DrawString(Convert.ToString(parScore), NUMBER_FONT, Brushes.Black, x - 5, y - 5);
+      _winFormsDrawer.Graphics.DrawString(Convert.ToString(parScore), NUMBER_FONT, Brushes.White, x - secondDistance, y - secondDistance);
+
+      if (parDecorativity)
+      {
+        firstDistance = 15;
+        secondDistance = 10;
+        points[0] = new Point(x, y - firstDistance);
+        points[1] = new Point(x + firstDistance, y - secondDistance);
+        points[2] = new Point(x + firstDistance, y + secondDistance);
+        points[3] = new Point(x, y + firstDistance);
+        points[4] = new Point(x - firstDistance, y + secondDistance);
+        points[5] = new Point(x - firstDistance, y - secondDistance);
+        _winFormsDrawer.Graphics.DrawPolygon(Pens.Blue, points);
+      }
     }
 
     /// <summary>
