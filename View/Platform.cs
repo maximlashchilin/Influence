@@ -145,7 +145,7 @@ namespace View
     /// <summary>
     /// Вызывает событие перемещения курсора мыши
     /// </summary>
-    /// <param name="parE"></param>
+    /// <param name="parE">Параметры события</param>
     protected virtual void CallMove(MoveEventArgs parE)
     {
       Move?.Invoke(this, parE);
@@ -285,6 +285,7 @@ namespace View
     /// <param name="parY">Координата Y</param>
     /// <param name="parScore">Число очков ячейки</param>
     /// <param name="parColor">Цвет ячейки</param>
-    public abstract void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColors parColor);
+    /// <param name="parDecorativity">Выделение ячейки</param>
+    public abstract void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColors parColor, bool parDecorativity);
   }
 }
