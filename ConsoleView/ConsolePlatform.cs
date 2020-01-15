@@ -164,14 +164,15 @@ namespace ConsoleView
     }
 
     /// <summary>
-    /// Отображает восьмиугольник в указанных координатах
+    /// Отображает ячейку в указанных координатах
     /// с количеством очков и соответствующим цветом
     /// </summary>
     /// <param name="parX">Координата X</param>
     /// <param name="parY">Координата Y</param>
     /// <param name="parScore">Количество очков</param>
     /// <param name="parColor">Цвет</param>
-    public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColors parColor)
+    /// <param name="parDecorativity">Выделение ячейки</param>
+    public override void DrawHexagonWithScore(float parX, float parY, int parScore, ItemColors parColor, bool parDecorativity)
     {
       Console.CursorVisible = false;
       short attribute = 15;
@@ -185,6 +186,11 @@ namespace ConsoleView
         {
           attribute = 4;
         }
+      }
+
+      if (parDecorativity)
+      {
+        attribute |= 0x0010;
       }
       _consoleDrawer.SetBufferCursor((short)(TranslateBaseXToPlatformX(parX) - 1), (short)(TranslateBaseYToPlatformY(parY) - 1));
       _consoleDrawer.WriteInBuffer("/─\\", attribute);
