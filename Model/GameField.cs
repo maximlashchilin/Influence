@@ -52,7 +52,7 @@ namespace Model
     /// <summary>
     /// Сообщение о выигрыше
     /// </summary>
-    private string _winMessage;
+    private string _winMessage = string.Empty;
 
     /// <summary>
     /// Ячейки игрового поля
