@@ -49,6 +49,11 @@ namespace View
     public event EventHandler BackspaceDown;
 
     /// <summary>
+    /// Событие нажатия Tab
+    /// </summary>
+    public event EventHandler TabDown;
+
+    /// <summary>
     /// Событие нажатия клавиши
     /// </summary>
     public event dKeyDownEventHandler KeyDown;
@@ -126,11 +131,19 @@ namespace View
     }
 
     /// <summary>
-    /// Вызывает событиие нажатия Backspace
+    /// Вызывает событие нажатия Backspace
     /// </summary>
     protected virtual void CallBackspaceDown()
     {
       BackspaceDown?.Invoke(this, EventArgs.Empty);
+    }
+    
+    /// <summary>
+    /// Вызывает событие нажатия Tab
+    /// </summary>
+    protected virtual void CallTabDown()
+    {
+      TabDown?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -178,6 +191,7 @@ namespace View
       KeyDown = null;
       EscDown = null;
       BackspaceDown = null;
+      TabDown = null;
       Move = null;
       Click = null;
     }
